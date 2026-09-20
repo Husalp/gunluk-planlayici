@@ -2535,13 +2535,47 @@ function updateDateUI(){
    KAYDET
 ====================================================== */
 
-function saveTasks(){
-
+async function saveTasks() {
   localStorage.setItem(
     "plannerTasks",
     JSON.stringify(tasks)
   );
 
+  const { data: sessionData } =
+    await supabaseClient.auth.getSession();
+
+  const user = sessionData.session?.user;
+
+  if (!user) {
+    return;
+  }
+
+  const rows = tasks.map(task => ({
+    id: task.id,
+    user_id: user.id,
+    title: task.text,
+    completed: task.completed,
+    task_date: task.date,
+    task_time: task.time || null,
+    category: task.category || null,
+    priority: task.priority || null,
+    task_order: task.order ?? 0,
+    recurring: task.recurring || false,
+    repeat_type: task.repeatType || null,
+    repeat_end: task.repeatEnd || null,
+    completed_dates: task.completedDates || []
+  }));
+
+  const { error } = await supabaseClient
+    .from("tasks")
+    .upsert(rows);
+
+  if (error) {
+    console.error(
+      "Supabase görev kaydetme hatası:",
+      error
+    );
+  }
 }
 
 
