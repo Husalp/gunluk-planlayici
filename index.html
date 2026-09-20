@@ -2549,7 +2549,57 @@ async function saveTasks() {
   if (!user) {
     return;
   }
+async function loadTasks() {
+  const { data: sessionData } =
+    await supabaseClient.auth.getSession();
 
+  const user = sessionData.session?.user;
+
+  if (!user) {
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("tasks")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("task_order", { ascending: true });
+
+  if (error) {
+    console.error(
+      "Supabase görev yükleme hatası:",
+      error
+    );
+    return;
+  }
+
+  tasks = data.map(row => ({
+    id: row.task_id,
+    text: row.title,
+    date: row.task_date,
+    time: row.task_time || "",
+    category: row.category || "",
+    priority: row.priority || "",
+    order: row.task_order ?? 0,
+    completed: !!row.completed,
+    recurring: !!row.recurring,
+    repeatType: row.repeat_type || "",
+    repeatEnd: row.repeat_end || "",
+    completedDates: row.completed_dates || []
+  }));
+
+  localStorage.setItem(
+    "plannerTasks",
+    JSON.stringify(tasks)
+  );
+
+  normalizeOrders();
+  updateDateUI();
+  renderHome();
+  renderAllTasks();
+  renderWeek();
+  renderStatistics();
+}
   const rows = tasks.map(task => ({
     task_id: task.id,
     user_id: user.id,
@@ -5032,11 +5082,15 @@ async function checkAuth() {
 supabaseClient.auth.onAuthStateChange((event, session) => {
   const authScreen = document.getElementById("authScreen");
 
-  if (session) {
-    authScreen.style.display = "none";
-  } else {
-    authScreen.style.display = "flex";
-  }
+ if (session) {
+  authScreen.style.display = "none";
+
+  setTimeout(() => {
+    loadTasks();
+  }, 0);
+} else {
+  authScreen.style.display = "flex";
+}
 });
 
 checkAuth();
