@@ -12,56 +12,169 @@
       padding: 0;
     }
 
+    :root {
+      --bg: #f6f7f9;
+      --card: #ffffff;
+      --text: #202124;
+      --muted: #777;
+      --border: #e7e7e7;
+      --accent: #4f46e5;
+      --accent-light: #eef2ff;
+      --danger: #dc3545;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    body.dark {
+      --bg: #151619;
+      --card: #202124;
+      --text: #f1f1f1;
+      --muted: #9a9a9a;
+      --border: #333438;
+      --accent: #818cf8;
+      --accent-light: #292c4a;
+      --danger: #ff6b7a;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
       padding: 40px 20px;
+      transition: background 0.25s, color 0.25s;
     }
 
     .container {
-      max-width: 700px;
-      margin: 0 auto;
+      max-width: 720px;
+      margin: auto;
+    }
+
+    /* Üst bölüm */
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 30px;
+    }
+
+    .date {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 7px;
     }
 
     h1 {
-      text-align: center;
-      margin-bottom: 10px;
+      font-size: 32px;
+      letter-spacing: -0.8px;
     }
 
-    .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 30px;
+    .theme-button {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--card);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 18px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
     }
+
+    .theme-button:hover {
+      transform: scale(1.05);
+    }
+
+    /* İlerleme kartı */
+
+    .progress-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .progress-text {
+      color: var(--muted);
+    }
+
+    .progress-percent {
+      font-weight: bold;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      border-radius: 10px;
+      transition: width 0.3s ease;
+    }
+
+    /* Görev ekleme */
 
     .add-box {
       display: flex;
       gap: 10px;
-      margin-bottom: 25px;
+      margin-bottom: 18px;
     }
 
     #taskInput {
       flex: 1;
-      padding: 14px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 16px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 15px;
+      font-size: 15px;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    #taskInput:focus {
+      border-color: var(--accent);
     }
 
     #addButton {
-      padding: 14px 20px;
       border: none;
-      border-radius: 10px;
-      background: #222;
+      border-radius: 12px;
+      padding: 0 20px;
+      background: var(--accent);
       color: white;
-      cursor: pointer;
       font-size: 15px;
+      cursor: pointer;
+      transition: opacity 0.2s;
     }
 
     #addButton:hover {
-      background: #444;
+      opacity: 0.9;
+    }
+
+    /* Görevler */
+
+    .tasks-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 10px;
+      box-shadow: var(--shadow);
     }
 
     .task-list {
@@ -71,51 +184,80 @@
     .task {
       display: flex;
       align-items: center;
-      gap: 12px;
-      background: white;
-      padding: 16px;
-      margin-bottom: 10px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      gap: 13px;
+      padding: 15px 12px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .task input[type="checkbox"] {
+    .task:last-child {
+      border-bottom: none;
+    }
+
+    .task-checkbox {
       width: 20px;
       height: 20px;
+      accent-color: var(--accent);
       cursor: pointer;
+      flex-shrink: 0;
     }
 
     .task-text {
       flex: 1;
-      font-size: 16px;
+      font-size: 15px;
+      line-height: 1.4;
+      word-break: break-word;
     }
 
     .completed .task-text {
       text-decoration: line-through;
-      color: #999;
+      color: var(--muted);
     }
 
     .delete-button {
       border: none;
       background: transparent;
-      color: #d33;
+      color: var(--muted);
       cursor: pointer;
+      padding: 6px;
       font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.2s, color 0.2s;
+    }
+
+    .task:hover .delete-button {
+      opacity: 1;
+    }
+
+    .delete-button:hover {
+      color: var(--danger);
     }
 
     .empty {
       text-align: center;
-      color: #888;
-      padding: 30px;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: 14px;
     }
 
     @media (max-width: 600px) {
+      body {
+        padding: 25px 15px;
+      }
+
+      h1 {
+        font-size: 27px;
+      }
+
       .add-box {
         flex-direction: column;
       }
 
       #addButton {
-        width: 100%;
+        height: 48px;
+      }
+
+      .delete-button {
+        opacity: 1;
       }
     }
   </style>
@@ -125,54 +267,136 @@
 
   <div class="container">
 
-    <h1>Günlük Planlayıcı</h1>
+    <div class="top">
+      <div>
+        <div class="date" id="date"></div>
+        <h1>Bugünkü Planım</h1>
+      </div>
 
-    <p class="subtitle">
-      Bugün yapacaklarını planla ve tamamladıkça işaretle.
-    </p>
+      <button class="theme-button" id="themeButton" title="Tema değiştir">
+        ◐
+      </button>
+    </div>
+
+    <div class="progress-card">
+      <div class="progress-top">
+        <span class="progress-text" id="progressText">
+          0 / 0 görev tamamlandı
+        </span>
+
+        <span class="progress-percent" id="progressPercent">
+          %0
+        </span>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
 
     <div class="add-box">
       <input
         type="text"
         id="taskInput"
-        placeholder="Yeni görev yaz..."
+        placeholder="Bugün ne yapman gerekiyor?"
       >
 
       <button id="addButton">
-        Görev Ekle
+        Ekle
       </button>
     </div>
 
-    <ul id="taskList" class="task-list"></ul>
+    <div class="tasks-card">
+      <ul id="taskList" class="task-list"></ul>
+    </div>
 
   </div>
 
   <script>
+
     const taskInput = document.getElementById("taskInput");
     const addButton = document.getElementById("addButton");
     const taskList = document.getElementById("taskList");
 
+    const dateElement = document.getElementById("date");
+    const progressText = document.getElementById("progressText");
+    const progressPercent = document.getElementById("progressPercent");
+    const progressFill = document.getElementById("progressFill");
+
+    const themeButton = document.getElementById("themeButton");
+
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    /* Tarih */
+
+    function showDate() {
+
+      const today = new Date();
+
+      const date = today.toLocaleDateString("tr-TR", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+
+      dateElement.textContent =
+        date.charAt(0).toUpperCase() + date.slice(1);
+    }
+
+    /* Görevleri kaydet */
 
     function saveTasks() {
       localStorage.setItem("tasks", JSON.stringify(tasks));
     }
 
+    /* İlerleme */
+
+    function updateProgress() {
+
+      const total = tasks.length;
+
+      const completed = tasks.filter(
+        task => task.completed
+      ).length;
+
+      const percent =
+        total === 0
+          ? 0
+          : Math.round((completed / total) * 100);
+
+      progressText.textContent =
+        `${completed} / ${total} görev tamamlandı`;
+
+      progressPercent.textContent =
+        `%${percent}`;
+
+      progressFill.style.width =
+        `${percent}%`;
+    }
+
+    /* Görevleri göster */
+
     function renderTasks() {
+
       taskList.innerHTML = "";
 
       if (tasks.length === 0) {
+
         taskList.innerHTML = `
           <li class="empty">
-            Henüz görev eklemedin.
+            Bugün için henüz bir görev yok.
           </li>
         `;
+
+        updateProgress();
         return;
       }
 
       tasks.forEach((task, index) => {
 
         const li = document.createElement("li");
+
         li.className = "task";
 
         if (task.completed) {
@@ -181,43 +405,63 @@
 
         li.innerHTML = `
           <input
+            class="task-checkbox"
             type="checkbox"
             ${task.completed ? "checked" : ""}
           >
 
-          <span class="task-text">
-            ${task.text}
-          </span>
+          <span class="task-text"></span>
 
-          <button class="delete-button">
+          <button
+            class="delete-button"
+            title="Görevi sil"
+          >
             Sil
           </button>
         `;
 
-        const checkbox = li.querySelector("input");
+        const text = li.querySelector(".task-text");
+
+        text.textContent = task.text;
+
+        const checkbox =
+          li.querySelector(".task-checkbox");
 
         checkbox.addEventListener("change", () => {
-          tasks[index].completed = checkbox.checked;
+
+          tasks[index].completed =
+            checkbox.checked;
+
           saveTasks();
           renderTasks();
         });
 
-        const deleteButton = li.querySelector(".delete-button");
+        const deleteButton =
+          li.querySelector(".delete-button");
 
         deleteButton.addEventListener("click", () => {
+
           tasks.splice(index, 1);
+
           saveTasks();
           renderTasks();
         });
 
         taskList.appendChild(li);
       });
+
+      updateProgress();
     }
 
+    /* Görev ekleme */
+
     function addTask() {
-      const text = taskInput.value.trim();
+
+      const text =
+        taskInput.value.trim();
 
       if (text === "") {
+        taskInput.focus();
         return;
       }
 
@@ -231,17 +475,55 @@
       taskInput.value = "";
 
       renderTasks();
+
+      taskInput.focus();
     }
 
-    addButton.addEventListener("click", addTask);
+    addButton.addEventListener(
+      "click",
+      addTask
+    );
 
-    taskInput.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        addTask();
+    taskInput.addEventListener(
+      "keydown",
+      event => {
+
+        if (event.key === "Enter") {
+          addTask();
+        }
+
       }
-    });
+    );
 
+    /* Karanlık mod */
+
+    themeButton.addEventListener(
+      "click",
+      () => {
+
+        document.body.classList.toggle("dark");
+
+        const dark =
+          document.body.classList.contains("dark");
+
+        localStorage.setItem(
+          "darkMode",
+          dark
+        );
+      }
+    );
+
+    if (
+      localStorage.getItem("darkMode") === "true"
+    ) {
+      document.body.classList.add("dark");
+    }
+
+    /* Başlangıç */
+
+    showDate();
     renderTasks();
+
   </script>
 
 </body>
