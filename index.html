@@ -46,48 +46,40 @@ const supabaseClient =
 >
 
 <title>Günlük Planlayıcı</title>
-<link rel="manifest" href="manifest.json">
+
+<link
+  rel="manifest"
+  href="manifest.json"
+>
 
 <meta
   name="apple-mobile-web-app-title"
   content="Günlük Plan"
-/>
+>
+
 <link
   rel="icon"
   type="image/svg+xml"
-  href="data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 viewBox%3D%220 0 64 64%22%3E%3Crect x%3D%224%22 y%3D%228%22 width%3D%2256%22 height%3D%2252%22 rx%3D%2212%22 fill%3D%22rgb%2879%2C70%2C229%29%22%2F%3E%3Cpath d%3D%22M16 5v14M48 5v14%22 stroke%3D%22white%22 stroke-width%3D%226%22 stroke-linecap%3D%22round%22%2F%3E%3Cpath d%3D%22M13 26h38%22 stroke%3D%22white%22 stroke-width%3D%225%22 stroke-linecap%3D%22round%22%2F%3E%3Cpath d%3D%22M17 40l9 9 21-21%22 fill%3D%22none%22 stroke%3D%22white%22 stroke-width%3D%226%22 stroke-linecap%3D%22round%22 stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E"
+  href="data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 viewBox%3D%220 0 64 64%22%3E%3Crect x%3D%224%22 y%3D%228%22 width%3D%2256%22 height%3D%2252%22 rx%3D%2212%22 fill%3D%22rgb(79%2C70%2C229)%22/%3E%3Cpath d%3D%22M16 5v14M48 5v14%22 stroke%3D%22white%22 stroke-width%3D%226%22 stroke-linecap%3D%22round%22/%3E%3Cpath d%3D%22M13 26h38%22 stroke%3D%22white%22 stroke-width%3D%225%22 stroke-linecap%3D%22round%22/%3E%3Cpath d%3D%22M17 40l9 9 21-21%22 fill%3D%22none%22 stroke%3D%22white%22 stroke-width%3D%226%22 stroke-linecap%3D%22round%22 stroke-linejoin%3D%22round%22/%3E%3C/svg%3E"
 >
 
 <style>
 
 :root{
   --primary:#4f46e5;
-  --primary-dark:#4338ca;
-  --primary-soft:#eef0ff;
-  --primary-soft-dark:#2d2d4d;
-
+  --primary2:#7168ef;
   --bg:#f4f6fb;
-  --surface:#ffffff;
-  --surface-soft:#f8f9fc;
-
+  --surface:#fff;
+  --surface2:#f8f9fc;
   --text:#1f2430;
-  --muted:#7c8390;
-
-  --border:#e4e7ee;
-  --border-strong:#d7dbe4;
-
+  --muted:#7a8190;
+  --border:#e5e8ef;
+  --soft:#eef0ff;
   --success:#3a8d5d;
-  --danger:#c53c3c;
-
-  --shadow-sm:
-    0 5px 18px rgba(25,32,56,.055);
-
-  --shadow-md:
-    0 14px 38px rgba(25,32,56,.10);
-
-  --radius-sm:10px;
-  --radius-md:14px;
-  --radius-lg:18px;
+  --danger:#c33d3d;
+  --shadow:0 10px 30px rgba(25,32,56,.07);
+  --shadow2:0 18px 50px rgba(25,32,56,.12);
+  --radius:16px;
 }
 
 *{
@@ -113,7 +105,7 @@ body{
   background:
     radial-gradient(
       circle at top left,
-      #edf0ff 0,
+      #eef0ff 0,
       transparent 30%
     ),
     var(--bg);
@@ -124,26 +116,22 @@ body{
 
   -webkit-font-smoothing:antialiased;
 
-  transition:
-    background .25s ease,
-    color .25s ease;
+  transition:.25s;
 }
 
 body.dark{
   --bg:#121417;
-  --surface:#1c2024;
-  --surface-soft:#252a2f;
-
-  --text:#f3f4f6;
-  --muted:#a3a9b2;
-
+  --surface:#1d2024;
+  --surface2:#25292e;
+  --text:#f4f5f7;
+  --muted:#a2a8b1;
   --border:#30353b;
-  --border-strong:#3c4249;
+  --soft:#2c2c4d;
 
   background:
     radial-gradient(
       circle at top left,
-      rgba(79,70,229,.16) 0,
+      rgba(79,70,229,.16),
       transparent 32%
     ),
     var(--bg);
@@ -156,13 +144,8 @@ select{
 }
 
 button{
+  border:0;
   -webkit-tap-highlight-color:transparent;
-}
-
-button,
-input,
-select{
-  outline:none;
 }
 
 button:focus-visible,
@@ -170,15 +153,10 @@ input:focus-visible,
 select:focus-visible{
   outline:
     3px solid
-    rgba(79,70,229,.16);
+    rgba(79,70,229,.18);
 
   outline-offset:2px;
 }
-
-
-/* ======================================================
-   LAYOUT
-====================================================== */
 
 .app{
   display:flex;
@@ -196,9 +174,6 @@ select:focus-visible{
 
   padding:22px 14px;
 
-  display:flex;
-  flex-direction:column;
-
   background:
     rgba(255,255,255,.92);
 
@@ -208,56 +183,59 @@ select:focus-visible{
   border-right:
     1px solid var(--border);
 
-  z-index:100;
+  display:flex;
+  flex-direction:column;
+
+  z-index:50;
 }
 
 .dark .sidebar{
   background:
-    rgba(28,32,36,.95);
+    rgba(29,32,36,.95);
 }
 
 .logo{
   display:flex;
   align-items:center;
+
   gap:10px;
 
   padding:
-    3px 10px 23px;
-
-  margin-bottom:11px;
+    3px 10px 24px;
 
   font-size:20px;
+
   font-weight:850;
-  letter-spacing:-.4px;
-}
 
-.logo-mark{
-  width:38px;
-  height:38px;
-
-  flex-shrink:0;
-
-  filter:
-    drop-shadow(
-      0 7px 13px
-      rgba(79,70,229,.20)
-    );
+  letter-spacing:-.5px;
 }
 
 .logo-text span{
   color:var(--primary);
 }
 
-.menu-title{
-  padding:
-    0 11px 9px;
+.logo-mark{
+  width:38px;
+  height:38px;
 
+  filter:
+    drop-shadow(
+      0 6px 12px
+      rgba(79,70,229,.22)
+    );
+}
+
+.menu-title{
   font-size:10px;
+
   font-weight:800;
 
   letter-spacing:.09em;
 
   color:#9aa0a9;
+
+  padding:
+    0 11px 9px;
 
   text-transform:uppercase;
 }
@@ -265,12 +243,6 @@ select:focus-visible{
 .menu-item,
 .theme-btn{
   width:100%;
-
-  border:0;
-
-  background:transparent;
-
-  color:inherit;
 
   text-align:left;
 
@@ -281,28 +253,33 @@ select:focus-visible{
 
   border-radius:11px;
 
+  background:transparent;
+
+  color:inherit;
+
   cursor:pointer;
 
-  transition:
-    background .2s ease,
-    color .2s ease,
-    transform .2s ease;
+  transition:.2s;
 }
 
 .menu-item:hover,
 .theme-btn:hover{
-  background:var(--surface-soft);
-  transform:translateX(2px);
+  background:var(--surface2);
+
+  transform:
+    translateX(2px);
 }
 
 .menu-item.active{
-  background:var(--primary-soft);
+  background:var(--soft);
+
   color:var(--primary);
+
   font-weight:800;
 }
 
 .dark .menu-item.active{
-  background:var(--primary-soft-dark);
+  background:#2c2c4d;
 }
 
 .sidebar-bottom{
@@ -314,22 +291,49 @@ select:focus-visible{
   padding-top:12px;
 }
 
-
-/* ======================================================
-   MAIN
-====================================================== */
-
-.main{
-  flex:1;
-
+.notification-btn{
   width:100%;
 
-  max-width:1450px;
+  text-align:left;
+
+  padding:
+    11px 12px;
+
+  margin-bottom:5px;
+
+  border-radius:11px;
+
+  background:transparent;
+
+  color:inherit;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.notification-btn:hover{
+  background:var(--surface2);
+
+  transform:
+    translateX(2px);
+}
+
+.notification-btn.granted{
+  color:var(--success);
+
+  font-weight:800;
+}
+
+.main{
+  width:100%;
+
+  max-width:1420px;
 
   margin:0 auto;
 
   padding:
-    28px 34px 45px;
+    26px 34px 44px;
 
   min-width:0;
 }
@@ -346,19 +350,78 @@ select:focus-visible{
 }
 
 @keyframes pageIn{
+
   from{
     opacity:0;
-    transform:translateY(4px);
+    transform:
+      translateY(4px);
   }
 
   to{
     opacity:1;
     transform:none;
   }
+
 }
 
 .mobile-header{
   display:none;
+}
+
+.mobile-notification{
+  width:38px;
+  height:38px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:11px;
+
+  background:var(--surface);
+
+  color:var(--text);
+
+  cursor:pointer;
+
+  position:relative;
+}
+
+.mobile-notification.granted{
+  color:var(--success);
+
+  border-color:
+    rgba(58,141,93,.25);
+}
+
+.notification-dot{
+  position:absolute;
+
+  width:7px;
+  height:7px;
+
+  border-radius:50%;
+
+  right:6px;
+  top:6px;
+
+  background:var(--success);
+
+  display:none;
+}
+
+.mobile-notification.granted
+.notification-dot{
+  display:block;
+}
+
+.notification-status{
+  font-size:11px;
+
+  color:var(--muted);
+
+  margin-top:8px;
+
+  line-height:1.45;
 }
 
 
@@ -370,6 +433,7 @@ select:focus-visible{
   display:flex;
 
   justify-content:space-between;
+
   align-items:flex-end;
 
   gap:20px;
@@ -379,20 +443,23 @@ select:focus-visible{
 
 .welcome h1{
   font-size:31px;
-  line-height:1.12;
 
   letter-spacing:-.9px;
+
+  line-height:1.12;
 
   margin-bottom:6px;
 }
 
 .welcome p{
   font-size:13px;
+
   color:var(--muted);
 }
 
 .date-navigation{
   display:flex;
+
   align-items:center;
 
   gap:7px;
@@ -410,6 +477,7 @@ select:focus-visible{
   border-radius:11px;
 
   background:var(--surface);
+
   color:var(--text);
 
   cursor:pointer;
@@ -418,23 +486,17 @@ select:focus-visible{
     0 4px 12px
     rgba(25,32,56,.04);
 
-  transition:
-    transform .2s ease,
-    border-color .2s ease;
+  transition:.2s;
 }
 
 .date-button:hover{
-  transform:translateY(-1px);
-
-  border-color:
-    var(--border-strong);
+  transform:
+    translateY(-1px);
 }
 
 .today-button{
   padding:
     11px 15px;
-
-  border:0;
 
   border-radius:11px;
 
@@ -442,7 +504,7 @@ select:focus-visible{
     linear-gradient(
       135deg,
       var(--primary),
-      #7067ef
+      var(--primary2)
     );
 
   color:#fff;
@@ -452,20 +514,8 @@ select:focus-visible{
   cursor:pointer;
 
   box-shadow:
-    0 8px 19px
-    rgba(79,70,229,.20);
-
-  transition:
-    transform .2s ease,
-    box-shadow .2s ease;
-}
-
-.today-button:hover{
-  transform:translateY(-1px);
-
-  box-shadow:
-    0 11px 23px
-    rgba(79,70,229,.25);
+    0 8px 18px
+    rgba(79,70,229,.2);
 }
 
 .date-input{
@@ -490,14 +540,17 @@ select:focus-visible{
 
 
 /* ======================================================
-   STAT CARDS
+   STATS
 ====================================================== */
 
 .stats{
   display:grid;
 
   grid-template-columns:
-    repeat(3,minmax(0,1fr));
+    repeat(
+      3,
+      minmax(0,1fr)
+    );
 
   gap:13px;
 
@@ -505,22 +558,23 @@ select:focus-visible{
 }
 
 .stat{
-  position:relative;
-
   padding:
     18px 19px;
-
-  overflow:hidden;
 
   border:
     1px solid var(--border);
 
-  border-radius:
-    var(--radius-md);
+  border-radius:15px;
 
   background:var(--surface);
 
-  box-shadow:var(--shadow-sm);
+  box-shadow:
+    0 5px 17px
+    rgba(25,32,56,.045);
+
+  position:relative;
+
+  overflow:hidden;
 }
 
 .stat::after{
@@ -528,11 +582,11 @@ select:focus-visible{
 
   position:absolute;
 
-  top:-25px;
-  right:-25px;
+  right:-24px;
+  top:-24px;
 
-  width:80px;
-  height:80px;
+  width:78px;
+  height:78px;
 
   border-radius:50%;
 
@@ -541,9 +595,6 @@ select:focus-visible{
 }
 
 .stat-title{
-  position:relative;
-  z-index:1;
-
   font-size:12px;
 
   color:var(--muted);
@@ -551,48 +602,48 @@ select:focus-visible{
   font-weight:700;
 
   margin-bottom:8px;
+
+  position:relative;
+
+  z-index:1;
 }
 
 .stat-value{
-  position:relative;
-  z-index:1;
-
   font-size:29px;
-
-  line-height:1;
 
   font-weight:850;
 
-  letter-spacing:-.7px;
+  letter-spacing:-.8px;
+
+  position:relative;
+
+  z-index:1;
 }
 
-
-/* ======================================================
-   PROGRESS
-====================================================== */
-
 .progress-box{
-  margin-bottom:15px;
-
   padding:
     17px 19px;
 
   border:
     1px solid var(--border);
 
-  border-radius:
-    var(--radius-md);
+  border-radius:15px;
 
   background:var(--surface);
 
-  box-shadow:var(--shadow-sm);
+  box-shadow:
+    0 5px 17px
+    rgba(25,32,56,.045);
+
+  margin-bottom:15px;
 }
 
 .progress-header{
   display:flex;
 
-  justify-content:space-between;
   align-items:center;
+
+  justify-content:space-between;
 
   gap:10px;
 
@@ -603,21 +654,18 @@ select:focus-visible{
 
 .progress-header span{
   color:var(--muted);
-  font-weight:700;
-}
 
-.progress-header strong{
-  font-size:13px;
+  font-weight:700;
 }
 
 .progress{
   height:9px;
 
-  overflow:hidden;
-
   border-radius:30px;
 
   background:#e9ebf0;
+
+  overflow:hidden;
 }
 
 .dark .progress{
@@ -625,8 +673,9 @@ select:focus-visible{
 }
 
 .progress-bar{
-  width:0;
   height:100%;
+
+  width:0;
 
   border-radius:30px;
 
@@ -634,7 +683,7 @@ select:focus-visible{
     linear-gradient(
       90deg,
       var(--primary),
-      #7a71ef
+      #7a72ef
     );
 
   transition:
@@ -643,7 +692,7 @@ select:focus-visible{
 
 
 /* ======================================================
-   CARDS / BUTTONS
+   CARDS
 ====================================================== */
 
 .card,
@@ -654,10 +703,11 @@ select:focus-visible{
     1px solid var(--border);
 
   border-radius:
-    var(--radius-lg);
+    var(--radius);
 
   box-shadow:
-    var(--shadow-sm);
+    0 5px 17px
+    rgba(25,32,56,.045);
 }
 
 .card{
@@ -667,19 +717,29 @@ select:focus-visible{
 .section-heading{
   display:flex;
 
-  justify-content:space-between;
   align-items:center;
+
+  justify-content:space-between;
 
   gap:12px;
 
-  margin-bottom:11px;
+  margin-bottom:10px;
 }
 
 .section-title-wrap{
   display:flex;
+
   align-items:center;
 
   gap:10px;
+}
+
+.section-title{
+  font-size:17px;
+
+  font-weight:850;
+
+  letter-spacing:-.2px;
 }
 
 .section-dot{
@@ -695,19 +755,9 @@ select:focus-visible{
     rgba(79,70,229,.08);
 }
 
-.section-title{
-  font-size:17px;
-
-  font-weight:850;
-
-  letter-spacing:-.2px;
-}
-
 .primary-btn{
   padding:
     11px 15px;
-
-  border:0;
 
   border-radius:11px;
 
@@ -715,7 +765,7 @@ select:focus-visible{
     linear-gradient(
       135deg,
       var(--primary),
-      #7168ef
+      var(--primary2)
     );
 
   color:#fff;
@@ -728,27 +778,22 @@ select:focus-visible{
     0 7px 18px
     rgba(79,70,229,.18);
 
-  transition:
-    transform .2s ease,
-    box-shadow .2s ease;
+  transition:.2s;
 }
 
 .primary-btn:hover{
-  transform:translateY(-1px);
-
-  box-shadow:
-    0 10px 22px
-    rgba(79,70,229,.23);
+  transform:
+    translateY(-1px);
 }
 
 .secondary-btn{
   padding:
     10px 13px;
 
+  border-radius:10px;
+
   border:
     1px solid var(--border);
-
-  border-radius:10px;
 
   background:var(--surface);
 
@@ -756,19 +801,12 @@ select:focus-visible{
 
   cursor:pointer;
 
-  transition:
-    background .2s ease,
-    border-color .2s ease,
-    transform .2s ease;
+  transition:.2s;
 }
 
 .secondary-btn:hover{
-  background:var(--surface-soft);
-
-  border-color:
-    var(--border-strong);
-
-  transform:translateY(-1px);
+  background:
+    var(--surface2);
 }
 
 
@@ -791,9 +829,7 @@ select:focus-visible{
 
   border-radius:10px;
 
-  transition:
-    background .2s ease,
-    transform .2s ease;
+  transition:.2s;
 }
 
 .task:last-child{
@@ -802,25 +838,22 @@ select:focus-visible{
 
 .task:hover{
   background:
-    var(--surface-soft);
+    var(--surface2);
 
   transform:
     translateX(2px);
-}
-
-.task.dragging{
-  opacity:.45;
 }
 
 .task-check{
   width:20px;
   height:20px;
 
-  flex-shrink:0;
+  accent-color:
+    var(--primary);
 
   cursor:pointer;
 
-  accent-color:var(--primary);
+  flex-shrink:0;
 }
 
 .task-info{
@@ -832,9 +865,9 @@ select:focus-visible{
 .task-name{
   font-size:14px;
 
-  line-height:1.45;
-
   font-weight:650;
+
+  line-height:1.45;
 
   overflow-wrap:anywhere;
 }
@@ -842,15 +875,15 @@ select:focus-visible{
 .task.completed .task-name{
   text-decoration:line-through;
 
-  color:#989da6;
+  color:#969ba4;
 }
 
 .task-meta{
   display:flex;
 
-  flex-wrap:wrap;
-
   gap:5px;
+
+  flex-wrap:wrap;
 
   margin-top:6px;
 }
@@ -865,7 +898,7 @@ select:focus-visible{
 
   background:#f1f3f6;
 
-  color:#626873;
+  color:#616774;
 
   font-weight:700;
 }
@@ -878,41 +911,49 @@ select:focus-visible{
 
 .priority-high{
   background:#fff0f0;
+
   color:#c43d3d;
 }
 
 .priority-medium{
   background:#fff5e7;
+
   color:#9d6500;
 }
 
 .priority-low{
   background:#edf8f0;
+
   color:#39744f;
 }
 
 .dark .priority-high{
-  background:#472a2a;
+  background:#482b2b;
+
   color:#ffaaaa;
 }
 
 .dark .priority-medium{
   background:#483925;
+
   color:#efc06e;
 }
 
 .dark .priority-low{
   background:#273d2f;
+
   color:#9ed9b0;
 }
 
 .repeat-tag{
   background:#eeebff;
+
   color:#5c4bc9;
 }
 
 .dark .repeat-tag{
   background:#302d4c;
+
   color:#bdb6ff;
 }
 
@@ -928,6 +969,7 @@ select:focus-visible{
 
 .action-btn{
   min-width:33px;
+
   min-height:33px;
 
   padding:7px;
@@ -940,9 +982,7 @@ select:focus-visible{
 
   cursor:pointer;
 
-  transition:
-    background .2s ease,
-    transform .2s ease;
+  transition:.2s;
 }
 
 .action-btn:hover{
@@ -954,20 +994,15 @@ select:focus-visible{
 }
 
 .drag-handle{
-  padding:
-    4px 3px;
+  cursor:grab;
 
-  color:#9aa0a8;
+  color:#9ba0a8;
 
   user-select:none;
 
-  cursor:grab;
+  padding:
+    4px 3px;
 }
-
-
-/* ======================================================
-   EMPTY
-====================================================== */
 
 .empty{
   text-align:center;
@@ -975,18 +1010,18 @@ select:focus-visible{
   padding:
     38px 12px;
 
-  font-size:13px;
-
   color:var(--muted);
+
+  font-size:13px;
 }
 
 .empty::before{
   content:"✓";
 
+  display:flex;
+
   width:48px;
   height:48px;
-
-  display:flex;
 
   align-items:center;
   justify-content:center;
@@ -996,7 +1031,7 @@ select:focus-visible{
 
   border-radius:50%;
 
-  background:var(--primary-soft);
+  background:var(--soft);
 
   color:var(--primary);
 
@@ -1006,13 +1041,12 @@ select:focus-visible{
 }
 
 .dark .empty::before{
-  background:
-    var(--primary-soft-dark);
+  background:#2c2c4d;
 }
 
 
 /* ======================================================
-   PAGE HEADER / FILTERS
+   PAGES
 ====================================================== */
 
 .page-header{
@@ -1022,8 +1056,9 @@ select:focus-visible{
 .page-header-top{
   display:flex;
 
-  justify-content:space-between;
   align-items:flex-start;
+
+  justify-content:space-between;
 
   gap:15px;
 }
@@ -1045,9 +1080,9 @@ select:focus-visible{
 .filters{
   display:flex;
 
-  flex-wrap:wrap;
-
   gap:9px;
+
+  flex-wrap:wrap;
 
   margin-bottom:20px;
 }
@@ -1072,14 +1107,15 @@ select{
 
   color:var(--text);
 
-  transition:
-    border-color .2s ease,
-    box-shadow .2s ease;
+  outline:none;
+
+  transition:.2s;
 }
 
 input:focus,
 select:focus{
-  border-color:var(--primary);
+  border-color:
+    var(--primary);
 
   box-shadow:
     0 0 0 3px
@@ -1089,8 +1125,9 @@ select:focus{
 .task-section-heading{
   display:flex;
 
-  justify-content:space-between;
   align-items:center;
+
+  justify-content:space-between;
 
   margin-bottom:6px;
 }
@@ -1101,29 +1138,30 @@ select:focus{
   padding:
     4px 8px;
 
+  border-radius:50px;
+
   border:
     1px solid var(--border);
 
-  border-radius:50px;
-
-  background:var(--surface-soft);
+  background:
+    var(--surface2);
 
   color:var(--muted);
-
-  text-align:center;
 
   font-size:10px;
 
   font-weight:800;
+
+  text-align:center;
 }
 
 .section-divider{
   height:1px;
 
+  background:var(--border);
+
   margin:
     18px 0;
-
-  background:var(--border);
 }
 
 
@@ -1135,6 +1173,7 @@ select:focus{
   display:flex;
 
   justify-content:space-between;
+
   align-items:center;
 
   gap:12px;
@@ -1188,17 +1227,16 @@ select:focus{
 
   cursor:pointer;
 
-  transition:
-    transform .2s ease,
-    border-color .2s ease,
-    box-shadow .2s ease;
+  transition:.2s;
 }
 
 .day-card:hover{
-  transform:translateY(-2px);
+  transform:
+    translateY(-2px);
 
   box-shadow:
-    var(--shadow-sm);
+    0 8px 20px
+    rgba(25,32,56,.06);
 }
 
 .day-card.selected{
@@ -1217,9 +1255,9 @@ select:focus{
 .day-name{
   font-size:10px;
 
-  color:var(--muted);
-
   text-transform:uppercase;
+
+  color:var(--muted);
 
   font-weight:800;
 
@@ -1252,12 +1290,13 @@ select:focus{
 
   margin-bottom:6px;
 
-  border:
-    1px solid var(--border);
-
   border-radius:8px;
 
-  background:var(--surface-soft);
+  background:
+    var(--surface2);
+
+  border:
+    1px solid var(--border);
 
   font-size:10px;
 
@@ -1275,11 +1314,11 @@ select:focus{
 }
 
 .week-empty{
-  margin-top:17px;
-
-  color:#9ca2aa;
-
   font-size:11px;
+
+  color:#9da3ab;
+
+  margin-top:17px;
 }
 
 
@@ -1312,9 +1351,9 @@ select:focus{
 .big-number{
   font-size:38px;
 
-  line-height:1;
-
   font-weight:900;
+
+  line-height:1;
 
   letter-spacing:-1px;
 
@@ -1351,15 +1390,15 @@ select:focus{
 
   min-width:70px;
 
-  overflow:hidden;
-
   border-radius:20px;
 
   background:#e9ebf0;
+
+  overflow:hidden;
 }
 
 .dark .stat-bar{
-  background:#34383d;
+  background:#33373d;
 }
 
 .stat-bar div{
@@ -1378,8 +1417,6 @@ select:focus{
 .stat-label{
   width:90px;
 
-  flex-shrink:0;
-
   font-size:11px;
 
   font-weight:650;
@@ -1387,8 +1424,6 @@ select:focus{
 
 .stat-count{
   width:55px;
-
-  flex-shrink:0;
 
   text-align:right;
 
@@ -1410,8 +1445,6 @@ select:focus{
 .day-stat-label{
   width:58px;
 
-  flex-shrink:0;
-
   font-size:11px;
 
   color:var(--muted);
@@ -1421,8 +1454,6 @@ select:focus{
 
 .day-stat-value{
   width:38px;
-
-  flex-shrink:0;
 
   text-align:right;
 
@@ -1441,18 +1472,19 @@ select:focus{
 
   inset:0;
 
+  padding:18px;
+
   display:none;
 
   align-items:center;
+
   justify-content:center;
 
-  padding:18px;
-
   background:
-    rgba(9,13,22,.56);
+    rgba(11,15,25,.55);
 
   backdrop-filter:
-    blur(5px);
+    blur(4px);
 
   z-index:1000;
 }
@@ -1470,26 +1502,25 @@ select:focus{
 
   overflow:auto;
 
-  padding:24px;
-
   border:
     1px solid var(--border);
 
   border-radius:20px;
 
-  background:var(--surface);
+  padding:24px;
 
-  color:var(--text);
+  background:var(--surface);
 
   box-shadow:
     0 25px 80px
-    rgba(0,0,0,.23);
+    rgba(0,0,0,.22);
 
   animation:
     modalIn .18s ease;
 }
 
 @keyframes modalIn{
+
   from{
     opacity:0;
 
@@ -1503,13 +1534,15 @@ select:focus{
 
     transform:none;
   }
+
 }
 
 .modal-header{
   display:flex;
 
-  justify-content:space-between;
   align-items:center;
+
+  justify-content:space-between;
 
   gap:12px;
 
@@ -1528,29 +1561,16 @@ select:focus{
   width:38px;
   height:38px;
 
-  border:0;
-
   border-radius:10px;
 
   background:
-    var(--surface-soft);
+    var(--surface2);
 
   color:inherit;
 
   font-size:22px;
 
   cursor:pointer;
-
-  transition:
-    background .2s ease,
-    transform .2s ease;
-}
-
-.modal-close:hover{
-  background:
-    rgba(79,70,229,.10);
-
-  transform:rotate(4deg);
 }
 
 .form-group{
@@ -1611,7 +1631,7 @@ select:focus{
     var(--primary);
 
   background:
-    var(--primary-soft);
+    var(--soft);
 }
 
 .custom-days{
@@ -1643,24 +1663,16 @@ select:focus{
   font-weight:750;
 
   cursor:pointer;
-
-  transition:
-    background .2s ease,
-    border-color .2s ease,
-    color .2s ease;
 }
 
 .custom-day.selected{
-  background:var(--primary);
+  background:
+    var(--primary);
 
-  border-color:var(--primary);
+  border-color:
+    var(--primary);
 
   color:#fff;
-}
-
-.dark .custom-day{
-  background:
-    var(--surface-soft);
 }
 
 .repeat-info{
@@ -1688,14 +1700,15 @@ select:focus{
 .recurring-edit-note{
   display:none;
 
+  margin-bottom:15px;
+
   padding:
     11px 12px;
 
-  margin-bottom:15px;
-
   border-radius:10px;
 
-  background:var(--primary-soft);
+  background:
+    var(--soft);
 
   color:#5547b3;
 
@@ -1705,8 +1718,7 @@ select:focus{
 }
 
 .dark .recurring-edit-note{
-  background:
-    #302d4c;
+  background:#302d4c;
 
   color:#c4bdff;
 }
@@ -1726,13 +1738,13 @@ select:focus{
   right:18px;
   bottom:18px;
 
+  z-index:2200;
+
   display:flex;
 
   flex-direction:column;
 
   gap:8px;
-
-  z-index:2200;
 
   pointer-events:none;
 }
@@ -1773,15 +1785,18 @@ select:focus{
 }
 
 @keyframes toastIn{
+
   from{
     opacity:0;
-    transform:translateY(8px);
+    transform:
+      translateY(8px);
   }
 
   to{
     opacity:1;
     transform:none;
   }
+
 }
 
 
@@ -1794,22 +1809,18 @@ select:focus{
 
   inset:0;
 
+  background:
+    var(--bg);
+
   display:flex;
 
   align-items:center;
+
   justify-content:center;
 
   z-index:99999;
 
   padding:18px;
-
-  background:
-    radial-gradient(
-      circle at top left,
-      #edf0ff 0,
-      transparent 32%
-    ),
-    var(--bg);
 }
 
 .auth-shell{
@@ -1821,89 +1832,78 @@ select:focus{
 }
 
 .auth-card{
-  padding:28px;
+  background:#fff;
 
   border:
-    1px solid var(--border);
+    1px solid #e6e8ee;
 
   border-radius:20px;
 
-  background:var(--surface);
+  padding:27px;
 
   box-shadow:
-    var(--shadow-md);
+    0 18px 50px
+    rgba(25,32,56,.09);
+}
+
+body.dark #authScreen{
+  background:#121417;
+}
+
+body.dark .auth-card{
+  background:#1d2024 !important;
+
+  border-color:
+    #30353b !important;
+
+  color:#f4f5f7;
+}
+
+body.dark #authEmail,
+body.dark #authPassword{
+  background:
+    #25292e !important;
+
+  color:#fff !important;
+
+  border-color:
+    #3a4047 !important;
 }
 
 .auth-icon{
   width:54px;
   height:54px;
 
+  border-radius:16px;
+
   display:flex;
 
   align-items:center;
+
   justify-content:center;
-
-  margin-bottom:17px;
-
-  border-radius:16px;
 
   background:
     linear-gradient(
       135deg,
       var(--primary),
-      #756cf0
+      var(--primary2)
     );
 
   color:#fff;
 
   font-size:25px;
 
+  margin-bottom:16px;
+
   box-shadow:
     0 10px 22px
-    rgba(79,70,229,.20);
-}
-
-.auth-title{
-  margin-bottom:7px;
-
-  font-size:26px;
-
-  letter-spacing:-.5px;
-}
-
-.auth-subtitle{
-  margin-bottom:20px;
-
-  font-size:13px;
-
-  color:var(--muted);
-}
-
-.auth-input{
-  width:100%;
-
-  margin-bottom:10px;
-
-  padding:
-    12px;
-
-  border:
-    1px solid var(--border-strong);
-
-  border-radius:10px;
-
-  background:var(--surface);
-
-  color:var(--text);
+    rgba(79,70,229,.2);
 }
 
 .auth-button{
   width:100%;
 
-  padding:
-    12px;
-
-  border:0;
+  padding:12px;
 
   border-radius:10px;
 
@@ -1911,7 +1911,7 @@ select:focus{
     linear-gradient(
       135deg,
       var(--primary),
-      #7067ef
+      var(--primary2)
     );
 
   color:#fff;
@@ -1930,24 +1930,22 @@ select:focus{
 .auth-toggle{
   width:100%;
 
-  margin-top:9px;
+  margin-top:8px;
 
   padding:10px;
-
-  border:0;
 
   background:transparent;
 
   color:var(--primary);
 
-  cursor:pointer;
+  font-weight:650;
 
-  font-weight:700;
+  cursor:pointer;
 }
 
 
 /* ======================================================
-   MOBILE QUICK BUTTON
+   FAB
 ====================================================== */
 
 .mobile-fab{
@@ -1956,7 +1954,7 @@ select:focus{
 
 
 /* ======================================================
-   MOBILE
+   TABLET
 ====================================================== */
 
 @media(max-width:900px){
@@ -1978,8 +1976,6 @@ select:focus{
 
     padding:
       0 0 20px;
-
-    margin-bottom:10px;
   }
 
   .menu-item,
@@ -1989,7 +1985,7 @@ select:focus{
     text-align:center;
 
     padding:
-      12px 6px;
+      12px 5px;
   }
 
   .menu-item::first-letter,
@@ -1997,18 +1993,39 @@ select:focus{
     font-size:20px;
   }
 
+  .notification-btn{
+    font-size:0;
+
+    text-align:center;
+
+    padding:
+      12px 5px;
+  }
+
   .main{
     padding:
-      22px 18px 35px;
+      23px 18px 35px;
   }
 
 }
 
-@media(max-width:700px){
+
+/* ======================================================
+   MOBILE
+====================================================== */
+
+@media(max-width:720px){
 
   body{
+    background:
+      var(--bg);
+
     padding-bottom:
       env(safe-area-inset-bottom);
+  }
+
+  .app{
+    display:block;
   }
 
   .sidebar{
@@ -2017,40 +2034,131 @@ select:focus{
 
   .main{
     padding:
-      12px
+      0
       12px
       calc(
-        88px
-        + env(safe-area-inset-bottom)
+        96px +
+        env(safe-area-inset-bottom)
       );
+
+    max-width:none;
+  }
+
+  .mobile-header{
+    position:sticky;
+
+    top:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    min-height:62px;
+
+    padding:
+      8px 2px;
+
+    background:
+      rgba(
+        244,
+        246,
+        251,
+        .88
+      );
+
+    backdrop-filter:
+      blur(16px);
+
+    z-index:60;
+
+    border-bottom:
+      1px solid
+      rgba(
+        229,
+        232,
+        239,
+        .75
+      );
+  }
+
+  .dark .mobile-header{
+    background:
+      rgba(
+        18,
+        20,
+        23,
+        .88
+      );
+
+    border-color:
+      rgba(
+        48,
+        53,
+        59,
+        .78
+      );
+  }
+
+  .mobile-brand{
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    font-size:17px;
+
+    font-weight:900;
+
+    letter-spacing:-.4px;
+  }
+
+  .mobile-brand-mark{
+    width:31px;
+
+    height:31px;
+  }
+
+  .mobile-theme{
+    width:38px;
+    height:38px;
+
+    border:
+      1px solid var(--border);
+
+    border-radius:11px;
+
+    background:
+      var(--surface);
+
+    color:
+      var(--text);
+
+    cursor:pointer;
   }
 
   .topbar{
     display:block;
 
-    margin-bottom:15px;
-  }
+    margin:0;
 
-  .welcome{
-    display:flex;
-
-    justify-content:space-between;
-    align-items:flex-start;
-
-    gap:12px;
-
-    margin-bottom:13px;
+    padding:
+      18px 2px 14px;
   }
 
   .welcome h1{
-    font-size:23px;
+    font-size:26px;
 
-    letter-spacing:-.6px;
+    letter-spacing:-.7px;
+
+    margin-bottom:5px;
   }
 
   .welcome p{
-    margin-top:4px;
-
     font-size:12px;
   }
 
@@ -2060,9 +2168,12 @@ select:focus{
     grid-template-columns:
       42px
       minmax(0,1fr)
-      42px;
+      42px
+      auto;
 
-    gap:7px;
+    gap:6px;
+
+    margin-top:14px;
 
     width:100%;
   }
@@ -2078,23 +2189,21 @@ select:focus{
     min-width:0;
 
     height:42px;
-
-    padding:
-      9px 8px;
   }
 
   .today-button{
-    grid-column:
-      1 / -1;
+    height:42px;
 
-    width:100%;
-
-    height:40px;
+    padding:
+      10px 12px;
   }
 
   .stats{
     grid-template-columns:
-      repeat(3,minmax(0,1fr));
+      repeat(
+        3,
+        minmax(0,1fr)
+      );
 
     gap:7px;
 
@@ -2103,26 +2212,30 @@ select:focus{
 
   .stat{
     padding:
-      13px 10px;
+      13px 11px;
 
     border-radius:13px;
+  }
 
-    text-align:center;
+  .stat::after{
+    display:none;
   }
 
   .stat-title{
-    font-size:10px;
+    font-size:9px;
+
+    white-space:nowrap;
 
     margin-bottom:7px;
   }
 
   .stat-value{
-    font-size:23px;
+    font-size:24px;
   }
 
   .progress-box{
     padding:
-      14px;
+      14px 15px;
 
     margin-bottom:11px;
 
@@ -2130,10 +2243,6 @@ select:focus{
   }
 
   .progress-header{
-    font-size:11px;
-  }
-
-  .progress-header strong{
     font-size:11px;
   }
 
@@ -2145,49 +2254,42 @@ select:focus{
   }
 
   .section-heading{
-    align-items:flex-start;
+    align-items:center;
 
-    margin-bottom:9px;
+    margin-bottom:8px;
   }
 
   .section-title{
     font-size:15px;
   }
 
-  .section-dot{
-    width:8px;
-    height:8px;
-  }
+  .primary-btn{
+    padding:
+      10px 12px;
 
-  .section-heading .primary-btn{
-    display:none;
+    border-radius:10px;
+
+    font-size:12px;
   }
 
   .task{
-    align-items:flex-start;
-
     gap:9px;
 
     padding:
-      13px
-      1px;
+      12px 1px;
+
+    align-items:flex-start;
   }
 
   .task-check{
-    width:22px;
-    height:22px;
+    width:21px;
+    height:21px;
 
-    margin-top:2px;
-  }
-
-  .task-info{
-    min-width:0;
+    margin-top:1px;
   }
 
   .task-name{
-    font-size:14px;
-
-    line-height:1.4;
+    font-size:13px;
   }
 
   .task-meta{
@@ -2200,7 +2302,7 @@ select:focus{
     font-size:9px;
 
     padding:
-      4px 7px;
+      4px 6px;
   }
 
   .task-actions{
@@ -2209,100 +2311,95 @@ select:focus{
     gap:0;
   }
 
-  .action-btn{
-    width:35px;
-    min-width:35px;
-
-    height:35px;
-    min-height:35px;
-
-    padding:6px;
-  }
-
   .drag-handle{
     display:none;
   }
 
-  .page-header{
-    margin-bottom:15px;
+  .action-btn{
+    width:34px;
+
+    min-width:34px;
+
+    min-height:34px;
+
+    padding:7px;
   }
 
-  .page-header-top{
-    display:block;
+  .page-header{
+    padding:
+      16px 2px 0;
+
+    margin-bottom:14px;
   }
 
   .page-header h2{
     font-size:23px;
-
-    margin-bottom:4px;
   }
 
   .page-header p{
     font-size:12px;
   }
 
-  .page-header-top .primary-btn{
-    display:none;
+  .page-header-top{
+    display:block;
+  }
+
+  .page-header-top
+  .primary-btn{
+    width:100%;
+
+    margin-top:12px;
   }
 
   .filters{
     flex-direction:column;
 
-    gap:8px;
+    gap:7px;
 
     margin-bottom:16px;
   }
 
   .filters input,
   .filters select{
-    width:100%;
-
     min-width:0;
 
-    min-height:44px;
+    width:100%;
   }
 
   .task-section-heading{
     margin-bottom:4px;
   }
 
-  .count-badge{
-    min-width:25px;
-
-    padding:
-      3px 7px;
-
-    font-size:9px;
+  .section-divider{
+    margin:
+      16px 0;
   }
 
   .week-toolbar{
-    flex-direction:column;
-
-    align-items:stretch;
-
-    gap:10px;
+    display:block;
 
     margin-bottom:13px;
   }
 
   .week-title{
-    font-size:16px;
+    font-size:17px;
+
+    margin-bottom:9px;
   }
 
   .week-buttons{
     display:grid;
 
     grid-template-columns:
-      repeat(3,1fr);
+      1fr 1fr 1fr;
 
     gap:6px;
   }
 
-  .week-buttons .secondary-btn{
-    width:100%;
-
+  .week-buttons
+  .secondary-btn{
     padding:
-      10px 6px;
+      9px 5px;
 
     font-size:10px;
   }
@@ -2311,81 +2408,36 @@ select:focus{
     grid-template-columns:
       repeat(
         7,
-        minmax(142px,1fr)
+        minmax(
+          145px,
+          1fr
+        )
       );
 
     gap:8px;
   }
 
   .day-card{
-    min-height:205px;
+    min-height:200px;
 
     padding:12px;
-
-    border-radius:13px;
-  }
-
-  .day-card.selected{
-    padding:11px;
-  }
-
-  .day-number{
-    font-size:21px;
-  }
-
-  .day-count{
-    font-size:10px;
-  }
-
-  .week-task{
-    font-size:9px;
-
-    padding:
-      7px 8px;
   }
 
   .statistics-grid{
     grid-template-columns:
       1fr;
 
-    gap:11px;
+    gap:10px;
   }
 
   .stat-card{
-    padding:
-      17px;
+    padding:18px;
+
+    border-radius:15px;
   }
 
   .big-number{
-    font-size:34px;
-  }
-
-  .category-row{
-    gap:8px;
-  }
-
-  .stat-label{
-    width:70px;
-
-    font-size:10px;
-  }
-
-  .stat-count{
-    width:48px;
-
-    font-size:10px;
-  }
-
-  .day-stat-label{
-    width:48px;
-
-    font-size:10px;
-  }
-
-  .day-stat-value{
-    width:34px;
-
-    font-size:10px;
+    font-size:35px;
   }
 
   .modal-overlay{
@@ -2395,23 +2447,9 @@ select:focus{
   }
 
   .modal{
-    width:100%;
-
     max-width:none;
 
-    max-height:
-      calc(
-        94vh
-        - env(safe-area-inset-top)
-      );
-
-    padding:
-      18px
-      16px
-      calc(
-        20px
-        + env(safe-area-inset-bottom)
-      );
+    max-height:92vh;
 
     border-radius:
       20px
@@ -2419,40 +2457,35 @@ select:focus{
       0
       0;
 
-    box-shadow:
-      0 -14px 45px
-      rgba(0,0,0,.20);
+    padding:
+      20px
+      16px
+      calc(
+        20px +
+        env(
+          safe-area-inset-bottom
+        )
+      );
+
+    animation:
+      sheetIn .2s ease;
   }
 
-  .modal::before{
-    content:"";
+  @keyframes sheetIn{
+    from{
+      opacity:0;
+      transform:
+        translateY(18px);
+    }
 
-    display:block;
-
-    width:42px;
-    height:4px;
-
-    margin:
-      -4px
-      auto
-      15px;
-
-    border-radius:20px;
-
-    background:
-      #cdd1d8;
-  }
-
-  .dark .modal::before{
-    background:#4b525a;
+    to{
+      opacity:1;
+      transform:none;
+    }
   }
 
   .modal-header{
-    margin-bottom:16px;
-  }
-
-  .modal-title{
-    font-size:19px;
+    margin-bottom:17px;
   }
 
   .form-grid{
@@ -2460,141 +2493,114 @@ select:focus{
       1fr;
   }
 
-  .form-group{
-    margin-bottom:13px;
-  }
-
-  .form-label{
-    font-size:11px;
-  }
-
-  input,
-  select{
-    min-height:44px;
-  }
-
   .custom-days{
     grid-template-columns:
       repeat(4,1fr);
-
-    gap:6px;
-  }
-
-  .custom-day{
-    min-height:40px;
-  }
-
-  .repeat-options{
-    display:grid;
-
-    grid-template-columns:
-      repeat(2,1fr);
-
-    gap:6px;
-  }
-
-  .quick-repeat{
-    min-height:40px;
   }
 
   .modal-actions{
+    position:sticky;
+
+    bottom:0;
+
+    background:
+      var(--surface);
+
+    padding:
+      12px 0 2px;
+
     display:grid;
 
     grid-template-columns:
       1fr 1fr;
-
-    gap:8px;
   }
 
-  .modal-actions button{
+  .modal-actions
+  button{
     width:100%;
-
-    min-height:45px;
   }
 
   .toast-container{
     left:10px;
+
     right:10px;
 
     bottom:
       calc(
-        78px
-        + env(safe-area-inset-bottom)
+        77px +
+        env(
+          safe-area-inset-bottom
+        )
       );
   }
 
   .toast{
-    width:100%;
-
     max-width:none;
 
-    min-width:0;
+    width:100%;
   }
 
   .mobile-fab{
     position:fixed;
 
-    right:18px;
+    right:16px;
 
     bottom:
       calc(
-        84px
-        + env(safe-area-inset-bottom)
+        86px +
+        env(
+          safe-area-inset-bottom
+        )
       );
 
-    width:57px;
-    height:57px;
+    width:50px;
+    height:50px;
 
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
-    border-radius:18px;
+    border-radius:16px;
 
     background:
       linear-gradient(
         135deg,
         var(--primary),
-        #746bf0
+        var(--primary2)
       );
 
     color:#fff;
 
     font-size:27px;
 
-    font-weight:400;
-
-    cursor:pointer;
+    font-weight:500;
 
     box-shadow:
-      0 13px 30px
-      rgba(79,70,229,.30);
+      0 12px 28px
+      rgba(79,70,229,.32);
 
-    z-index:850;
+    z-index:880;
 
-    transition:
-      transform .2s ease,
-      box-shadow .2s ease;
-  }
-
-  .mobile-fab:active{
-    transform:scale(.95);
+    cursor:pointer;
   }
 
   .mobile-nav{
     position:fixed;
 
-    left:9px;
-    right:9px;
+    left:8px;
+    right:8px;
 
     bottom:
       calc(
-        9px
-        + env(safe-area-inset-bottom)
+        8px +
+        env(
+          safe-area-inset-bottom
+        )
       );
 
-    height:65px;
+    height:68px;
 
     display:grid;
 
@@ -2603,176 +2609,159 @@ select:focus{
 
     padding:5px;
 
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        .94
+      );
+
+    backdrop-filter:
+      blur(16px);
+
     border:
       1px solid var(--border);
 
     border-radius:18px;
 
-    background:
-      rgba(255,255,255,.94);
-
-    backdrop-filter:
-      blur(18px);
-
     box-shadow:
-      0 14px 38px
-      rgba(25,32,56,.16);
+      0 15px 35px
+      rgba(
+        20,
+        27,
+        47,
+        .15
+      );
 
     z-index:900;
   }
 
   .dark .mobile-nav{
     background:
-      rgba(28,32,36,.96);
+      rgba(
+        29,
+        32,
+        36,
+        .95
+      );
   }
 
   .mobile-nav button{
-    display:flex;
+    background:
+      transparent;
 
-    flex-direction:column;
-
-    align-items:center;
-    justify-content:center;
-
-    gap:3px;
-
-    border:0;
+    color:
+      var(--muted);
 
     border-radius:13px;
 
-    background:transparent;
-
-    color:var(--muted);
-
     font-size:9px;
 
-    font-weight:650;
+    line-height:1.15;
 
-    line-height:1.1;
+    font-weight:700;
 
     cursor:pointer;
   }
 
-  .mobile-nav button .nav-icon{
+  .mobile-nav
+  button
+  .nav-icon{
+    display:block;
+
     font-size:19px;
 
     line-height:1;
+
+    margin-bottom:4px;
   }
 
-  .mobile-nav button.active{
+  .mobile-nav
+  button.active{
     background:
-      var(--primary-soft);
+      var(--soft);
 
     color:
       var(--primary);
 
-    font-weight:800;
+    font-weight:850;
   }
 
-  .dark .mobile-nav button.active{
+  .dark .mobile-nav
+  button.active{
     background:
-      var(--primary-soft-dark);
+      #2c2c4d;
 
-    color:#bdb8ff;
+    color:#c0baff;
   }
 
 }
 
-@media(max-width:380px){
 
-  .stats{
-    gap:5px;
+/* ======================================================
+   SMALL MOBILE
+====================================================== */
+
+@media(max-width:390px){
+
+  .welcome h1{
+    font-size:24px;
+  }
+
+  .date-navigation{
+    grid-template-columns:
+      38px
+      minmax(0,1fr)
+      38px
+      auto;
+  }
+
+  .date-button{
+    width:38px;
+    height:40px;
+  }
+
+  .today-button{
+    padding:
+      10px 9px;
   }
 
   .stat{
     padding:
-      12px 7px;
+      12px 8px;
   }
 
   .stat-title{
-    font-size:9px;
+    font-size:8px;
   }
 
   .stat-value{
-    font-size:21px;
+    font-size:22px;
+  }
+
+  .task-actions
+  .action-btn{
+    min-width:31px;
+    width:31px;
+  }
+
+  .mobile-nav{
+    height:65px;
   }
 
   .mobile-fab{
+    width:48px;
+    height:48px;
+
     right:14px;
   }
 
 }
 
-
-/* ======================================================
-   MOBILE HEADER / EXTRA
-====================================================== */
-
-@media(max-width:700px){
-
-  .mobile-header{
-    display:flex;
-
-    align-items:center;
-    justify-content:space-between;
-
-    gap:12px;
-
-    margin-bottom:7px;
-  }
-
-  .mobile-brand{
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    font-size:16px;
-
-    font-weight:850;
-
-    letter-spacing:-.3px;
-  }
-
-  .mobile-brand-mark{
-    width:30px;
-    height:30px;
-
-    flex-shrink:0;
-  }
-
-  .mobile-theme{
-    width:38px;
-    height:38px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    border:
-      1px solid var(--border);
-
-    border-radius:11px;
-
-    background:
-      var(--surface);
-
-    color:var(--text);
-
-    cursor:pointer;
-  }
-
-}
-
-
-/* ======================================================
-   END CSS
-====================================================== */
-
 </style>
 </head>
+
 
 <body>
 
@@ -2791,31 +2780,49 @@ select:focus{
         ✓
       </div>
 
-      <h1 class="auth-title">
+      <h1
+        style="
+          margin-bottom:6px;
+          font-size:25px;
+          letter-spacing:-.5px;
+        "
+      >
         Günlük Planlayıcı
       </h1>
 
       <p
         id="authTitle"
-        class="auth-subtitle"
+        style="
+          margin-bottom:19px;
+          color:#7b8190;
+          font-size:13px;
+        "
       >
         Hesabına giriş yap
       </p>
 
       <input
         id="authEmail"
-        class="auth-input"
         type="email"
         placeholder="E-posta"
         autocomplete="email"
+        style="
+          width:100%;
+          padding:12px;
+          margin-bottom:9px;
+        "
       >
 
       <input
         id="authPassword"
-        class="auth-input"
         type="password"
         placeholder="Şifre"
         autocomplete="current-password"
+        style="
+          width:100%;
+          padding:12px;
+          margin-bottom:9px;
+        "
       >
 
       <button
@@ -2837,14 +2844,105 @@ select:focus{
       <p
         id="authMessage"
         style="
-          margin-top:13px;
+          margin-top:12px;
           font-size:12px;
-          color:var(--muted);
+          color:#7b8190;
           line-height:1.5;
         "
       ></p>
 
     </div>
+
+  </div>
+
+</div>
+
+
+<!-- ====================================================
+     MOBILE HEADER
+===================================================== -->
+
+<div class="mobile-header">
+
+  <div class="mobile-brand">
+
+    <svg
+      class="mobile-brand-mark"
+      viewBox="0 0 64 64"
+      aria-hidden="true"
+    >
+
+      <rect
+        x="4"
+        y="8"
+        width="56"
+        height="52"
+        rx="12"
+        fill="rgb(79,70,229)"
+      />
+
+      <path
+        d="M16 5v14M48 5v14"
+        stroke="white"
+        stroke-width="6"
+        stroke-linecap="round"
+      />
+
+      <path
+        d="M13 26h38"
+        stroke="white"
+        stroke-width="5"
+        stroke-linecap="round"
+      />
+
+      <path
+        d="M17 40l9 9 21-21"
+        fill="none"
+        stroke="white"
+        stroke-width="6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+
+    </svg>
+
+    <span>
+      Günlük<span style="color:var(--primary)">Plan</span>
+    </span>
+
+  </div>
+
+
+  <div
+    style="
+      display:flex;
+      align-items:center;
+      gap:6px;
+    "
+  >
+
+    <button
+      id="mobileNotificationButton"
+      class="mobile-notification"
+      onclick="handleNotificationButton()"
+      aria-label="Bildirimleri aç veya test bildirimi gönder"
+    >
+      🔔
+
+      <span
+        class="notification-dot"
+      ></span>
+
+    </button>
+
+
+    <button
+      class="mobile-theme"
+      onclick="toggleDarkMode()"
+      aria-label="Karanlık modu değiştir"
+    >
+      🌙
+    </button>
 
   </div>
 
@@ -2858,696 +2956,652 @@ select:focus{
 <div class="app">
 
 
-  <!-- SIDEBAR -->
+<aside class="sidebar">
 
-  <aside class="sidebar">
+  <div class="logo">
 
-    <div class="logo">
+    <svg
+      class="logo-mark"
+      viewBox="0 0 64 64"
+      aria-hidden="true"
+    >
 
-      <svg
-        class="logo-mark"
-        viewBox="0 0 64 64"
-        aria-hidden="true"
+      <rect
+        x="4"
+        y="8"
+        width="56"
+        height="52"
+        rx="12"
+        fill="rgb(79,70,229)"
+      />
+
+      <path
+        d="M16 5v14M48 5v14"
+        stroke="white"
+        stroke-width="6"
+        stroke-linecap="round"
+      />
+
+      <path
+        d="M13 26h38"
+        stroke="white"
+        stroke-width="5"
+        stroke-linecap="round"
+      />
+
+      <path
+        d="M17 40l9 9 21-21"
+        fill="none"
+        stroke="white"
+        stroke-width="6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+
+    </svg>
+
+    <div class="logo-text">
+      Günlük<span>Plan</span>
+    </div>
+
+  </div>
+
+
+  <div class="menu-title">
+    Menü
+  </div>
+
+
+  <button
+    class="menu-item active"
+    onclick="showPage('home',this)"
+  >
+    🏠 Ana Sayfa
+  </button>
+
+
+  <button
+    class="menu-item"
+    onclick="showPage('tasks',this)"
+  >
+    📋 Görevler
+  </button>
+
+
+  <button
+    class="menu-item"
+    onclick="showPage('week',this)"
+  >
+    📅 Haftalık
+  </button>
+
+
+  <button
+    class="menu-item"
+    onclick="showPage('stats',this)"
+  >
+    📊 İstatistikler
+  </button>
+
+
+  <div class="sidebar-bottom">
+
+    <button
+      id="sideNotificationButton"
+      class="notification-btn"
+      onclick="handleNotificationButton()"
+    >
+      🔔 Bildirimleri Aç
+    </button>
+
+
+    <button
+      class="theme-btn"
+      onclick="toggleDarkMode()"
+    >
+      🌙 Karanlık Mod
+    </button>
+
+  </div>
+
+</aside>
+
+
+<main class="main">
+
+
+<section
+  id="home"
+  class="page active"
+>
+
+  <div class="topbar">
+
+    <div class="welcome">
+
+      <h1 id="welcomeTitle">
+        Günlük Planım 👋
+      </h1>
+
+      <p id="welcomeDate"></p>
+
+    </div>
+
+
+    <div class="date-navigation">
+
+      <button
+        class="date-button"
+        onclick="changeDate(-1)"
+      >
+        ‹
+      </button>
+
+
+      <input
+        type="date"
+        id="selectedDate"
+        class="date-input"
+        onchange="selectDate(this.value)"
       >
 
-        <rect
-          x="4"
-          y="8"
-          width="56"
-          height="52"
-          rx="12"
-          fill="rgb(79,70,229)"
-        />
 
-        <path
-          d="M16 5v14M48 5v14"
-          stroke="white"
-          stroke-width="6"
-          stroke-linecap="round"
-        />
+      <button
+        class="date-button"
+        onclick="changeDate(1)"
+      >
+        ›
+      </button>
 
-        <path
-          d="M13 26h38"
-          stroke="white"
-          stroke-width="5"
-          stroke-linecap="round"
-        />
 
-        <path
-          d="M17 40l9 9 21-21"
-          fill="none"
-          stroke="white"
-          stroke-width="6"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
+      <button
+        class="today-button"
+        onclick="goToday()"
+      >
+        Bugün
+      </button>
 
-      </svg>
+    </div>
 
-      <div class="logo-text">
-        Günlük<span>Plan</span>
+  </div>
+
+
+  <div class="stats">
+
+    <div class="stat">
+
+      <div class="stat-title">
+        Toplam Görev
+      </div>
+
+      <div
+        class="stat-value"
+        id="totalTasks"
+      >
+        0
       </div>
 
     </div>
 
 
-    <div class="menu-title">
-      Menü
+    <div class="stat">
+
+      <div class="stat-title">
+        Tamamlanan
+      </div>
+
+      <div
+        class="stat-value"
+        id="completedTasks"
+      >
+        0
+      </div>
+
     </div>
 
 
-    <button
-      class="menu-item active"
-      onclick="showPage('home',this)"
-    >
-      🏠 Ana Sayfa
-    </button>
+    <div class="stat">
+
+      <div class="stat-title">
+        İlerleme
+      </div>
+
+      <div
+        class="stat-value"
+        id="percentage"
+      >
+        0%
+      </div>
+
+    </div>
+
+  </div>
 
 
-    <button
-      class="menu-item"
-      onclick="showPage('tasks',this)"
-    >
-      📋 Görevler
-    </button>
+  <div class="progress-box">
+
+    <div class="progress-header">
+
+      <span>
+        Günlük ilerleme
+      </span>
+
+      <strong id="progressText">
+        0 / 0
+      </strong>
+
+    </div>
 
 
-    <button
-      class="menu-item"
-      onclick="showPage('week',this)"
-    >
-      📅 Haftalık
-    </button>
+    <div class="progress">
+
+      <div
+        class="progress-bar"
+        id="progressBar"
+      ></div>
+
+    </div>
+
+  </div>
 
 
-    <button
-      class="menu-item"
-      onclick="showPage('stats',this)"
-    >
-      📊 İstatistikler
-    </button>
+  <div
+    id="notificationStatus"
+    class="notification-status"
+  >
+    🔔 Bildirim almak için üstteki zil simgesine dokun.
+  </div>
 
 
-    <div class="sidebar-bottom">
+  <br>
+
+
+  <div class="card">
+
+    <div class="section-heading">
+
+      <div class="section-title-wrap">
+
+        <span class="section-dot"></span>
+
+        <div class="section-title">
+          Bu Günün Görevleri
+        </div>
+
+      </div>
+
 
       <button
-        class="theme-btn"
-        onclick="toggleDarkMode()"
+        class="primary-btn"
+        onclick="openNewTask()"
       >
-        🌙 Karanlık Mod
+        + Yeni Görev
       </button>
 
     </div>
 
-  </aside>
+
+    <div id="homeTaskList"></div>
+
+  </div>
+
+</section>
 
 
-  <!-- MAIN -->
+<section
+  id="tasks"
+  class="page"
+>
 
-  <main class="main">
+  <div class="page-header">
+
+    <div class="page-header-top">
+
+      <div>
+
+        <h2>
+          Tüm Görevler
+        </h2>
+
+        <p>
+          Planladığın tüm görevleri yönet.
+        </p>
+
+      </div>
 
 
-    <!-- MOBILE HEADER -->
+      <button
+        class="primary-btn"
+        onclick="openNewTask()"
+      >
+        + Yeni Görev
+      </button>
 
-    <div class="mobile-header">
+    </div>
 
-      <div class="mobile-brand">
+  </div>
 
-        <svg
-          class="mobile-brand-mark"
-          viewBox="0 0 64 64"
-          aria-hidden="true"
+
+  <div class="card">
+
+    <div class="filters">
+
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="🔎 Görevlerde ara..."
+        oninput="renderAllTasks()"
+      >
+
+
+      <select
+        id="filterStatus"
+        onchange="renderAllTasks()"
+      >
+
+        <option value="all">
+          Tüm görevler
+        </option>
+
+        <option value="active">
+          Tamamlanmayanlar
+        </option>
+
+        <option value="completed">
+          Tamamlananlar
+        </option>
+
+      </select>
+
+
+      <select
+        id="filterCategory"
+        onchange="renderAllTasks()"
+      >
+
+        <option value="all">
+          Tüm kategoriler
+        </option>
+
+        <option value="Genel">
+          Genel
+        </option>
+
+        <option value="Ders">
+          Ders
+        </option>
+
+        <option value="Python">
+          Python
+        </option>
+
+        <option value="İngilizce">
+          İngilizce
+        </option>
+
+        <option value="Spor">
+          Spor
+        </option>
+
+        <option value="Kişisel">
+          Kişisel
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="task-section-heading">
+
+      <div class="section-title">
+        Tekrarlayan Planlar
+      </div>
+
+      <div
+        class="count-badge"
+        id="recurringSectionCount"
+      >
+        0
+      </div>
+
+    </div>
+
+
+    <div
+      id="recurringTaskList"
+    ></div>
+
+
+    <div class="section-divider"></div>
+
+
+    <div class="task-section-heading">
+
+      <div class="section-title">
+        Tek Seferlik Görevler
+      </div>
+
+      <div
+        class="count-badge"
+        id="normalSectionCount"
+      >
+        0
+      </div>
+
+    </div>
+
+
+    <div
+      id="allTaskList"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<section
+  id="week"
+  class="page"
+>
+
+  <div class="page-header">
+
+    <h2>
+      Haftalık Plan
+    </h2>
+
+    <p>
+      Haftanın tamamını tek ekranda gör.
+    </p>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="week-toolbar">
+
+      <div
+        class="week-title"
+        id="weekTitle"
+      ></div>
+
+
+      <div class="week-buttons">
+
+        <button
+          class="secondary-btn"
+          onclick="changeWeek(-1)"
         >
+          ‹ Önceki
+        </button>
 
-          <rect
-            x="4"
-            y="8"
-            width="56"
-            height="52"
-            rx="12"
-            fill="rgb(79,70,229)"
-          />
 
-          <path
-            d="M16 5v14M48 5v14"
-            stroke="white"
-            stroke-width="6"
-            stroke-linecap="round"
-          />
+        <button
+          class="secondary-btn"
+          onclick="weekToday()"
+        >
+          Bu Hafta
+        </button>
 
-          <path
-            d="M13 26h38"
-            stroke="white"
-            stroke-width="5"
-            stroke-linecap="round"
-          />
 
-          <path
-            d="M17 40l9 9 21-21"
-            fill="none"
-            stroke="white"
-            stroke-width="6"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-
-        </svg>
-
-        <span>
-          Günlük<span style="color:var(--primary)">Plan</span>
-        </span>
+        <button
+          class="secondary-btn"
+          onclick="changeWeek(1)"
+        >
+          Sonraki ›
+        </button>
 
       </div>
-
-
-      <button
-        class="mobile-theme"
-        onclick="toggleDarkMode()"
-        title="Tema değiştir"
-      >
-        🌙
-      </button>
 
     </div>
 
 
-    <!-- HOME -->
+    <div
+      id="weekGrid"
+      class="week-grid"
+    ></div>
 
-    <section
-      id="home"
-      class="page active"
-    >
+  </div>
 
-      <div class="topbar">
-
-        <div class="welcome">
-
-          <div>
-
-            <h1 id="welcomeTitle">
-              Günlük Planım 👋
-            </h1>
-
-            <p id="welcomeDate"></p>
-
-          </div>
-
-        </div>
+</section>
 
 
-        <div class="date-navigation">
+<section
+  id="stats"
+  class="page"
+>
 
-          <button
-            class="date-button"
-            onclick="changeDate(-1)"
-          >
-            ‹
-          </button>
+  <div class="page-header">
 
-          <input
-            type="date"
-            id="selectedDate"
-            class="date-input"
-            onchange="selectDate(this.value)"
-          >
+    <h2>
+      İstatistikler
+    </h2>
 
-          <button
-            class="date-button"
-            onclick="changeDate(1)"
-          >
-            ›
-          </button>
+    <p>
+      Planlarını ve çalışma düzenini takip et.
+    </p>
 
-          <button
-            class="today-button"
-            onclick="goToday()"
-          >
-            Bugün
-          </button>
+  </div>
 
-        </div>
 
+  <div class="statistics-grid">
+
+
+    <div class="stat-card">
+
+      <h3>
+        Genel Durum
+      </h3>
+
+
+      <div
+        class="big-number"
+        id="allTotal"
+      >
+        0
+      </div>
+
+      <div class="muted">
+        Tek seferlik görev
       </div>
 
 
-      <div class="stats">
-
-        <div class="stat">
-
-          <div class="stat-title">
-            Toplam Görev
-          </div>
-
-          <div
-            class="stat-value"
-            id="totalTasks"
-          >
-            0
-          </div>
-
-        </div>
+      <br>
 
 
-        <div class="stat">
+      <div
+        class="big-number"
+        id="allCompleted"
+      >
+        0
+      </div>
 
-          <div class="stat-title">
-            Tamamlanan
-          </div>
-
-          <div
-            class="stat-value"
-            id="completedTasks"
-          >
-            0
-          </div>
-
-        </div>
-
-
-        <div class="stat">
-
-          <div class="stat-title">
-            İlerleme
-          </div>
-
-          <div
-            class="stat-value"
-            id="percentage"
-          >
-            0%
-          </div>
-
-        </div>
-
+      <div class="muted">
+        Tamamlanan görev
       </div>
 
 
-      <div class="progress-box">
+      <br>
 
-        <div class="progress-header">
 
-          <span>
-            Günlük ilerleme
-          </span>
+      <div
+        class="big-number"
+        id="allPercentage"
+      >
+        0%
+      </div>
 
-          <strong id="progressText">
-            0 / 0
-          </strong>
+      <div class="muted">
+        Tamamlanma oranı
+      </div>
 
-        </div>
+    </div>
 
-        <div class="progress">
 
-          <div
-            id="progressBar"
-            class="progress-bar"
-          ></div>
+    <div class="stat-card">
 
-        </div>
+      <h3>
+        Tekrarlayan Planlar
+      </h3>
 
+
+      <div
+        class="big-number"
+        id="recurringCount"
+      >
+        0
       </div>
 
 
-      <div class="card">
-
-        <div class="section-heading">
-
-          <div class="section-title-wrap">
-
-            <span class="section-dot"></span>
-
-            <div class="section-title">
-              Bu Günün Görevleri
-            </div>
-
-          </div>
-
-          <button
-            class="primary-btn"
-            onclick="openNewTask()"
-          >
-            + Yeni Görev
-          </button>
-
-        </div>
-
-        <div id="homeTaskList"></div>
-
+      <div class="muted">
+        Aktif tekrarlayan plan
       </div>
 
-    </section>
+    </div>
 
 
-    <!-- TASKS -->
+    <div class="stat-card">
 
-    <section
-      id="tasks"
-      class="page"
-    >
+      <h3>
+        Kategoriler
+      </h3>
 
-      <div class="page-header">
+      <div id="categoryStats"></div>
 
-        <div class="page-header-top">
+    </div>
 
-          <div>
 
-            <h2>
-              Tüm Görevler
-            </h2>
+    <div class="stat-card">
 
-            <p>
-              Planladığın tüm görevleri yönet.
-            </p>
+      <h3>
+        Son 7 Gün
+      </h3>
 
-          </div>
+      <div id="lastSevenStats"></div>
 
-          <button
-            class="primary-btn"
-            onclick="openNewTask()"
-          >
-            + Yeni Görev
-          </button>
+    </div>
 
-        </div>
 
-      </div>
+    <div class="stat-card">
 
+      <h3>
+        Öncelikler
+      </h3>
 
-      <div class="card">
+      <div id="priorityStats"></div>
 
-        <div class="filters">
+    </div>
 
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="🔎 Görevlerde ara..."
-            oninput="renderAllTasks()"
-          >
 
+  </div>
 
-          <select
-            id="filterStatus"
-            onchange="renderAllTasks()"
-          >
+</section>
 
-            <option value="all">
-              Tüm görevler
-            </option>
 
-            <option value="active">
-              Tamamlanmayanlar
-            </option>
-
-            <option value="completed">
-              Tamamlananlar
-            </option>
-
-          </select>
-
-
-          <select
-            id="filterCategory"
-            onchange="renderAllTasks()"
-          >
-
-            <option value="all">
-              Tüm kategoriler
-            </option>
-
-            <option value="Genel">
-              Genel
-            </option>
-
-            <option value="Ders">
-              Ders
-            </option>
-
-            <option value="Python">
-              Python
-            </option>
-
-            <option value="İngilizce">
-              İngilizce
-            </option>
-
-            <option value="Spor">
-              Spor
-            </option>
-
-            <option value="Kişisel">
-              Kişisel
-            </option>
-
-          </select>
-
-        </div>
-
-
-        <div class="task-section-heading">
-
-          <div class="section-title">
-            Tekrarlayan Planlar
-          </div>
-
-          <div
-            id="recurringSectionCount"
-            class="count-badge"
-          >
-            0
-          </div>
-
-        </div>
-
-
-        <div id="recurringTaskList"></div>
-
-
-        <div class="section-divider"></div>
-
-
-        <div class="task-section-heading">
-
-          <div class="section-title">
-            Tek Seferlik Görevler
-          </div>
-
-          <div
-            id="normalSectionCount"
-            class="count-badge"
-          >
-            0
-          </div>
-
-        </div>
-
-
-        <div id="allTaskList"></div>
-
-      </div>
-
-    </section>
-
-
-    <!-- WEEK -->
-
-    <section
-      id="week"
-      class="page"
-    >
-
-      <div class="page-header">
-
-        <h2>
-          Haftalık Plan
-        </h2>
-
-        <p>
-          Haftanın tamamını tek ekranda gör.
-        </p>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="week-toolbar">
-
-          <div
-            id="weekTitle"
-            class="week-title"
-          ></div>
-
-
-          <div class="week-buttons">
-
-            <button
-              class="secondary-btn"
-              onclick="changeWeek(-1)"
-            >
-              ‹ Önceki
-            </button>
-
-            <button
-              class="secondary-btn"
-              onclick="weekToday()"
-            >
-              Bu Hafta
-            </button>
-
-            <button
-              class="secondary-btn"
-              onclick="changeWeek(1)"
-            >
-              Sonraki ›
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <div
-          id="weekGrid"
-          class="week-grid"
-        ></div>
-
-      </div>
-
-    </section>
-
-
-    <!-- STATS -->
-
-    <section
-      id="stats"
-      class="page"
-    >
-
-      <div class="page-header">
-
-        <h2>
-          İstatistikler
-        </h2>
-
-        <p>
-          Planlarını ve çalışma düzenini takip et.
-        </p>
-
-      </div>
-
-
-      <div class="statistics-grid">
-
-
-        <div class="stat-card">
-
-          <h3>
-            Genel Durum
-          </h3>
-
-          <div
-            id="allTotal"
-            class="big-number"
-          >
-            0
-          </div>
-
-          <div class="muted">
-            Tek seferlik görev
-          </div>
-
-
-          <br>
-
-
-          <div
-            id="allCompleted"
-            class="big-number"
-          >
-            0
-          </div>
-
-          <div class="muted">
-            Tamamlanan görev
-          </div>
-
-
-          <br>
-
-
-          <div
-            id="allPercentage"
-            class="big-number"
-          >
-            0%
-          </div>
-
-          <div class="muted">
-            Tamamlanma oranı
-          </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-          <h3>
-            Tekrarlayan Planlar
-          </h3>
-
-          <div
-            id="recurringCount"
-            class="big-number"
-          >
-            0
-          </div>
-
-          <div class="muted">
-            Aktif tekrarlayan plan
-          </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-          <h3>
-            Kategoriler
-          </h3>
-
-          <div id="categoryStats"></div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-          <h3>
-            Son 7 Gün
-          </h3>
-
-          <div id="lastSevenStats"></div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-          <h3>
-            Öncelikler
-          </h3>
-
-          <div id="priorityStats"></div>
-
-        </div>
-
-
-      </div>
-
-    </section>
-
-
-  </main>
+</main>
 
 </div>
 
@@ -3566,61 +3620,48 @@ select:focus{
       🏠
     </span>
 
-    <span>
-      Ana Sayfa
-    </span>
-
+    Ana Sayfa
   </button>
 
 
   <button
     onclick="showMobilePage('tasks',this)"
   >
-
     <span class="nav-icon">
       📋
     </span>
 
-    <span>
-      Görevler
-    </span>
-
+    Görevler
   </button>
 
 
   <button
     onclick="showMobilePage('week',this)"
   >
-
     <span class="nav-icon">
       📅
     </span>
 
-    <span>
-      Haftalık
-    </span>
-
+    Haftalık
   </button>
 
 
   <button
     onclick="showMobilePage('stats',this)"
   >
-
     <span class="nav-icon">
       📊
     </span>
 
-    <span>
-      İstatistik
-    </span>
-
+    İstatistik
   </button>
 
 </nav>
 
 
-<!-- MOBILE FAB -->
+<!-- ====================================================
+     MOBILE FAB
+===================================================== -->
 
 <button
   class="mobile-fab"
@@ -3636,8 +3677,8 @@ select:focus{
 ===================================================== -->
 
 <div
-  id="modalOverlay"
   class="modal-overlay"
+  id="modalOverlay"
   onclick="closeModalOutside(event)"
 >
 
@@ -3649,11 +3690,12 @@ select:focus{
     <div class="modal-header">
 
       <div
-        id="modalTitle"
         class="modal-title"
+        id="modalTitle"
       >
         Yeni Görev
       </div>
+
 
       <button
         class="modal-close"
@@ -3694,12 +3736,13 @@ select:focus{
           Görev
         </label>
 
+
         <input
           id="modalTaskName"
           type="text"
+          placeholder="Örneğin: Python çalış"
           maxlength="120"
           required
-          placeholder="Örneğin: Python çalış"
         >
 
       </div>
@@ -3715,6 +3758,7 @@ select:focus{
           >
             Başlangıç tarihi
           </label>
+
 
           <input
             id="modalDate"
@@ -3733,6 +3777,7 @@ select:focus{
           >
             Saat
           </label>
+
 
           <input
             id="modalTime"
@@ -3755,7 +3800,10 @@ select:focus{
             Kategori
           </label>
 
-          <select id="modalCategory">
+
+          <select
+            id="modalCategory"
+          >
 
             <option value="Genel">
               📌 Genel
@@ -3795,7 +3843,10 @@ select:focus{
             Öncelik
           </label>
 
-          <select id="modalPriority">
+
+          <select
+            id="modalPriority"
+          >
 
             <option value="low">
               🟢 Düşük
@@ -3861,7 +3912,7 @@ select:focus{
           id="customDaysArea"
           style="
             display:none;
-            margin-top:12px;
+            margin-top:11px;
           "
         >
 
@@ -3881,6 +3932,7 @@ select:focus{
               Pzt
             </button>
 
+
             <button
               type="button"
               class="custom-day"
@@ -3889,6 +3941,7 @@ select:focus{
             >
               Sal
             </button>
+
 
             <button
               type="button"
@@ -3899,6 +3952,7 @@ select:focus{
               Çar
             </button>
 
+
             <button
               type="button"
               class="custom-day"
@@ -3907,6 +3961,7 @@ select:focus{
             >
               Per
             </button>
+
 
             <button
               type="button"
@@ -3917,6 +3972,7 @@ select:focus{
               Cum
             </button>
 
+
             <button
               type="button"
               class="custom-day"
@@ -3925,6 +3981,7 @@ select:focus{
             >
               Cmt
             </button>
+
 
             <button
               type="button"
@@ -3944,7 +4001,7 @@ select:focus{
           id="repeatEndArea"
           style="
             display:none;
-            margin-top:12px;
+            margin-top:11px;
           "
         >
 
@@ -3954,6 +4011,7 @@ select:focus{
           >
             Tekrar bitiş tarihi
           </label>
+
 
           <input
             id="modalRepeatEnd"
@@ -3971,6 +4029,7 @@ select:focus{
               3 gün
             </button>
 
+
             <button
               type="button"
               class="quick-repeat"
@@ -3979,6 +4038,7 @@ select:focus{
               7 gün
             </button>
 
+
             <button
               type="button"
               class="quick-repeat"
@@ -3986,6 +4046,7 @@ select:focus{
             >
               30 gün
             </button>
+
 
             <button
               type="button"
@@ -4017,6 +4078,7 @@ select:focus{
         >
           Vazgeç
         </button>
+
 
         <button
           type="submit"
@@ -4067,6 +4129,18 @@ let editingTaskId =
 
 let loadTasksPromise =
   null;
+
+let serviceWorkerRegistration =
+  null;
+
+let reminderInterval =
+  null;
+
+const NOTIFICATION_SETTING_KEY =
+  "plannerNotificationsEnabled";
+
+const NOTIFIED_KEY =
+  "plannerNotifiedTasks_v1";
 
 
 /* ======================================================
@@ -4149,6 +4223,632 @@ tasks =
 
 
 /* ======================================================
+   BİLDİRİMLER
+====================================================== */
+
+async function registerServiceWorker(){
+
+  if(
+    !(
+      "serviceWorker"
+      in navigator
+    )
+  ){
+
+    updateNotificationUI();
+
+    return false;
+
+  }
+
+  try{
+
+    const registration =
+      await navigator.serviceWorker.register(
+        "/sw.js",
+        {
+          scope:"/"
+        }
+      );
+
+    serviceWorkerRegistration =
+      registration;
+
+    await navigator.serviceWorker.ready;
+
+    updateNotificationUI();
+
+    startReminderWatcher();
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Service Worker kayıt hatası:",
+      error
+    );
+
+    updateNotificationUI();
+
+    return false;
+
+  }
+
+}
+
+function notificationsSupported(){
+
+  return (
+    "Notification"
+    in window &&
+    "serviceWorker"
+    in navigator
+  );
+
+}
+
+async function requestNotificationPermission(){
+
+  if(
+    !notificationsSupported()
+  ){
+
+    alert(
+      "Bu cihaz veya tarayıcı bildirimleri desteklemiyor."
+    );
+
+    return false;
+
+  }
+
+  try{
+
+    if(
+      Notification.permission ===
+      "denied"
+    ){
+
+      alert(
+        "Bildirim izni engellenmiş. Telefon/site ayarlarından bildirim iznini açabilirsin."
+      );
+
+      return false;
+
+    }
+
+
+    const permission =
+      Notification.permission ===
+      "granted"
+
+        ? "granted"
+
+        : await
+          Notification.requestPermission();
+
+
+    if(
+      permission !==
+      "granted"
+    ){
+
+      showToast(
+        "Bildirim izni verilmedi.",
+        "error"
+      );
+
+      updateNotificationUI();
+
+      return false;
+
+    }
+
+
+    localStorage.setItem(
+      NOTIFICATION_SETTING_KEY,
+      "true"
+    );
+
+
+    updateNotificationUI();
+
+    startReminderWatcher();
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Bildirim izni hatası:",
+      error
+    );
+
+    showToast(
+      "Bildirimler açılamadı.",
+      "error"
+    );
+
+    return false;
+
+  }
+
+}
+
+function updateNotificationUI(){
+
+  const permission =
+    notificationsSupported()
+
+      ? Notification.permission
+
+      : "unsupported";
+
+
+  const enabled =
+    permission ===
+      "granted" &&
+
+    localStorage.getItem(
+      NOTIFICATION_SETTING_KEY
+    ) ===
+      "true";
+
+
+  const side =
+    document.getElementById(
+      "sideNotificationButton"
+    );
+
+
+  const mobile =
+    document.getElementById(
+      "mobileNotificationButton"
+    );
+
+
+  const status =
+    document.getElementById(
+      "notificationStatus"
+    );
+
+
+  if(side){
+
+    if(
+      permission ===
+      "denied"
+    ){
+
+      side.textContent =
+        "🔕 Bildirimler Engellendi";
+
+      side.classList.remove(
+        "granted"
+      );
+
+    }else if(enabled){
+
+      side.textContent =
+        "🔔 Bildirimleri Açık · Test Et";
+
+      side.classList.add(
+        "granted"
+      );
+
+    }else{
+
+      side.textContent =
+        "🔔 Bildirimleri Aç";
+
+      side.classList.remove(
+        "granted"
+      );
+
+    }
+
+  }
+
+
+  if(mobile){
+
+    mobile.classList.toggle(
+      "granted",
+      enabled
+    );
+
+  }
+
+
+  if(status){
+
+    status.style.display =
+      "block";
+
+
+    if(
+      permission ===
+        "granted" &&
+      enabled
+    ){
+
+      status.textContent =
+        "🔔 Bildirimler açık. Saatli görevlerin için uygulama açıkken hatırlatma alabilirsin.";
+
+    }else if(
+      permission ===
+      "denied"
+    ){
+
+      status.textContent =
+        "🔕 Bildirimler engelli. Telefon/site bildirim ayarlarından yeniden açabilirsin.";
+
+    }else{
+
+      status.textContent =
+        "🔔 Bildirim almak için üstteki zil simgesine dokun.";
+
+    }
+
+  }
+
+}
+
+async function handleNotificationButton(){
+
+  if(
+    !notificationsSupported()
+  ){
+
+    alert(
+      "Bu cihaz veya tarayıcı bildirimleri desteklemiyor."
+    );
+
+    return;
+
+  }
+
+
+  const granted =
+    await requestNotificationPermission();
+
+
+  if(!granted){
+
+    return;
+
+  }
+
+
+  try{
+
+    if(
+      !serviceWorkerRegistration
+    ){
+
+      await registerServiceWorker();
+
+    }
+
+
+    const registration =
+      serviceWorkerRegistration ||
+      await navigator.serviceWorker.ready;
+
+
+    await registration.showNotification(
+      "Günlük Plan 🔔",
+      {
+
+        body:
+          "Bildirimler başarıyla çalışıyor!",
+
+        icon:
+          "/icon.svg",
+
+        badge:
+          "/icon.svg",
+
+        tag:
+          "gunluk-plan-test",
+
+        renotify:
+          false,
+
+        vibrate:
+          [200,100,200],
+
+        data:{
+          url:"/"
+        }
+
+      }
+    );
+
+
+    showToast(
+      "Test bildirimi gönderildi."
+    );
+
+  }catch(error){
+
+    console.error(
+      "Test bildirimi hatası:",
+      error
+    );
+
+    showToast(
+      "Bildirim gönderilemedi.",
+      "error"
+    );
+
+  }
+
+}
+
+function getNotifiedTasks(){
+
+  try{
+
+    const value =
+      JSON.parse(
+        localStorage.getItem(
+          NOTIFIED_KEY
+        ) ||
+        "{}"
+      );
+
+
+    return (
+      value &&
+      typeof value ===
+      "object"
+    )
+      ? value
+      : {};
+
+  }catch(error){
+
+    return {};
+
+  }
+
+}
+
+function setTaskNotified(
+  key
+){
+
+  const data =
+    getNotifiedTasks();
+
+
+  data[key] =
+    Date.now();
+
+
+  const entries =
+    Object.entries(
+      data
+    )
+      .sort(
+        (a,b)=>
+          b[1]-a[1]
+      )
+      .slice(
+        0,
+        200
+      );
+
+
+  localStorage.setItem(
+    NOTIFIED_KEY,
+    JSON.stringify(
+      Object.fromEntries(
+        entries
+      )
+    )
+  );
+
+}
+
+function getReminderCandidates(){
+
+  const today =
+    getTodayKey();
+
+
+  const now =
+    new Date();
+
+
+  const timeNow =
+    String(
+      now.getHours()
+    ).padStart(
+      2,
+      "0"
+    ) +
+    ":" +
+    String(
+      now.getMinutes()
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  return getDayTasks(
+    today
+  )
+    .filter(
+      task =>
+        task.time &&
+        task.time <= timeNow &&
+        !task.completed
+    )
+    .map(
+      task => ({
+
+        ...task,
+
+        occurrenceKey:
+          `${today}|${task.sourceId}|${task.time}`
+
+      })
+    );
+
+}
+
+async function checkDueTaskNotifications(){
+
+  if(
+    !notificationsSupported()
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    Notification.permission !==
+    "granted"
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    localStorage.getItem(
+      NOTIFICATION_SETTING_KEY
+    ) !==
+    "true"
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    !serviceWorkerRegistration
+  ){
+
+    return;
+
+  }
+
+
+  const notified =
+    getNotifiedTasks();
+
+
+  const candidates =
+    getReminderCandidates();
+
+
+  for(
+    const task
+    of candidates
+  ){
+
+    if(
+      notified[
+        task.occurrenceKey
+      ]
+    ){
+
+      continue;
+
+    }
+
+
+    try{
+
+      await
+        serviceWorkerRegistration
+          .showNotification(
+
+            `Görev zamanı: ${task.text}`,
+
+            {
+
+              body:
+                `${task.time} · ${task.category}`,
+
+              icon:
+                "/icon.svg",
+
+              badge:
+                "/icon.svg",
+
+              tag:
+                `task-${task.sourceId}-${getTodayKey()}`,
+
+              renotify:
+                true,
+
+              vibrate:
+                [200,100,200],
+
+              data:{
+                url:"/"
+              }
+
+            }
+
+          );
+
+
+      setTaskNotified(
+        task.occurrenceKey
+      );
+
+    }catch(error){
+
+      console.error(
+        "Görev bildirimi hatası:",
+        error
+      );
+
+    }
+
+  }
+
+}
+
+function startReminderWatcher(){
+
+  if(
+    reminderInterval
+  ){
+
+    clearInterval(
+      reminderInterval
+    );
+
+  }
+
+
+  reminderInterval =
+    setInterval(
+      checkDueTaskNotifications,
+      20000
+    );
+
+
+  setTimeout(
+    checkDueTaskNotifications,
+    2500
+  );
+
+}
+
+
+/* ======================================================
    TARİH
 ====================================================== */
 
@@ -4167,11 +4867,17 @@ function dateKeyFromDate(d){
     "-" +
     String(
       d.getMonth()+1
-    ).padStart(2,"0") +
+    ).padStart(
+      2,
+      "0"
+    ) +
     "-" +
     String(
       d.getDate()
-    ).padStart(2,"0")
+    ).padStart(
+      2,
+      "0"
+    )
   );
 
 }
@@ -4181,10 +4887,15 @@ function dateObject(key){
   const parts =
     key.split("-");
 
+
   return new Date(
+
     Number(parts[0]),
+
     Number(parts[1])-1,
+
     Number(parts[2])
+
   );
 
 }
@@ -4195,13 +4906,20 @@ function addDays(
 ){
 
   const d =
-    dateObject(key);
+    dateObject(
+      key
+    );
+
 
   d.setDate(
-    d.getDate()+amount
+    d.getDate() +
+    amount
   );
 
-  return dateKeyFromDate(d);
+
+  return dateKeyFromDate(
+    d
+  );
 
 }
 
@@ -4250,37 +4968,49 @@ function showToast(
       "toastContainer"
     );
 
+
   if(!container){
+
     return;
+
   }
+
 
   const toast =
     document.createElement(
       "div"
     );
 
+
   toast.className =
     "toast " +
     type;
 
+
   toast.textContent =
     message;
+
 
   container.appendChild(
     toast
   );
 
+
   setTimeout(
     ()=>{
+
       toast.style.opacity =
         "0";
 
       toast.style.transform =
         "translateY(5px)";
 
+
       setTimeout(
         ()=>{
+
           toast.remove();
+
         },
         180
       );
@@ -4301,15 +5031,21 @@ function updateGreeting(){
   const hour =
     new Date().getHours();
 
+
   let text =
     "Günlük Planım 👋";
 
-  if(hour<12){
+
+  if(
+    hour < 12
+  ){
 
     text =
       "Günaydın 👋";
 
-  }else if(hour<18){
+  }else if(
+    hour < 18
+  ){
 
     text =
       "İyi günler 👋";
@@ -4321,6 +5057,7 @@ function updateGreeting(){
 
   }
 
+
   document.getElementById(
     "welcomeTitle"
   ).textContent =
@@ -4330,7 +5067,7 @@ function updateGreeting(){
 
 
 /* ======================================================
-   TARİH
+   TARİH NAVİGASYONU
 ====================================================== */
 
 function changeDate(
@@ -4357,8 +5094,11 @@ function selectDate(
 ){
 
   if(!value){
+
     return;
+
   }
+
 
   selectedDate =
     value;
@@ -4393,6 +5133,7 @@ function updateDateUI(){
   ).value =
     selectedDate;
 
+
   document.getElementById(
     "welcomeDate"
   ).textContent =
@@ -4404,7 +5145,7 @@ function updateDateUI(){
 
 
 /* ======================================================
-   SUPABASE
+   SUPABASE SATIRI
 ====================================================== */
 
 function taskToRow(
@@ -4471,24 +5212,39 @@ function taskToRow(
 
 }
 
+
+/* ======================================================
+   KAYDET
+====================================================== */
+
 async function saveTasks(){
 
   localStorage.setItem(
     "plannerTasks",
-    JSON.stringify(tasks)
+    JSON.stringify(
+      tasks
+    )
   );
+
 
   const {
     data:sessionData
   } =
-    await supabaseClient.auth.getSession();
+    await supabaseClient
+      .auth
+      .getSession();
+
 
   const user =
     sessionData.session?.user;
 
+
   if(!user){
+
     return;
+
   }
+
 
   const rows =
     tasks.map(
@@ -4499,9 +5255,16 @@ async function saveTasks(){
         )
     );
 
-  if(rows.length===0){
+
+  if(
+    rows.length ===
+    0
+  ){
+
     return;
+
   }
+
 
   const {
     error
@@ -4516,6 +5279,7 @@ async function saveTasks(){
         }
       );
 
+
   if(error){
 
     console.error(
@@ -4527,13 +5291,21 @@ async function saveTasks(){
 
 }
 
+
+/* ======================================================
+   YÜKLE
+====================================================== */
+
 async function loadTasks(){
 
-  if(loadTasksPromise){
+  if(
+    loadTasksPromise
+  ){
 
     return loadTasksPromise;
 
   }
+
 
   loadTasksPromise =
     (async()=>{
@@ -4545,12 +5317,17 @@ async function loadTasks(){
           .auth
           .getSession();
 
+
       const user =
         sessionData.session?.user;
 
+
       if(!user){
+
         return;
+
       }
+
 
       let {
         data,
@@ -4570,6 +5347,7 @@ async function loadTasks(){
             }
           );
 
+
       if(error){
 
         console.error(
@@ -4581,15 +5359,18 @@ async function loadTasks(){
 
       }
 
+
       const migrationKey =
         "plannerSupabaseMigrationDone_" +
         user.id;
+
 
       const alreadyMigrated =
         localStorage.getItem(
           migrationKey
         ) ===
         "true";
+
 
       if(!alreadyMigrated){
 
@@ -4604,6 +5385,7 @@ async function loadTasks(){
               )
           );
 
+
         const localOnlyTasks =
           tasks.filter(
             task =>
@@ -4613,6 +5395,7 @@ async function loadTasks(){
                 )
               )
           );
+
 
         if(
           localOnlyTasks.length
@@ -4637,6 +5420,7 @@ async function loadTasks(){
                 }
               );
 
+
           if(migrationError){
 
             console.error(
@@ -4648,10 +5432,12 @@ async function loadTasks(){
 
         }
 
+
         localStorage.setItem(
           migrationKey,
           "true"
         );
+
 
         const refreshed =
           await supabaseClient
@@ -4668,6 +5454,7 @@ async function loadTasks(){
               }
             );
 
+
         if(
           !refreshed.error
         ){
@@ -4679,6 +5466,7 @@ async function loadTasks(){
         }
 
       }
+
 
       tasks =
         (data || [])
@@ -4741,12 +5529,17 @@ async function loadTasks(){
             })
           );
 
+
       ensureOrders();
+
 
       localStorage.setItem(
         "plannerTasks",
-        JSON.stringify(tasks)
+        JSON.stringify(
+          tasks
+        )
       );
+
 
       updateDateUI();
 
@@ -4759,6 +5552,7 @@ async function loadTasks(){
       renderStatistics();
 
     })();
+
 
   try{
 
@@ -4794,10 +5588,12 @@ function showPage(
         )
     );
 
+
   const target =
     document.getElementById(
       page
     );
+
 
   if(target){
 
@@ -4806,6 +5602,7 @@ function showPage(
     );
 
   }
+
 
   document
     .querySelectorAll(
@@ -4818,6 +5615,7 @@ function showPage(
         )
     );
 
+
   if(button){
 
     button.classList.add(
@@ -4826,19 +5624,31 @@ function showPage(
 
   }
 
-  if(page==="tasks"){
+
+  if(
+    page ===
+    "tasks"
+  ){
 
     renderAllTasks();
 
   }
 
-  if(page==="week"){
+
+  if(
+    page ===
+    "week"
+  ){
 
     renderWeek();
 
   }
 
-  if(page==="stats"){
+
+  if(
+    page ===
+    "stats"
+  ){
 
     renderStatistics();
 
@@ -4856,10 +5666,12 @@ function showMobilePage(
       `.menu-item[onclick*="'${page}'"]`
     );
 
+
   showPage(
     page,
     sidebarButton
   );
+
 
   document
     .querySelectorAll(
@@ -4872,6 +5684,7 @@ function showMobilePage(
         )
     );
 
+
   if(button){
 
     button.classList.add(
@@ -4879,6 +5692,7 @@ function showMobilePage(
     );
 
   }
+
 
   window.scrollTo({
     top:0,
@@ -4908,6 +5722,7 @@ function getCustomRepeatDays(
 
   }
 
+
   return repeatType
     .slice(7)
     .split(",")
@@ -4917,8 +5732,8 @@ function getCustomRepeatDays(
         Number.isInteger(
           day
         ) &&
-        day>=0 &&
-        day<=6
+        day >= 0 &&
+        day <= 6
     );
 
 }
@@ -4931,23 +5746,36 @@ function getRepeatLabel(
     task.repeatType ||
     "daily";
 
-  if(type==="daily"){
+
+  if(
+    type ===
+    "daily"
+  ){
 
     return "Her gün";
 
   }
 
-  if(type==="weekly"){
+
+  if(
+    type ===
+    "weekly"
+  ){
 
     return "Her hafta";
 
   }
 
-  if(type==="monthly"){
+
+  if(
+    type ===
+    "monthly"
+  ){
 
     return "Her ay";
 
   }
+
 
   if(
     type.startsWith(
@@ -4967,6 +5795,7 @@ function getRepeatLabel(
 
     };
 
+
     return getCustomRepeatDays(
       type
     )
@@ -4977,6 +5806,7 @@ function getRepeatLabel(
       .join(" • ");
 
   }
+
 
   return "Tekrarlı";
 
@@ -4995,6 +5825,7 @@ function isRecurringActiveOnDate(
 
   }
 
+
   if(
     !task.date ||
     date < task.date
@@ -5004,6 +5835,7 @@ function isRecurringActiveOnDate(
 
   }
 
+
   if(
     task.repeatEnd &&
     date > task.repeatEnd
@@ -5012,6 +5844,7 @@ function isRecurringActiveOnDate(
     return false;
 
   }
+
 
   const current =
     dateObject(
@@ -5027,13 +5860,21 @@ function isRecurringActiveOnDate(
     task.repeatType ||
     "daily";
 
-  if(type==="daily"){
+
+  if(
+    type ===
+    "daily"
+  ){
 
     return true;
 
   }
 
-  if(type==="weekly"){
+
+  if(
+    type ===
+    "weekly"
+  ){
 
     return (
       current.getDay() ===
@@ -5042,7 +5883,11 @@ function isRecurringActiveOnDate(
 
   }
 
-  if(type==="monthly"){
+
+  if(
+    type ===
+    "monthly"
+  ){
 
     return (
       current.getDate() ===
@@ -5050,6 +5895,7 @@ function isRecurringActiveOnDate(
     );
 
   }
+
 
   if(
     type.startsWith(
@@ -5065,6 +5911,7 @@ function isRecurringActiveOnDate(
 
   }
 
+
   return false;
 
 }
@@ -5074,7 +5921,9 @@ function isRecurringActiveOnDate(
    GÖREVLER
 ====================================================== */
 
-function getSourceId(task){
+function getSourceId(
+  task
+){
 
   return (
     task.sourceId ||
@@ -5092,7 +5941,8 @@ function getDayTasks(
       .filter(
         t =>
           !t.recurring &&
-          t.date===date
+          t.date ===
+          date
       )
       .map(
         t => ({
@@ -5108,6 +5958,7 @@ function getDayTasks(
 
         })
       );
+
 
   const recurringTasks =
     tasks
@@ -5142,12 +5993,14 @@ function getDayTasks(
         })
       );
 
+
   return [
     ...normalTasks,
     ...recurringTasks
-  ].sort(
-    compareTasks
-  );
+  ]
+    .sort(
+      compareTasks
+    );
 
 }
 
@@ -5163,12 +6016,14 @@ function compareTasks(
       ? a.order
       : 999999;
 
+
   const orderB =
     Number.isFinite(
       b.order
     )
       ? b.order
       : 999999;
+
 
   if(
     orderA !==
@@ -5182,13 +6037,16 @@ function compareTasks(
 
   }
 
+
   const timeA =
     a.time ||
     "99:99";
 
+
   const timeB =
     b.time ||
     "99:99";
+
 
   if(
     timeA !==
@@ -5201,13 +6059,15 @@ function compareTasks(
 
   }
 
+
   return String(
     getSourceId(a)
-  ).localeCompare(
-    String(
-      getSourceId(b)
-    )
-  );
+  )
+    .localeCompare(
+      String(
+        getSourceId(b)
+      )
+    );
 
 }
 
@@ -5221,50 +6081,60 @@ function openNewTask(){
   editingTaskId =
     null;
 
+
   document.getElementById(
     "modalTitle"
   ).textContent =
     "Yeni Görev";
+
 
   document.getElementById(
     "modalTaskId"
   ).value =
     "";
 
+
   document.getElementById(
     "modalTaskName"
   ).value =
     "";
+
 
   document.getElementById(
     "modalDate"
   ).value =
     selectedDate;
 
+
   document.getElementById(
     "modalTime"
   ).value =
     "";
+
 
   document.getElementById(
     "modalCategory"
   ).value =
     "Genel";
 
+
   document.getElementById(
     "modalPriority"
   ).value =
     "medium";
+
 
   document.getElementById(
     "modalRepeat"
   ).value =
     "none";
 
+
   document.getElementById(
     "modalRepeatEnd"
   ).value =
     "";
+
 
   document.getElementById(
     "recurringEditNote"
@@ -5272,15 +6142,19 @@ function openNewTask(){
     "show"
   );
 
+
   clearCustomDays();
 
+
   updateRepeatFields();
+
 
   document.getElementById(
     "modalOverlay"
   ).classList.add(
     "open"
   );
+
 
   setTimeout(
     ()=>{
@@ -5304,51 +6178,64 @@ function openEditTask(
         String(id)
     );
 
+
   if(!task){
+
     return;
+
   }
+
 
   editingTaskId =
     task.id;
+
 
   document.getElementById(
     "modalTitle"
   ).textContent =
     "Görevi Düzenle";
 
+
   document.getElementById(
     "modalTaskId"
   ).value =
     task.id;
+
 
   document.getElementById(
     "modalTaskName"
   ).value =
     task.text;
 
+
   document.getElementById(
     "modalDate"
   ).value =
     task.date;
+
 
   document.getElementById(
     "modalTime"
   ).value =
     task.time;
 
+
   document.getElementById(
     "modalCategory"
   ).value =
     task.category;
+
 
   document.getElementById(
     "modalPriority"
   ).value =
     task.priority;
 
+
   let repeatValue =
     task.repeatType ||
     "none";
+
 
   if(
     repeatValue.startsWith(
@@ -5361,6 +6248,7 @@ function openEditTask(
 
   }
 
+
   document.getElementById(
     "modalRepeat"
   ).value =
@@ -5368,13 +6256,16 @@ function openEditTask(
       ? repeatValue
       : "none";
 
+
   document.getElementById(
     "modalRepeatEnd"
   ).value =
     task.repeatEnd ||
     "";
 
+
   clearCustomDays();
+
 
   if(
     task.recurring &&
@@ -5389,6 +6280,7 @@ function openEditTask(
         task.repeatType
       );
 
+
     document
       .querySelectorAll(
         ".custom-day"
@@ -5400,6 +6292,7 @@ function openEditTask(
             Number(
               button.dataset.day
             );
+
 
           if(
             selected.includes(
@@ -5418,6 +6311,7 @@ function openEditTask(
 
   }
 
+
   document.getElementById(
     "recurringEditNote"
   ).classList.toggle(
@@ -5425,7 +6319,9 @@ function openEditTask(
     task.recurring
   );
 
+
   updateRepeatFields();
+
 
   document.getElementById(
     "modalOverlay"
@@ -5472,42 +6368,56 @@ function updateRepeatFields(){
       "modalRepeat"
     ).value;
 
+
   const endArea =
     document.getElementById(
       "repeatEndArea"
     );
+
 
   const customArea =
     document.getElementById(
       "customDaysArea"
     );
 
-  if(repeat==="none"){
+
+  if(
+    repeat ===
+    "none"
+  ){
 
     endArea.style.display =
       "none";
 
+
     customArea.style.display =
       "none";
+
 
     document.getElementById(
       "modalRepeatEnd"
     ).value =
       "";
 
+
     clearCustomDays();
+
 
     return;
 
   }
 
+
   endArea.style.display =
     "block";
 
+
   customArea.style.display =
-    repeat==="custom"
+    repeat ===
+      "custom"
       ? "block"
       : "none";
+
 
   updateRepeatEndMin();
 
@@ -5519,6 +6429,7 @@ function updateRepeatEndMin(){
     document.getElementById(
       "modalDate"
     ).value;
+
 
   document.getElementById(
     "modalRepeatEnd"
@@ -5537,6 +6448,7 @@ function setRepeatDays(
       "modalRepeat"
     );
 
+
   if(
     repeat.value ===
     "none"
@@ -5547,7 +6459,9 @@ function setRepeatDays(
 
   }
 
+
   updateRepeatFields();
+
 
   const start =
     document.getElementById(
@@ -5555,14 +6469,18 @@ function setRepeatDays(
     ).value ||
     selectedDate;
 
+
   document.getElementById(
     "modalRepeatEnd"
   ).value =
-    days === 0
+    days ===
+      0
+
       ? ""
+
       : addDays(
           start,
-          days-1
+          days - 1
         );
 
 }
@@ -5640,40 +6558,48 @@ async function saveFromModal(
 
   event.preventDefault();
 
+
   const text =
     document.getElementById(
       "modalTaskName"
     ).value.trim();
+
 
   const date =
     document.getElementById(
       "modalDate"
     ).value;
 
+
   const time =
     document.getElementById(
       "modalTime"
     ).value;
+
 
   const category =
     document.getElementById(
       "modalCategory"
     ).value;
 
+
   const priority =
     document.getElementById(
       "modalPriority"
     ).value;
+
 
   const repeatSelect =
     document.getElementById(
       "modalRepeat"
     ).value;
 
+
   const repeatEnd =
     document.getElementById(
       "modalRepeatEnd"
     ).value;
+
 
   if(!text){
 
@@ -5685,6 +6611,7 @@ async function saveFromModal(
 
   }
 
+
   if(!date){
 
     alert(
@@ -5695,11 +6622,13 @@ async function saveFromModal(
 
   }
 
+
   if(
     repeatSelect !==
       "none" &&
     repeatEnd &&
-    repeatEnd < date
+    repeatEnd <
+      date
   ){
 
     alert(
@@ -5710,8 +6639,10 @@ async function saveFromModal(
 
   }
 
+
   let repeatType =
     repeatSelect;
+
 
   if(
     repeatSelect ===
@@ -5720,6 +6651,7 @@ async function saveFromModal(
 
     const selectedDays =
       getSelectedCustomDays();
+
 
     if(
       selectedDays.length ===
@@ -5734,18 +6666,22 @@ async function saveFromModal(
 
     }
 
+
     repeatType =
       "custom:" +
       selectedDays.join(",");
 
   }
 
+
   const isRecurring =
     repeatSelect !==
     "none";
 
+
   const currentEditingId =
     editingTaskId;
+
 
   if(
     currentEditingId !==
@@ -5761,38 +6697,48 @@ async function saveFromModal(
           )
       );
 
+
     if(task){
 
       const wasRecurring =
         task.recurring;
 
+
       task.text =
         text;
+
 
       task.date =
         date;
 
+
       task.time =
         time;
+
 
       task.category =
         category;
 
+
       task.priority =
         priority;
 
+
       task.recurring =
         isRecurring;
+
 
       task.repeatType =
         isRecurring
           ? repeatType
           : "none";
 
+
       task.repeatEnd =
         isRecurring
           ? repeatEnd
           : "";
+
 
       if(
         isRecurring &&
@@ -5805,6 +6751,7 @@ async function saveFromModal(
           [];
 
       }
+
 
       if(
         !isRecurring &&
@@ -5828,6 +6775,7 @@ async function saveFromModal(
         date
       );
 
+
     const maxOrder =
       dayTasks.length
         ? Math.max(
@@ -5842,6 +6790,7 @@ async function saveFromModal(
           )
         : -1;
 
+
     tasks.push({
 
       id:
@@ -5852,66 +6801,60 @@ async function saveFromModal(
         ),
 
       text:
-
         text,
 
       date:
-
         date,
 
       time:
-
         time,
 
       category:
-
         category,
 
       priority:
-
         priority,
 
       order:
-
         maxOrder + 1,
 
       completed:
-
         false,
 
       recurring:
-
         isRecurring,
 
       repeatType:
-
         isRecurring
           ? repeatType
           : "none",
 
       repeatEnd:
-
         isRecurring
           ? repeatEnd
           : "",
 
       completedDates:
-
         []
 
     });
 
   }
 
+
   selectedDate =
     date;
+
 
   weekAnchor =
     date;
 
+
   await saveTasks();
 
+
   closeModal();
+
 
   updateDateUI();
 
@@ -5923,8 +6866,10 @@ async function saveFromModal(
 
   renderStatistics();
 
+
   showToast(
-    currentEditingId !== null
+    currentEditingId !==
+      null
       ? "Görev güncellendi."
       : "Görev eklendi."
   );
@@ -5949,9 +6894,13 @@ async function toggleTask(
         String(sourceId)
     );
 
+
   if(!task){
+
     return;
+
   }
+
 
   if(
     isRecurring
@@ -5968,12 +6917,16 @@ async function toggleTask(
 
     }
 
+
     const index =
       task.completedDates.indexOf(
         occurrenceDate
       );
 
-    if(index === -1){
+
+    if(
+      index === -1
+    ){
 
       task.completedDates.push(
         occurrenceDate
@@ -5995,7 +6948,9 @@ async function toggleTask(
 
   }
 
+
   await saveTasks();
+
 
   renderHome();
 
@@ -6004,6 +6959,7 @@ async function toggleTask(
   renderWeek();
 
   renderStatistics();
+
 
   showToast(
     isRecurring
@@ -6032,11 +6988,13 @@ async function deleteTask(
         String(sourceId)
     );
 
+
   if(!task){
 
     return;
 
   }
+
 
   if(recurring){
 
@@ -6044,6 +7002,7 @@ async function deleteTask(
       confirm(
         "Bu tekrarlayan planın tamamı silinsin mi?"
       );
+
 
     if(!okay){
 
@@ -6053,6 +7012,7 @@ async function deleteTask(
 
   }
 
+
   const {
     data:sessionData
   } =
@@ -6060,8 +7020,10 @@ async function deleteTask(
       .auth
       .getSession();
 
+
   const user =
     sessionData.session?.user;
+
 
   if(user){
 
@@ -6084,6 +7046,7 @@ async function deleteTask(
           "task_id"
         );
 
+
     if(error){
 
       console.error(
@@ -6091,32 +7054,39 @@ async function deleteTask(
         error
       );
 
+
       alert(
         "Görev Supabase'den silinemedi. Görev korunuyor."
       );
+
 
       return;
 
     }
 
+
     if(
       !deletedRows ||
-      deletedRows.length === 0
+      deletedRows.length ===
+      0
     ){
 
       console.error(
         "Supabase silme işlemi satır döndürmedi."
       );
 
+
       alert(
         "Görev uygulamadan silinmedi çünkü Supabase'deki kayıt doğrulanamadı."
       );
+
 
       return;
 
     }
 
   }
+
 
   tasks =
     tasks.filter(
@@ -6125,7 +7095,9 @@ async function deleteTask(
         String(sourceId)
     );
 
+
   ensureOrders();
+
 
   localStorage.setItem(
     "plannerTasks",
@@ -6134,6 +7106,7 @@ async function deleteTask(
     )
   );
 
+
   renderHome();
 
   renderAllTasks();
@@ -6141,6 +7114,7 @@ async function deleteTask(
   renderWeek();
 
   renderStatistics();
+
 
   showToast(
     recurring
@@ -6166,35 +7140,47 @@ function moveTask(
       date
     );
 
+
   const index =
     day.findIndex(
       task =>
         String(
           getSourceId(task)
         ) ===
-        String(sourceId)
+        String(
+          sourceId
+        )
     );
 
-  if(index === -1){
-
-    return;
-
-  }
-
-  const newIndex =
-    index + direction;
 
   if(
-    newIndex < 0 ||
-    newIndex >= day.length
+    index === -1
   ){
 
     return;
 
   }
 
+
+  const newIndex =
+    index +
+    direction;
+
+
+  if(
+    newIndex < 0 ||
+    newIndex >=
+    day.length
+  ){
+
+    return;
+
+  }
+
+
   const reordered =
     [...day];
+
 
   const item =
     reordered.splice(
@@ -6202,11 +7188,13 @@ function moveTask(
       1
     )[0];
 
+
   reordered.splice(
     newIndex,
     0,
     item
   );
+
 
   reordered.forEach(
     (dayTask,index)=>{
@@ -6216,9 +7204,12 @@ function moveTask(
           task =>
             String(task.id) ===
             String(
-              getSourceId(dayTask)
+              getSourceId(
+                dayTask
+              )
             )
         );
+
 
       if(source){
 
@@ -6230,6 +7221,7 @@ function moveTask(
     }
   );
 
+
   saveTasks();
 
   renderHome();
@@ -6238,13 +7230,21 @@ function moveTask(
 
   renderWeek();
 
+
   showToast(
     "Görev sırası güncellendi."
   );
 
 }
 
-function startDrag(id){
+
+/* ======================================================
+   DRAG
+====================================================== */
+
+function startDrag(
+  id
+){
 
   draggedTaskId =
     id;
@@ -6265,19 +7265,24 @@ function dropTask(
 ){
 
   if(
-    draggedTaskId === null ||
-    String(draggedTaskId) ===
-    String(targetId)
+    draggedTaskId ===
+      null ||
+    String(
+      draggedTaskId
+    ) ===
+      String(targetId)
   ){
 
     return;
 
   }
 
+
   const day =
     getDayTasks(
       date
     );
+
 
   const from =
     day.findIndex(
@@ -6290,14 +7295,18 @@ function dropTask(
         )
     );
 
+
   const to =
     day.findIndex(
       task =>
         String(
           getSourceId(task)
         ) ===
-        String(targetId)
+        String(
+          targetId
+        )
     );
+
 
   if(
     from === -1 ||
@@ -6311,8 +7320,10 @@ function dropTask(
 
   }
 
+
   const reordered =
     [...day];
+
 
   const item =
     reordered.splice(
@@ -6320,11 +7331,13 @@ function dropTask(
       1
     )[0];
 
+
   reordered.splice(
     to,
     0,
     item
   );
+
 
   reordered.forEach(
     (dayTask,index)=>{
@@ -6334,9 +7347,12 @@ function dropTask(
           task =>
             String(task.id) ===
             String(
-              getSourceId(dayTask)
+              getSourceId(
+                dayTask
+              )
             )
         );
+
 
       if(source){
 
@@ -6348,16 +7364,20 @@ function dropTask(
     }
   );
 
+
   saveTasks();
+
 
   draggedTaskId =
     null;
+
 
   renderHome();
 
   renderAllTasks();
 
   renderWeek();
+
 
   showToast(
     "Görev sırası güncellendi."
@@ -6402,6 +7422,7 @@ function priorityText(
 
   }
 
+
   if(
     priority ===
     "medium"
@@ -6410,6 +7431,7 @@ function priorityText(
     return "🟡 Orta";
 
   }
+
 
   return "🟢 Düşük";
 
@@ -6424,10 +7446,12 @@ function escapeHTML(
       "div"
     );
 
+
   div.textContent =
     text == null
       ? ""
       : String(text);
+
 
   return div.innerHTML;
 
@@ -6444,6 +7468,7 @@ function taskHTML(
 
   const timeTag =
     task.time
+
       ? `
           <span class="tag">
             ⏰ ${escapeHTML(
@@ -6451,12 +7476,17 @@ function taskHTML(
             )}
           </span>
         `
+
       : "";
+
 
   const repeatTag =
     task.isRecurring
+
       ? `
-          <span class="tag repeat-tag">
+          <span
+            class="tag repeat-tag"
+          >
             🔁 ${escapeHTML(
               getRepeatLabel(
                 task
@@ -6464,13 +7494,19 @@ function taskHTML(
             )}
           </span>
         `
+
       : "";
+
 
   const dateTag =
     task.isRecurring
+
       ? `
           <span class="tag">
-            📅 ${
+
+            📅
+
+            ${
               task.repeatEnd
                 ? shortDate(
                     task.repeatEnd
@@ -6478,34 +7514,45 @@ function taskHTML(
                   "'e kadar"
                 : "Süresiz"
             }
+
           </span>
         `
+
       : `
           <span class="tag">
-            📅 ${shortDate(
+
+            📅
+            ${shortDate(
               task.date
             )}
+
           </span>
         `;
+
 
   return `
 
     <div
       class="
         task
-        ${task.completed
-          ? "completed"
-          : ""}
+        ${
+          task.completed
+            ? "completed"
+            : ""
+        }
       "
       draggable="true"
+
       ondragstart="
         startDrag(
           ${task.sourceId}
         )
       "
+
       ondragover="
         allowDrop(event)
       "
+
       ondrop="
         dropTask(
           ${task.sourceId},
@@ -6514,14 +7561,17 @@ function taskHTML(
       "
     >
 
+
       <input
         class="task-check"
         type="checkbox"
+
         ${
           task.completed
             ? "checked"
             : ""
         }
+
         onchange="
           toggleTask(
             ${task.sourceId},
@@ -6545,11 +7595,13 @@ function taskHTML(
 
           ${timeTag}
 
+
           <span class="tag">
             ${escapeHTML(
               task.category
             )}
           </span>
+
 
           <span
             class="
@@ -6564,7 +7616,9 @@ function taskHTML(
             )}
           </span>
 
+
           ${repeatTag}
+
 
           ${dateTag}
 
@@ -6574,6 +7628,7 @@ function taskHTML(
 
 
       <div class="task-actions">
+
 
         <span
           class="drag-handle"
@@ -6639,6 +7694,7 @@ function taskHTML(
           🗑️
         </button>
 
+
       </div>
 
     </div>
@@ -6659,38 +7715,18 @@ function renderHome(){
       "homeTaskList"
     );
 
+
   const dayTasks =
     getDayTasks(
       selectedDate
     );
 
-  if(
-    dayTasks.length ===
-    0
-  ){
 
-    list.innerHTML = `
+  list.innerHTML =
+    dayTasks.length
 
-      <div class="empty">
+      ?
 
-        Bu gün için henüz görev yok. 📅
-
-        <br><br>
-
-        <button
-          class="primary-btn"
-          onclick="openNewTask()"
-        >
-          + İlk Görevi Ekle
-        </button>
-
-      </div>
-
-    `;
-
-  }else{
-
-    list.innerHTML =
       dayTasks
         .map(
           task =>
@@ -6698,20 +7734,33 @@ function renderHome(){
               task
             )
         )
-        .join("");
+        .join("")
 
-  }
+      :
+
+      `
+        <div class="empty">
+
+          Bu gün için henüz görev yok. 📅
+
+          <br><br>
+
+          <button
+            class="primary-btn"
+            onclick="openNewTask()"
+          >
+            + İlk Görevi Ekle
+          </button>
+
+        </div>
+      `;
+
 
   updateStats(
     dayTasks
   );
 
 }
-
-
-/* ======================================================
-   GÜNLÜK STATS
-====================================================== */
 
 function updateStats(
   dayTasks
@@ -6720,48 +7769,55 @@ function updateStats(
   const total =
     dayTasks.length;
 
-  const completed =
+
+  const done =
     dayTasks.filter(
       t =>
         t.completed
     ).length;
 
-  const percentage =
-    total === 0
-      ? 0
-      : Math.round(
-          completed /
+
+  const pct =
+    total
+      ? Math.round(
+          done /
           total *
           100
-        );
+        )
+      : 0;
+
 
   document.getElementById(
     "totalTasks"
   ).textContent =
     total;
 
+
   document.getElementById(
     "completedTasks"
   ).textContent =
-    completed;
+    done;
+
 
   document.getElementById(
     "percentage"
   ).textContent =
-    percentage +
+    pct +
     "%";
+
 
   document.getElementById(
     "progressText"
   ).textContent =
-    completed +
+    done +
     " / " +
     total;
+
 
   document.getElementById(
     "progressBar"
   ).style.width =
-    percentage +
+    pct +
     "%";
 
 }
@@ -6778,10 +7834,12 @@ function renderAllTasks(){
       "allTaskList"
     );
 
+
   const recurringList =
     document.getElementById(
       "recurringTaskList"
     );
+
 
   const search =
     (
@@ -6791,11 +7849,13 @@ function renderAllTasks(){
       ""
     ).toLowerCase();
 
+
   const status =
     document.getElementById(
       "filterStatus"
     )?.value ||
     "all";
+
 
   const category =
     document.getElementById(
@@ -6804,93 +7864,81 @@ function renderAllTasks(){
     "all";
 
 
-  const normalTasks =
+  const normal =
     tasks
       .filter(
-        task =>
-          !task.recurring
+        t =>
+          !t.recurring
       )
       .filter(
-        task=>{
+        t =>
+          t.text
+            .toLowerCase()
+            .includes(
+              search
+            ) &&
 
-          const matchesSearch =
-            task.text
-              .toLowerCase()
-              .includes(
-                search
-              );
-
-          const matchesStatus =
+          (
             status ===
               "all" ||
 
             (
               status ===
                 "active" &&
-              !task.completed
+              !t.completed
             ) ||
 
             (
               status ===
                 "completed" &&
-              task.completed
-            );
+              t.completed
+            )
+          ) &&
 
-          const matchesCategory =
+          (
             category ===
               "all" ||
-            task.category ===
-              category;
 
-          return (
-            matchesSearch &&
-            matchesStatus &&
-            matchesCategory
-          );
-
-        }
+            t.category ===
+              category
+          )
       )
       .sort(
         compareTasks
       );
 
 
-  const recurringTasks =
+  const recurring =
     tasks
       .filter(
-        task =>
-          task.recurring
+        t =>
+          t.recurring
       )
       .filter(
-        task=>{
+        t =>
+          t.text
+            .toLowerCase()
+            .includes(
+              search
+            ) &&
 
-          const matchesSearch =
-            task.text
-              .toLowerCase()
-              .includes(
-                search
-              );
-
-          const matchesCategory =
+          (
             category ===
               "all" ||
-            task.category ===
-              category;
 
-          return (
-            matchesSearch &&
-            matchesCategory
-          );
-
-        }
+            t.category ===
+              category
+          )
       )
       .sort(
         (a,b)=>
           (
-            a.order || 0
+            a.order ||
+            0
           ) -
           (
-            b.order || 0
+            b.order ||
+            0
           )
       );
 
@@ -6898,35 +7946,25 @@ function renderAllTasks(){
   document.getElementById(
     "normalSectionCount"
   ).textContent =
-    normalTasks.length;
+    normal.length;
 
 
   document.getElementById(
     "recurringSectionCount"
   ).textContent =
-    recurringTasks.length;
+    recurring.length;
 
 
-  if(
-    normalTasks.length ===
-    0
-  ){
+  normalList.innerHTML =
+    normal.length
 
-    normalList.innerHTML = `
+      ?
 
-      <div class="empty">
-        Uygun tek seferlik görev bulunamadı.
-      </div>
-
-    `;
-
-  }else{
-
-    normalList.innerHTML =
-      normalTasks
+      normal
         .map(
           task =>
             taskHTML({
+
               ...task,
 
               isRecurring:
@@ -6937,68 +7975,62 @@ function renderAllTasks(){
 
               occurrenceDate:
                 task.date
+
             })
         )
-        .join("");
+        .join("")
 
-  }
+      :
+
+      `
+        <div class="empty">
+          Uygun tek seferlik görev bulunamadı.
+        </div>
+      `;
 
 
-  if(
-    recurringTasks.length ===
-    0
-  ){
+  recurringList.innerHTML =
+    recurring.length
 
-    recurringList.innerHTML = `
+      ?
 
-      <div class="empty">
-        Henüz tekrarlayan plan yok.
-      </div>
-
-    `;
-
-  }else{
-
-    recurringList.innerHTML =
-      recurringTasks
+      recurring
         .map(
-          task =>
-            recurringHTML(
-              task
-            )
+          recurringHTML
         )
-        .join("");
+        .join("")
 
-  }
+      :
+
+      `
+        <div class="empty">
+          Henüz tekrarlayan plan yok.
+        </div>
+      `;
 
 }
-
-
-/* ======================================================
-   RECURRING HTML
-====================================================== */
 
 function recurringHTML(
   task
 ){
 
-  const rangeText =
+  const range =
     task.repeatEnd
-      ? shortDate(
+
+      ? `${shortDate(
           task.date
-        ) +
-        " → " +
-        shortDate(
+        )} → ${shortDate(
           task.repeatEnd
-        )
-      : shortDate(
+        )}`
+
+      : `${shortDate(
           task.date
-        ) +
-        " → Süresiz";
+        )} → Süresiz`;
 
 
-  const timeTag =
+  const time =
     task.time
+
       ? `
           <span class="tag">
             ⏰ ${escapeHTML(
@@ -7006,6 +8038,7 @@ function recurringHTML(
             )}
           </span>
         `
+
       : "";
 
 
@@ -7013,7 +8046,9 @@ function recurringHTML(
 
     <div class="task">
 
+
       <div class="task-info">
+
 
         <div class="task-name">
           🔁 ${escapeHTML(
@@ -7024,7 +8059,8 @@ function recurringHTML(
 
         <div class="task-meta">
 
-          ${timeTag}
+          ${time}
+
 
           <span class="tag">
             ${escapeHTML(
@@ -7057,8 +8093,9 @@ function recurringHTML(
 
 
           <span class="tag">
-            📅 ${rangeText}
+            📅 ${range}
           </span>
+
 
         </div>
 
@@ -7066,6 +8103,7 @@ function recurringHTML(
 
 
       <div class="task-actions">
+
 
         <button
           class="action-btn"
@@ -7093,6 +8131,7 @@ function recurringHTML(
           🗑️
         </button>
 
+
       </div>
 
     </div>
@@ -7115,41 +8154,46 @@ function getMonday(
       key
     );
 
+
   const day =
     d.getDay();
 
-  const diff =
-    day === 0
-      ? -6
-      : 1-day;
 
   d.setDate(
     d.getDate() +
-    diff
+    (
+      day === 0
+        ? -6
+        : 1-day
+    )
   );
+
 
   return d;
 
 }
 
 function changeWeek(
-  amount
+  n
 ){
 
-  const monday =
+  const m =
     getMonday(
       weekAnchor
     );
 
-  monday.setDate(
-    monday.getDate() +
-    amount * 7
+
+  m.setDate(
+    m.getDate() +
+    n * 7
   );
+
 
   weekAnchor =
     dateKeyFromDate(
-      monday
+      m
     );
+
 
   renderWeek();
 
@@ -7159,6 +8203,7 @@ function weekToday(){
 
   weekAnchor =
     getTodayKey();
+
 
   renderWeek();
 
@@ -7171,20 +8216,24 @@ function renderWeek(){
       "weekGrid"
     );
 
+
   const monday =
     getMonday(
       weekAnchor
     );
+
 
   const sunday =
     new Date(
       monday
     );
 
+
   sunday.setDate(
     sunday.getDate() +
     6
   );
+
 
   document.getElementById(
     "weekTitle"
@@ -7202,15 +8251,16 @@ function renderWeek(){
     );
 
 
-  const dayNames = [
-    "Pzt",
-    "Sal",
-    "Çar",
-    "Per",
-    "Cum",
-    "Cmt",
-    "Paz"
-  ];
+  const names =
+    [
+      "Pzt",
+      "Sal",
+      "Çar",
+      "Per",
+      "Cum",
+      "Cmt",
+      "Paz"
+    ];
 
 
   let html =
@@ -7223,29 +8273,34 @@ function renderWeek(){
     i++
   ){
 
-    const current =
+    const cur =
       new Date(
         monday
       );
 
-    current.setDate(
+
+    cur.setDate(
       monday.getDate() +
       i
     );
 
+
     const key =
       dateKeyFromDate(
-        current
+        cur
       );
+
 
     const dayTasks =
       getDayTasks(
         key
       );
 
+
     const selected =
       key ===
       selectedDate;
+
 
     const today =
       key ===
@@ -7257,13 +8312,18 @@ function renderWeek(){
       <div
         class="
           day-card
-          ${selected
-            ? "selected"
-            : ""}
-          ${today
-            ? "today"
-            : ""}
+          ${
+            selected
+              ? "selected"
+              : ""
+          }
+          ${
+            today
+              ? "today"
+              : ""
+          }
         "
+
         onclick="
           selectWeekDay(
             '${key}'
@@ -7271,13 +8331,14 @@ function renderWeek(){
         "
       >
 
+
         <div class="day-name">
-          ${dayNames[i]}
+          ${names[i]}
         </div>
 
 
         <div class="day-number">
-          ${current.getDate()}
+          ${cur.getDate()}
         </div>
 
 
@@ -7288,67 +8349,70 @@ function renderWeek(){
 
 
         ${
-          dayTasks.length ===
-          0
+          dayTasks.length
 
             ?
 
-          `
-            <div class="week-empty">
-              Plan yok
-            </div>
-          `
-
-            :
-
-          dayTasks
-            .map(
-              task =>
-                `
+            dayTasks
+              .map(
+                t => `
 
                   <div
                     class="
                       week-task
-                      ${task.completed
-                        ? "done"
-                        : ""}
+                      ${
+                        t.completed
+                          ? "done"
+                          : ""
+                      }
                     "
+
                     onclick="
                       event.stopPropagation();
 
                       toggleTask(
-                        ${task.sourceId},
+                        ${t.sourceId},
                         '${key}',
-                        ${task.isRecurring}
+                        ${t.isRecurring}
                       )
                     "
                   >
 
                     ${
-                      task.time
+                      t.time
                         ? "⏰ " +
                           escapeHTML(
-                            task.time
+                            t.time
                           ) +
                           " "
                         : ""
                     }
 
+
                     ${
-                      task.isRecurring
+                      t.isRecurring
                         ? "🔁 "
                         : ""
                     }
 
+
                     ${escapeHTML(
-                      task.text
+                      t.text
                     )}
 
                   </div>
 
                 `
-            )
-            .join("")
+              )
+              .join("")
+
+            :
+
+            `
+              <div class="week-empty">
+                Plan yok
+              </div>
+            `
         }
 
       </div>
@@ -7356,6 +8420,7 @@ function renderWeek(){
     `;
 
   }
+
 
   grid.innerHTML =
     html;
@@ -7369,10 +8434,13 @@ function selectWeekDay(
   selectedDate =
     key;
 
+
   weekAnchor =
     key;
 
+
   updateDateUI();
+
 
   showHomeFromCode();
 
@@ -7391,12 +8459,14 @@ function showHomeFromCode(){
         )
     );
 
+
   document.getElementById(
     "home"
   ).classList.add(
     "active"
   );
 
+
   document
     .querySelectorAll(
       ".menu-item"
@@ -7408,6 +8478,7 @@ function showHomeFromCode(){
         )
     );
 
+
   document
     .querySelectorAll(
       ".menu-item"
@@ -7415,6 +8486,7 @@ function showHomeFromCode(){
     .classList.add(
       "active"
     );
+
 
   document
     .querySelectorAll(
@@ -7424,8 +8496,8 @@ function showHomeFromCode(){
       b =>
         b.classList.remove(
           "active"
-        )
-    );
+        );
+
 
   document
     .querySelectorAll(
@@ -7434,8 +8506,10 @@ function showHomeFromCode(){
     .classList.add(
       "active"
     );
+
 
   renderHome();
+
 
   window.scrollTo({
     top:0,
@@ -7446,34 +8520,37 @@ function showHomeFromCode(){
 
 
 /* ======================================================
-   İSTATİSTİK
+   İSTATİSTİKLER
 ====================================================== */
 
 function renderStatistics(){
 
-  const normalTasks =
+  const normal =
     tasks.filter(
       t =>
         !t.recurring
     );
 
-  const total =
-    normalTasks.length;
 
-  const completed =
-    normalTasks.filter(
+  const total =
+    normal.length;
+
+
+  const done =
+    normal.filter(
       t =>
         t.completed
     ).length;
 
-  const percentage =
-    total === 0
-      ? 0
-      : Math.round(
-          completed /
+
+  const pct =
+    total
+      ? Math.round(
+          done /
           total *
           100
-        );
+        )
+      : 0;
 
 
   document.getElementById(
@@ -7485,13 +8562,13 @@ function renderStatistics(){
   document.getElementById(
     "allCompleted"
   ).textContent =
-    completed;
+    done;
 
 
   document.getElementById(
     "allPercentage"
   ).textContent =
-    percentage +
+    pct +
     "%";
 
 
@@ -7514,77 +8591,80 @@ function renderStatistics(){
 
 function renderCategoryStats(){
 
-  const categories = [
-    "Genel",
-    "Ders",
-    "Python",
-    "İngilizce",
-    "Spor",
-    "Kişisel"
-  ];
+  const cats =
+    [
+      "Genel",
+      "Ders",
+      "Python",
+      "İngilizce",
+      "Spor",
+      "Kişisel"
+    ];
 
-  const container =
+
+  const c =
     document.getElementById(
       "categoryStats"
     );
 
-  container.innerHTML =
+
+  c.innerHTML =
     "";
 
 
-  categories.forEach(
-    category=>{
+  cats.forEach(
+    cat=>{
 
-      const normalTasks =
+      const list =
         tasks.filter(
           t =>
             !t.recurring &&
             t.category ===
-            category
+            cat
         );
 
+
       const done =
-        normalTasks.filter(
+        list.filter(
           t =>
             t.completed
         ).length;
 
-      const percent =
-        normalTasks.length ===
-          0
 
-          ? 0
-
-          : Math.round(
+      const pct =
+        list.length
+          ? Math.round(
               done /
-              normalTasks.length *
+              list.length *
               100
-            );
+            )
+          : 0;
 
 
-      container.innerHTML += `
+      c.innerHTML += `
 
         <div class="category-row">
 
           <div class="stat-label">
             ${escapeHTML(
-              category
+              cat
             )}
           </div>
+
 
           <div class="stat-bar">
 
             <div
               style="
-                width:${percent}%
+                width:${pct}%
               "
             ></div>
 
           </div>
 
+
           <div class="stat-count">
-            ${done}/
-            ${normalTasks.length}
+            ${done}/${list.length}
           </div>
 
         </div>
@@ -7598,12 +8678,13 @@ function renderCategoryStats(){
 
 function renderLastSevenStats(){
 
-  const container =
+  const c =
     document.getElementById(
       "lastSevenStats"
     );
 
-  container.innerHTML =
+
+  c.innerHTML =
     "";
 
 
@@ -7624,6 +8705,7 @@ function renderLastSevenStats(){
         end
       );
 
+
     d.setDate(
       d.getDate() -
       i
@@ -7635,10 +8717,12 @@ function renderLastSevenStats(){
         d
       );
 
+
     const dayTasks =
       getDayTasks(
         key
       );
+
 
     const done =
       dayTasks.filter(
@@ -7646,17 +8730,19 @@ function renderLastSevenStats(){
           t.completed
       ).length;
 
+
     const total =
       dayTasks.length;
 
-    const percent =
-      total === 0
-        ? 0
-        : Math.round(
+
+    const pct =
+      total
+        ? Math.round(
             done /
             total *
             100
-          );
+          )
+        : 0;
 
 
     const label =
@@ -7668,7 +8754,7 @@ function renderLastSevenStats(){
       );
 
 
-    container.innerHTML += `
+    c.innerHTML += `
 
       <div class="day-stat-row">
 
@@ -7681,7 +8767,7 @@ function renderLastSevenStats(){
 
           <div
             style="
-              width:${percent}%
+              width:${pct}%
             "
           ></div>
 
@@ -7702,71 +8788,68 @@ function renderLastSevenStats(){
 
 function renderPriorityStats(){
 
-  const priorities = [
-
-    {
-      key:"high",
-      name:"Yüksek"
-    },
-
-    {
-      key:"medium",
-      name:"Orta"
-    },
-
-    {
-      key:"low",
-      name:"Düşük"
-    }
-
-  ];
+  const ps =
+    [
+      {
+        key:"high",
+        name:"Yüksek"
+      },
+      {
+        key:"medium",
+        name:"Orta"
+      },
+      {
+        key:"low",
+        name:"Düşük"
+      }
+    ];
 
 
-  const container =
+  const c =
     document.getElementById(
       "priorityStats"
     );
 
-  container.innerHTML =
+
+  c.innerHTML =
     "";
 
 
-  priorities.forEach(
-    priority=>{
+  ps.forEach(
+    p=>{
 
-      const normalTasks =
+      const list =
         tasks.filter(
           t =>
             !t.recurring &&
             t.priority ===
-            priority.key
+            p.key
         );
 
+
       const done =
-        normalTasks.filter(
+        list.filter(
           t =>
             t.completed
         ).length;
 
-      const percent =
-        normalTasks.length ===
-          0
 
-          ? 0
-
-          : Math.round(
+      const pct =
+        list.length
+          ? Math.round(
               done /
-              normalTasks.length *
+              list.length *
               100
-            );
+            )
+          : 0;
 
 
-      container.innerHTML += `
+      c.innerHTML += `
 
         <div class="category-row">
 
           <div class="stat-label">
-            ${priority.name}
+            ${p.name}
           </div>
 
 
@@ -7774,7 +8857,7 @@ function renderPriorityStats(){
 
             <div
               style="
-                width:${percent}%
+                width:${pct}%
               "
             ></div>
 
@@ -7782,8 +8865,7 @@ function renderPriorityStats(){
 
 
           <div class="stat-count">
-            ${done}/
-            ${normalTasks.length}
+            ${done}/${list.length}
           </div>
 
         </div>
@@ -7806,6 +8888,7 @@ function toggleDarkMode(){
     "dark"
   );
 
+
   localStorage.setItem(
     "darkMode",
     document.body.classList.contains(
@@ -7814,6 +8897,7 @@ function toggleDarkMode(){
   );
 
 }
+
 
 if(
   localStorage.getItem(
@@ -7867,11 +8951,12 @@ document.addEventListener(
 let authMode =
   "login";
 
+
 function toggleAuthMode(){
 
   authMode =
     authMode ===
-    "login"
+      "login"
 
       ? "signup"
 
@@ -7883,23 +8968,26 @@ function toggleAuthMode(){
       "authTitle"
     );
 
-  const button =
+
+  const btn =
     document.getElementById(
       "authButton"
     );
+
 
   const toggle =
     document.getElementById(
       "authToggle"
     );
 
-  const message =
+
+  const msg =
     document.getElementById(
       "authMessage"
     );
 
 
-  message.textContent =
+  msg.textContent =
     "";
 
 
@@ -7911,8 +8999,10 @@ function toggleAuthMode(){
     title.textContent =
       "Yeni hesap oluştur";
 
-    button.textContent =
+
+    btn.textContent =
       "Kayıt Ol";
+
 
     toggle.textContent =
       "Zaten hesabın var mı? Giriş yap";
@@ -7922,8 +9012,10 @@ function toggleAuthMode(){
     title.textContent =
       "Hesabına giriş yap";
 
-    button.textContent =
+
+    btn.textContent =
       "Giriş Yap";
+
 
     toggle.textContent =
       "Hesabın yok mu? Kayıt ol";
@@ -7939,17 +9031,20 @@ async function handleAuth(){
       "authEmail"
     ).value.trim();
 
+
   const password =
     document.getElementById(
       "authPassword"
     ).value;
 
-  const message =
+
+  const msg =
     document.getElementById(
       "authMessage"
     );
 
-  const button =
+
+  const btn =
     document.getElementById(
       "authButton"
     );
@@ -7960,7 +9055,7 @@ async function handleAuth(){
     !password
   ){
 
-    message.textContent =
+    msg.textContent =
       "Lütfen e-posta ve şifreni gir.";
 
     return;
@@ -7973,7 +9068,7 @@ async function handleAuth(){
     6
   ){
 
-    message.textContent =
+    msg.textContent =
       "Şifre en az 6 karakter olmalı.";
 
     return;
@@ -7981,10 +9076,11 @@ async function handleAuth(){
   }
 
 
-  button.disabled =
+  btn.disabled =
     true;
 
-  message.textContent =
+
+  msg.textContent =
     "İşlem yapılıyor...";
 
 
@@ -8002,13 +9098,8 @@ async function handleAuth(){
         await supabaseClient
           .auth
           .signUp({
-
-            email:
-              email,
-
-            password:
-              password
-
+            email,
+            password
           });
 
 
@@ -8028,15 +9119,18 @@ async function handleAuth(){
         ).style.display =
           "none";
 
-        message.textContent =
+
+        msg.textContent =
           "";
+
 
         await loadTasks();
 
       }else{
 
-        message.textContent =
+        msg.textContent =
           "Hesabın oluşturuldu. Şimdi giriş yapabilirsin.";
+
 
         toggleAuthMode();
 
@@ -8051,11 +9145,8 @@ async function handleAuth(){
           .auth
           .signInWithPassword({
 
-            email:
-              email,
-
-            password:
-              password
+            email,
+            password
 
           });
 
@@ -8072,8 +9163,10 @@ async function handleAuth(){
       ).style.display =
         "none";
 
-      message.textContent =
+
+      msg.textContent =
         "";
+
 
       await loadTasks();
 
@@ -8081,22 +9174,17 @@ async function handleAuth(){
 
   }catch(error){
 
-    message.textContent =
+    msg.textContent =
       error.message;
 
   }finally{
 
-    button.disabled =
+    btn.disabled =
       false;
 
   }
 
 }
-
-
-/* ======================================================
-   AUTH CONTROL
-====================================================== */
 
 async function checkAuth(){
 
@@ -8117,6 +9205,7 @@ async function checkAuth(){
     ).style.display =
       "none";
 
+
     await loadTasks();
 
   }else{
@@ -8131,43 +9220,50 @@ async function checkAuth(){
 }
 
 
-supabaseClient.auth.onAuthStateChange(
-  (
-    event,
-    session
-  )=>{
+/* ======================================================
+   AUTH STATE
+====================================================== */
 
-    const authScreen =
-      document.getElementById(
-        "authScreen"
-      );
+supabaseClient
+  .auth
+  .onAuthStateChange(
+    (
+      event,
+      session
+    )=>{
+
+      const auth =
+        document.getElementById(
+          "authScreen"
+        );
 
 
-    if(session){
+      if(session){
 
-      authScreen.style.display =
-        "none";
+        auth.style.display =
+          "none";
 
-      setTimeout(
-        ()=>{
-          loadTasks();
-        },
-        0
-      );
 
-    }else{
+        setTimeout(
+          ()=>{
+            loadTasks();
+          },
+          0
+        );
 
-      authScreen.style.display =
-        "flex";
+      }else{
+
+        auth.style.display =
+          "flex";
+
+      }
 
     }
-
-  }
-);
+  );
 
 
 /* ======================================================
-   START
+   BAŞLAT
 ====================================================== */
 
 ensureOrders();
@@ -8177,6 +9273,10 @@ updateGreeting();
 updateDateUI();
 
 renderHome();
+
+updateNotificationUI();
+
+registerServiceWorker();
 
 checkAuth();
 
