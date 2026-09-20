@@ -2567,8 +2567,10 @@ async function saveTasks() {
   }));
 
   const { error } = await supabaseClient
-    .from("tasks")
-    .upsert(rows);
+  .from("tasks")
+  .upsert(rows, {
+    onConflict: "user_id,task_id"
+  });
 
   if (error) {
     console.error(
