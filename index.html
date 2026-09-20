@@ -888,6 +888,42 @@ select:focus{
   line-height:1.5;
 }
 
+.custom-days{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
+  margin-top:10px;
+}
+
+.custom-day{
+  border:1px solid #ddd;
+  background:#fff;
+  color:#444;
+  border-radius:8px;
+  padding:8px 4px;
+  cursor:pointer;
+  font-size:11px;
+  text-align:center;
+}
+
+.custom-day.selected{
+  background:#4f46e5;
+  border-color:#4f46e5;
+  color:#fff;
+  font-weight:700;
+}
+
+.dark .custom-day{
+  background:#292c30;
+  color:#ddd;
+  border-color:#44484d;
+}
+
+.dark .custom-day.selected{
+  background:#4f46e5;
+  color:#fff;
+}
+
 .modal-actions{
   display:flex;
   justify-content:flex-end;
@@ -1022,6 +1058,10 @@ select:focus{
 
   .form-grid{
     grid-template-columns:1fr;
+  }
+
+  .custom-days{
+    grid-template-columns:repeat(4,1fr);
   }
 
   .modal-actions{
@@ -1690,7 +1730,7 @@ select:focus{
       </div>
 
       <div class="muted">
-        Aktif günlük plan
+        Aktif tekrarlayan plan
       </div>
 
     </div>
@@ -1840,7 +1880,7 @@ select:focus{
             class="form-label"
             for="modalDate"
           >
-            Tarih
+            Başlangıç tarihi
           </label>
 
           <input
@@ -1964,7 +2004,97 @@ select:focus{
             🔁 Her gün
           </option>
 
+          <option value="weekly">
+            📆 Her hafta
+          </option>
+
+          <option value="custom">
+            🗓️ Belirli günler
+          </option>
+
+          <option value="monthly">
+            🔂 Her ay
+          </option>
+
         </select>
+
+        <div
+          id="customDaysArea"
+          style="display:none;margin-top:12px;"
+        >
+
+          <div class="form-label">
+            Hangi günlerde?
+          </div>
+
+          <div class="custom-days">
+
+            <button
+              type="button"
+              class="custom-day"
+              data-day="1"
+              onclick="toggleCustomDay(this)"
+            >
+              Pzt
+            </button>
+
+            <button
+              type="button"
+              class="custom-day"
+              data-day="2"
+              onclick="toggleCustomDay(this)"
+            >
+              Sal
+            </button>
+
+            <button
+              type="button"
+              class="custom-day"
+              data-day="3"
+              onclick="toggleCustomDay(this)"
+            >
+              Çar
+            </button>
+
+            <button
+              type="button"
+              class="custom-day"
+              data-day="4"
+              onclick="toggleCustomDay(this)"
+            >
+              Per
+            </button>
+
+            <button
+              type="button"
+              class="custom-day"
+              data-day="5"
+              onclick="toggleCustomDay(this)"
+            >
+              Cum
+            </button>
+
+            <button
+              type="button"
+              class="custom-day"
+              data-day="6"
+              onclick="toggleCustomDay(this)"
+            >
+              Cmt
+            </button>
+
+            <button
+              type="button"
+              class="custom-day"
+              data-day="0"
+              onclick="toggleCustomDay(this)"
+            >
+              Paz
+            </button>
+
+          </div>
+
+        </div>
 
         <div
           id="repeatEndArea"
@@ -2020,8 +2150,8 @@ select:focus{
           </div>
 
           <div class="repeat-info">
-            Örneğin "3 gün" seçersen görev,
-            başlangıç günü dahil olmak üzere 3 gün görünür.
+            Bitiş tarihi başlangıç günü dahil edilir.
+            Süresiz seçersen bir bitiş tarihi olmaz.
           </div>
 
         </div>
@@ -2087,6 +2217,17 @@ let loadTasksPromise =
 tasks =
   tasks.map((task,index)=>{
 
+    let repeatType =
+      task.repeatType ||
+      (task.recurring ? "daily" : "none");
+
+    if(
+      repeatType==="daily" &&
+      !task.recurring
+    ){
+      repeatType="none";
+    }
+
     return {
 
       id:
@@ -2125,8 +2266,7 @@ tasks =
         Boolean(task.recurring),
 
       repeatType:
-        task.repeatType ||
-        "daily",
+        repeatType,
 
       repeatEnd:
         task.repeatEnd ||
@@ -2359,7 +2499,9 @@ function taskToRow(task,userId){
       task.priority || null,
 
     task_order:
-      task.order ?? 0,
+      Number.isFinite(task.order)
+        ? task.order
+        : 0,
 
     recurring:
       task.recurring || false,
@@ -2371,7 +2513,9 @@ function taskToRow(task,userId){
       task.repeatEnd || null,
 
     completed_dates:
-      task.completedDates || []
+      Array.isArray(task.completedDates)
+        ? task.completedDates
+        : []
 
   };
 
@@ -2459,7 +2603,6 @@ async function loadTasks(){
         return;
       }
 
-
       let { data, error } =
         await supabaseClient
           .from("tasks")
@@ -2475,7 +2618,6 @@ async function loadTasks(){
             }
           );
 
-
       if(error){
 
         console.error(
@@ -2487,11 +2629,6 @@ async function loadTasks(){
 
       }
 
-
-      /* ==================================================
-         ESKİ TARAYICI GÖREVLERİNİ BİR KEZ AKTAR
-      ================================================== */
-
       const migrationKey =
         "plannerSupabaseMigrationDone_" +
         user.id;
@@ -2500,7 +2637,6 @@ async function loadTasks(){
         localStorage.getItem(
           migrationKey
         ) === "true";
-
 
       if(!alreadyMigrated){
 
@@ -2511,7 +2647,6 @@ async function loadTasks(){
             )
           );
 
-
         const localOnlyTasks =
           tasks.filter(
             task =>
@@ -2519,7 +2654,6 @@ async function loadTasks(){
                 String(task.id)
               )
           );
-
 
         if(localOnlyTasks.length>0){
 
@@ -2532,8 +2666,9 @@ async function loadTasks(){
                 )
             );
 
-
-          const { error:migrationError } =
+          const {
+            error:migrationError
+          } =
             await supabaseClient
               .from("tasks")
               .upsert(
@@ -2543,7 +2678,6 @@ async function loadTasks(){
                     "user_id,task_id"
                 }
               );
-
 
           if(migrationError){
 
@@ -2556,12 +2690,10 @@ async function loadTasks(){
 
         }
 
-
         localStorage.setItem(
           migrationKey,
           "true"
         );
-
 
         const refreshed =
           await supabaseClient
@@ -2578,7 +2710,6 @@ async function loadTasks(){
               }
             );
 
-
         if(!refreshed.error){
 
           data =
@@ -2587,7 +2718,6 @@ async function loadTasks(){
         }
 
       }
-
 
       tasks =
         (data || []).map(
@@ -2606,13 +2736,15 @@ async function loadTasks(){
               row.task_time || "",
 
             category:
-              row.category || "",
+              row.category || "Genel",
 
             priority:
-              row.priority || "",
+              row.priority || "medium",
 
             order:
-              row.task_order ?? 0,
+              Number.isFinite(row.task_order)
+                ? row.task_order
+                : 0,
 
             completed:
               !!row.completed,
@@ -2621,7 +2753,11 @@ async function loadTasks(){
               !!row.recurring,
 
             repeatType:
-              row.repeat_type || "",
+              row.repeat_type || (
+                row.recurring
+                  ? "daily"
+                  : "none"
+              ),
 
             repeatEnd:
               row.repeat_end || "",
@@ -2636,15 +2772,12 @@ async function loadTasks(){
           })
         );
 
-
-      normalizeOrders();
-
+      ensureOrders();
 
       localStorage.setItem(
         "plannerTasks",
         JSON.stringify(tasks)
       );
-
 
       updateDateUI();
 
@@ -2657,7 +2790,6 @@ async function loadTasks(){
       renderStatistics();
 
     })();
-
 
   try{
 
@@ -2685,9 +2817,12 @@ function showPage(page,button){
       p=>p.classList.remove("active")
     );
 
-  document
-    .getElementById(page)
-    .classList.add("active");
+  const target =
+    document.getElementById(page);
+
+  if(target){
+    target.classList.add("active");
+  }
 
   document
     .querySelectorAll(".menu-item")
@@ -2742,6 +2877,163 @@ function showMobilePage(page,button){
 
 
 /* ======================================================
+   TEKRAR MANTIĞI
+====================================================== */
+
+function getCustomRepeatDays(repeatType){
+
+  if(
+    typeof repeatType!=="string" ||
+    !repeatType.startsWith("custom:")
+  ){
+
+    return [];
+
+  }
+
+  return repeatType
+    .slice(7)
+    .split(",")
+    .map(Number)
+    .filter(
+      day =>
+        Number.isInteger(day) &&
+        day>=0 &&
+        day<=6
+    );
+
+}
+
+function getRepeatLabel(task){
+
+  const type =
+    task.repeatType || "daily";
+
+  if(type==="daily"){
+
+    return "Her gün";
+
+  }
+
+  if(type==="weekly"){
+
+    return "Her hafta";
+
+  }
+
+  if(type==="monthly"){
+
+    return "Her ay";
+
+  }
+
+  if(type.startsWith("custom:")){
+
+    const names={
+      1:"Pzt",
+      2:"Sal",
+      3:"Çar",
+      4:"Per",
+      5:"Cum",
+      6:"Cmt",
+      0:"Paz"
+    };
+
+    const days =
+      getCustomRepeatDays(type);
+
+    return days
+      .map(
+        day=>names[day]
+      )
+      .join(" • ");
+
+  }
+
+  return "Tekrarlı";
+
+}
+
+function isRecurringActiveOnDate(
+  task,
+  date
+){
+
+  if(
+    !task.recurring
+  ){
+
+    return false;
+
+  }
+
+  if(
+    !task.date ||
+    date<task.date
+  ){
+
+    return false;
+
+  }
+
+  if(
+    task.repeatEnd &&
+    date>task.repeatEnd
+  ){
+
+    return false;
+
+  }
+
+  const current =
+    dateObject(date);
+
+  const start =
+    dateObject(task.date);
+
+  const type =
+    task.repeatType || "daily";
+
+  if(type==="daily"){
+
+    return true;
+
+  }
+
+  if(type==="weekly"){
+
+    return (
+      current.getDay()===
+      start.getDay()
+    );
+
+  }
+
+  if(type==="monthly"){
+
+    return (
+      current.getDate()===
+      start.getDate()
+    );
+
+  }
+
+  if(type.startsWith("custom:")){
+
+    return getCustomRepeatDays(
+      type
+    ).includes(
+      current.getDay()
+    );
+
+  }
+
+  return false;
+
+}
+
+
+/* ======================================================
    GÖREVLER
 ====================================================== */
 
@@ -2779,11 +3071,9 @@ function getDayTasks(date){
       .filter(
         t =>
           t.recurring &&
-          t.repeatType==="daily" &&
-          date>=t.date &&
-          (
-            !t.repeatEnd ||
-            date<=t.repeatEnd
+          isRecurringActiveOnDate(
+            t,
+            date
           )
       )
       .map(
@@ -2798,6 +3088,9 @@ function getDayTasks(date){
           occurrenceDate:date,
 
           completed:
+            Array.isArray(
+              t.completedDates
+            ) &&
             t.completedDates.includes(date)
 
         })
@@ -2812,6 +3105,22 @@ function getDayTasks(date){
 
 function compareTasks(a,b){
 
+  const orderA =
+    Number.isFinite(a.order)
+      ? a.order
+      : 999999;
+
+  const orderB =
+    Number.isFinite(b.order)
+      ? b.order
+      : 999999;
+
+  if(orderA!==orderB){
+
+    return orderA-orderB;
+
+  }
+
   const timeA =
     a.time || "99:99";
 
@@ -2824,9 +3133,10 @@ function compareTasks(a,b){
 
   }
 
-  return (
-    (a.order||0) -
-    (b.order||0)
+  return String(
+    getSourceId(a)
+  ).localeCompare(
+    String(getSourceId(b))
   );
 
 }
@@ -2882,6 +3192,8 @@ function openNewTask(){
     "recurringEditNote"
   ).classList.remove("show");
 
+  clearCustomDays();
+
   updateRepeatFields();
 
   document.getElementById(
@@ -2908,12 +3220,12 @@ function openEditTask(id){
 
   const task =
     tasks.find(
-      t=>t.id===id
+      t=>String(t.id)===String(id)
     );
 
   if(!task)return;
 
-  editingTaskId=id;
+  editingTaskId=task.id;
 
   document.getElementById(
     "modalTitle"
@@ -2922,7 +3234,8 @@ function openEditTask(id){
 
   document.getElementById(
     "modalTaskId"
-  ).value=id;
+  ).value=
+    task.id;
 
   document.getElementById(
     "modalTaskName"
@@ -2949,17 +3262,70 @@ function openEditTask(id){
   ).value=
     task.priority;
 
+  let repeatSelectValue =
+    task.repeatType || "none";
+
+  if(
+    repeatSelectValue.startsWith(
+      "custom:"
+    )
+  ){
+
+    repeatSelectValue="custom";
+
+  }
+
   document.getElementById(
     "modalRepeat"
   ).value =
     task.recurring
-      ? "daily"
+      ? repeatSelectValue
       : "none";
 
   document.getElementById(
     "modalRepeatEnd"
   ).value =
     task.repeatEnd || "";
+
+  clearCustomDays();
+
+  if(
+    task.recurring &&
+    task.repeatType &&
+    task.repeatType.startsWith("custom:")
+  ){
+
+    const selectedDays =
+      getCustomRepeatDays(
+        task.repeatType
+      );
+
+    document
+      .querySelectorAll(
+        ".custom-day"
+      )
+      .forEach(
+        button=>{
+
+          const day =
+            Number(
+              button.dataset.day
+            );
+
+          if(
+            selectedDays.includes(day)
+          ){
+
+            button.classList.add(
+              "selected"
+            );
+
+          }
+
+        }
+      );
+
+  }
 
   document.getElementById(
     "recurringEditNote"
@@ -3004,7 +3370,7 @@ function closeModalOutside(event){
 
 
 /* ======================================================
-   TEKRAR
+   TEKRAR FORMU
 ====================================================== */
 
 function updateRepeatFields(){
@@ -3014,24 +3380,38 @@ function updateRepeatFields(){
       "modalRepeat"
     ).value;
 
-  const area =
+  const endArea =
     document.getElementById(
       "repeatEndArea"
     );
 
-  if(repeat==="daily"){
+  const customArea =
+    document.getElementById(
+      "customDaysArea"
+    );
 
-    area.style.display="block";
+  if(repeat==="none"){
 
-  }else{
+    endArea.style.display="none";
 
-    area.style.display="none";
+    customArea.style.display="none";
 
     document.getElementById(
       "modalRepeatEnd"
     ).value="";
 
+    clearCustomDays();
+
+    return;
+
   }
+
+  endArea.style.display="block";
+
+  customArea.style.display =
+    repeat==="custom"
+      ? "block"
+      : "none";
 
   updateRepeatEndMin();
 
@@ -3058,7 +3438,13 @@ function setRepeatDays(days){
       "modalRepeat"
     );
 
-  repeatSelect.value="daily";
+  if(
+    repeatSelect.value==="none"
+  ){
+
+    repeatSelect.value="daily";
+
+  }
 
   updateRepeatFields();
 
@@ -3084,6 +3470,59 @@ function setRepeatDays(days){
     addDays(
       start,
       days-1
+    );
+
+}
+
+function toggleCustomDay(button){
+
+  button.classList.toggle(
+    "selected"
+  );
+
+}
+
+function clearCustomDays(){
+
+  document
+    .querySelectorAll(
+      ".custom-day"
+    )
+    .forEach(
+      button=>
+        button.classList.remove(
+          "selected"
+        )
+    );
+
+}
+
+function getSelectedCustomDays(){
+
+  return Array.from(
+    document.querySelectorAll(
+      ".custom-day.selected"
+    )
+  )
+    .map(
+      button =>
+        Number(
+          button.dataset.day
+        )
+    )
+    .sort(
+      (a,b)=>{
+
+        const order=[
+          1,2,3,4,5,6,0
+        ];
+
+        return (
+          order.indexOf(a) -
+          order.indexOf(b)
+        );
+
+      }
     );
 
 }
@@ -3122,7 +3561,7 @@ function saveFromModal(event){
       "modalPriority"
     ).value;
 
-  const repeatType =
+  const repeatSelect =
     document.getElementById(
       "modalRepeat"
     ).value;
@@ -3131,6 +3570,9 @@ function saveFromModal(event){
     document.getElementById(
       "modalRepeatEnd"
     ).value;
+
+  let repeatType =
+    repeatSelect;
 
   if(!text){
 
@@ -3153,7 +3595,7 @@ function saveFromModal(event){
   }
 
   if(
-    repeatType==="daily" &&
+    repeatSelect!=="none" &&
     repeatEnd &&
     repeatEnd<date
   ){
@@ -3166,14 +3608,45 @@ function saveFromModal(event){
 
   }
 
+  if(
+    repeatSelect==="custom"
+  ){
+
+    const customDays =
+      getSelectedCustomDays();
+
+    if(customDays.length===0){
+
+      alert(
+        "Lütfen en az bir gün seç."
+      );
+
+      return;
+
+    }
+
+    repeatType =
+      "custom:" +
+      customDays.join(",");
+
+  }
+
+  const isRecurring =
+    repeatSelect!=="none";
+
   if(editingTaskId!==null){
 
     const task =
       tasks.find(
-        t=>t.id===editingTaskId
+        t =>
+          String(t.id)===
+          String(editingTaskId)
       );
 
     if(task){
+
+      const wasRecurring =
+        task.recurring;
 
       task.text=text;
 
@@ -3186,22 +3659,39 @@ function saveFromModal(event){
       task.priority=priority;
 
       task.recurring =
-        repeatType==="daily";
+        isRecurring;
 
       task.repeatType =
-        repeatType;
+        isRecurring
+          ? repeatType
+          : "none";
 
       task.repeatEnd =
-        repeatType==="daily"
+        isRecurring
           ? repeatEnd
           : "";
 
       if(
-        task.recurring &&
-        !Array.isArray(task.completedDates)
+        isRecurring
+      ){
+
+        if(
+          !Array.isArray(
+            task.completedDates
+          )
+        ){
+
+          task.completedDates=[];
+
+        }
+
+      }else if(
+        wasRecurring
       ){
 
         task.completedDates=[];
+
+        task.completed=false;
 
       }
 
@@ -3216,7 +3706,10 @@ function saveFromModal(event){
       dayTasks.length
         ? Math.max(
             ...dayTasks.map(
-              t=>t.order||0
+              t =>
+                Number.isFinite(t.order)
+                  ? t.order
+                  : -1
             )
           )
         : -1;
@@ -3244,13 +3737,15 @@ function saveFromModal(event){
       completed:false,
 
       recurring:
-        repeatType==="daily",
+        isRecurring,
 
       repeatType:
-        repeatType,
+        isRecurring
+          ? repeatType
+          : "none",
 
       repeatEnd:
-        repeatType==="daily"
+        isRecurring
           ? repeatEnd
           : "",
 
@@ -3293,7 +3788,9 @@ function toggleTask(
 
   const task =
     tasks.find(
-      t=>t.id===sourceId
+      t =>
+        String(t.id)===
+        String(sourceId)
     );
 
   if(!task)return;
@@ -3361,7 +3858,9 @@ async function deleteTask(
 
   const task =
     tasks.find(
-      t=>t.id===sourceId
+      t =>
+        String(t.id)===
+        String(sourceId)
     );
 
   if(!task){
@@ -3381,17 +3880,18 @@ async function deleteTask(
 
   }
 
-
   const { data:sessionData } =
     await supabaseClient.auth.getSession();
 
   const user =
     sessionData.session?.user;
 
-
   if(user){
 
-    const { error } =
+    const {
+      data:deletedRows,
+      error
+    } =
       await supabaseClient
         .from("tasks")
         .delete()
@@ -3402,6 +3902,9 @@ async function deleteTask(
         .eq(
           "task_id",
           sourceId
+        )
+        .select(
+          "task_id"
         );
 
     if(error){
@@ -3412,7 +3915,23 @@ async function deleteTask(
       );
 
       alert(
-        "Görev Supabase'den silinemedi. Görev silinmedi."
+        "Görev Supabase'den silinemedi. Görev korunuyor."
+      );
+
+      return;
+    }
+
+    if(
+      !deletedRows ||
+      deletedRows.length===0
+    ){
+
+      console.error(
+        "Supabase silme işlemi satır döndürmedi."
+      );
+
+      alert(
+        "Görev uygulamadan silinmedi çünkü Supabase'deki kayıt doğrulanamadı."
       );
 
       return;
@@ -3420,21 +3939,19 @@ async function deleteTask(
 
   }
 
-
   tasks =
     tasks.filter(
-      t=>t.id!==sourceId
+      t =>
+        String(t.id)!==
+        String(sourceId)
     );
 
-
-  normalizeOrders();
-
+  ensureOrders();
 
   localStorage.setItem(
     "plannerTasks",
     JSON.stringify(tasks)
   );
-
 
   renderHome();
 
@@ -3462,7 +3979,11 @@ function moveTask(
 
   const index =
     day.findIndex(
-      t=>getSourceId(t)===sourceId
+      t =>
+        String(
+          getSourceId(t)
+        )===
+        String(sourceId)
     );
 
   if(index===-1)return;
@@ -3479,39 +4000,41 @@ function moveTask(
 
   }
 
-  const first =
-    day[index];
+  const reordered =
+    [...day];
 
-  const second =
-    day[newIndex];
-
-  const firstSource =
-    tasks.find(
-      t=>t.id===getSourceId(first)
+  const [item] =
+    reordered.splice(
+      index,
+      1
     );
 
-  const secondSource =
-    tasks.find(
-      t=>t.id===getSourceId(second)
-    );
+  reordered.splice(
+    newIndex,
+    0,
+    item
+  );
 
-  if(
-    !firstSource ||
-    !secondSource
-  ){
+  reordered.forEach(
+    (dayTask,index)=>{
 
-    return;
+      const source =
+        tasks.find(
+          t =>
+            String(t.id)===
+            String(
+              getSourceId(dayTask)
+            )
+        );
 
-  }
+      if(source){
 
-  const temp =
-    firstSource.order;
+        source.order=index;
 
-  firstSource.order =
-    secondSource.order;
+      }
 
-  secondSource.order =
-    temp;
+    }
+  );
 
   saveTasks();
 
@@ -3547,7 +4070,8 @@ function dropTask(
 
   if(
     draggedTaskId===null ||
-    draggedTaskId===targetId
+    String(draggedTaskId)===
+    String(targetId)
   ){
 
     return;
@@ -3559,12 +4083,20 @@ function dropTask(
 
   const from =
     day.findIndex(
-      t=>getSourceId(t)===draggedTaskId
+      t =>
+        String(
+          getSourceId(t)
+        )===
+        String(draggedTaskId)
     );
 
   const to =
     day.findIndex(
-      t=>getSourceId(t)===targetId
+      t =>
+        String(
+          getSourceId(t)
+        )===
+        String(targetId)
     );
 
   if(
@@ -3598,7 +4130,11 @@ function dropTask(
 
       const source =
         tasks.find(
-          t=>t.id===getSourceId(item)
+          t =>
+            String(t.id)===
+            String(
+              getSourceId(item)
+            )
         );
 
       if(source){
@@ -3627,58 +4163,28 @@ function dropTask(
    ORDER
 ====================================================== */
 
-function normalizeOrders(){
+function ensureOrders(){
 
-  const dates =
-    [
-      ...new Set(
-        tasks
-          .filter(
-            t=>!t.recurring
-          )
-          .map(
-            t=>t.date
-          )
-      )
-    ];
+  tasks.forEach(
+    (task,index)=>{
 
-  dates.forEach(date=>{
-
-    const day =
-      tasks
-        .filter(
-          t =>
-            !t.recurring &&
-            t.date===date
+      if(
+        !Number.isFinite(
+          task.order
         )
-        .sort(compareTasks);
-
-    day.forEach(
-      (task,index)=>{
+      ){
 
         task.order=index;
 
-      }
-    );
+      }else{
 
-  });
-
-  tasks
-    .filter(
-      t=>t.recurring
-    )
-    .sort(
-      (a,b)=>
-        (a.order||0)-
-        (b.order||0)
-    )
-    .forEach(
-      (task,index)=>{
-
-        task.order=index;
+        task.order =
+          Number(task.order);
 
       }
-    );
+
+    }
+  );
 
 }
 
@@ -3711,7 +4217,10 @@ function escapeHTML(text){
   const div =
     document.createElement("div");
 
-  div.textContent=text;
+  div.textContent =
+    text == null
+      ? ""
+      : String(text);
 
   return div.innerHTML;
 
@@ -3737,7 +4246,9 @@ function taskHTML(task){
     task.isRecurring
       ? `
         <span class="tag repeat-tag">
-          🔁 Her gün
+          🔁 ${escapeHTML(
+            getRepeatLabel(task)
+          )}
         </span>
       `
       : "";
@@ -3808,7 +4319,7 @@ function taskHTML(task){
             ${escapeHTML(task.category)}
           </span>
 
-          <span class="tag priority-${task.priority}">
+          <span class="tag priority-${escapeHTML(task.priority)}">
             ${priorityText(task.priority)}
           </span>
 
@@ -4186,12 +4697,14 @@ function recurringHTML(task){
             ${escapeHTML(task.category)}
           </span>
 
-          <span class="tag priority-${task.priority}">
+          <span class="tag priority-${escapeHTML(task.priority)}">
             ${priorityText(task.priority)}
           </span>
 
           <span class="tag repeat-tag">
-            Her gün
+            ${escapeHTML(
+              getRepeatLabel(task)
+            )}
           </span>
 
           <span class="tag">
@@ -4592,7 +5105,7 @@ function renderCategoryStats(){
       <div class="category-row">
 
         <div class="stat-label">
-          ${category}
+          ${escapeHTML(category)}
         </div>
 
         <div class="stat-bar">
@@ -4661,7 +5174,8 @@ function renderLastSevenStats(){
         ?0
         :Math.round(
           done/
-          total*100
+          total*
+          100
         );
 
     const label =
@@ -4822,6 +5336,18 @@ document
 
 
 /* ======================================================
+   TEKRAR DEĞİŞİMİ
+====================================================== */
+
+document
+  .getElementById("modalRepeat")
+  .addEventListener(
+    "change",
+    updateRepeatFields
+  );
+
+
+/* ======================================================
    ESC
 ====================================================== */
 
@@ -4845,7 +5371,7 @@ document.addEventListener(
    BAŞLAT
 ====================================================== */
 
-normalizeOrders();
+ensureOrders();
 
 updateGreeting();
 
