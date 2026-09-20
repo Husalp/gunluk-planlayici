@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  const SUPABASE_URL = "https://zibtfmksgciyfnllnxea.supabase.co";
+  const SUPABASE_URL =
+    "https://zibtfmksgciyfnllnxea.supabase.co";
 
-  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_MdE_-LkQuqvDi43nUboXzw_13WyB1sv";
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_MdE_-LkQuqvDi43nUboXzw_13WyB1sv";
 
-  const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
 </script>
+
 <meta charset="UTF-8">
 
 <meta
@@ -22,13 +27,11 @@
 
 <title>Günlük Planlayıcı</title>
 
-<!-- TARAYICI LOGOSU -->
 <link
   rel="icon"
   type="image/svg+xml"
   href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20x%3D%224%22%20y%3D%228%22%20width%3D%2256%22%20height%3D%2252%22%20rx%3D%2212%22%20fill%3D%22rgb%2879%2C70%2C229%29%22%2F%3E%3Cpath%20d%3D%22M16%205v14M48%205v14%22%20stroke%3D%22white%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M13%2026h38%22%20stroke%3D%22white%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M17%2040l9%209%2021-21%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E"
 >
-
 
 <style>
 
@@ -61,20 +64,10 @@ button{
   -webkit-tap-highlight-color:transparent;
 }
 
-
-/* =========================
-   APP
-========================= */
-
 .app{
   display:flex;
   min-height:100vh;
 }
-
-
-/* =========================
-   SIDEBAR
-========================= */
 
 .sidebar{
   width:235px;
@@ -170,19 +163,9 @@ button{
   background:#2c3034;
 }
 
-
-/* =========================
-   MOBILE NAV
-========================= */
-
 .mobile-nav{
   display:none;
 }
-
-
-/* =========================
-   MAIN
-========================= */
 
 .main{
   flex:1;
@@ -200,11 +183,6 @@ button{
 .page.active{
   display:block;
 }
-
-
-/* =========================
-   TOPBAR
-========================= */
 
 .topbar{
   display:flex;
@@ -275,11 +253,6 @@ button{
   color:#fff;
 }
 
-
-/* =========================
-   CARDS
-========================= */
-
 .card{
   background:#fff;
   border:1px solid #e4e6e9;
@@ -305,11 +278,6 @@ button{
   font-weight:700;
 }
 
-
-/* =========================
-   BUTTONS
-========================= */
-
 .primary-btn{
   border:0;
   background:#4f46e5;
@@ -334,11 +302,6 @@ button{
   border-color:#44484d;
   color:#fff;
 }
-
-
-/* =========================
-   STATS
-========================= */
 
 .stats{
   display:grid;
@@ -373,11 +336,6 @@ button{
   font-size:28px;
   font-weight:700;
 }
-
-
-/* =========================
-   PROGRESS
-========================= */
 
 .progress-box{
   background:#fff;
@@ -417,11 +375,6 @@ button{
   border-radius:20px;
   transition:.3s;
 }
-
-
-/* =========================
-   TASK
-========================= */
 
 .task{
   display:flex;
@@ -558,11 +511,6 @@ button{
   font-size:14px;
 }
 
-
-/* =========================
-   PAGE HEADER
-========================= */
-
 .page-header{
   margin-bottom:20px;
 }
@@ -587,11 +535,6 @@ button{
 .dark .page-header p{
   color:#aaa;
 }
-
-
-/* =========================
-   FILTERS
-========================= */
 
 .filters{
   display:flex;
@@ -626,11 +569,6 @@ input:focus,
 select:focus{
   border-color:#4f46e5;
 }
-
-
-/* =========================
-   WEEK
-========================= */
 
 .week-toolbar{
   display:flex;
@@ -734,11 +672,6 @@ select:focus{
   margin-top:15px;
 }
 
-
-/* =========================
-   STATISTICS
-========================= */
-
 .statistics-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -841,11 +774,6 @@ select:focus{
   font-size:12px;
   text-align:right;
 }
-
-
-/* =========================
-   MODAL
-========================= */
 
 .modal-overlay{
   position:fixed;
@@ -984,23 +912,6 @@ select:focus{
 
 .recurring-edit-note.show{
   display:block;
-}
-
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:1100px){
-
-  .add-area{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .week-grid{
-    grid-template-columns:repeat(7,170px);
-  }
-
 }
 
 @media(max-width:900px){
@@ -1171,28 +1082,40 @@ select:focus{
 </style>
 </head>
 
-
 <body>
-<div id="authScreen" style="
-  position: fixed;
-  inset: 0;
-  background: #f5f5f7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 99999;
-">
-  <div style="
-    width: 100%;
-    max-width: 400px;
-    background: white;
-    padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  ">
-    <h1 style="margin-bottom: 8px;">Günlük Planlayıcı</h1>
 
-    <p id="authTitle" style="margin-bottom: 20px;">
+<div
+  id="authScreen"
+  style="
+    position:fixed;
+    inset:0;
+    background:#f5f5f7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:99999;
+  "
+>
+
+  <div
+    style="
+      width:100%;
+      max-width:400px;
+      background:white;
+      padding:30px;
+      border-radius:16px;
+      box-shadow:0 10px 30px rgba(0,0,0,.1);
+    "
+  >
+
+    <h1 style="margin-bottom:8px;">
+      Günlük Planlayıcı
+    </h1>
+
+    <p
+      id="authTitle"
+      style="margin-bottom:20px;"
+    >
       Hesabına giriş yap
     </p>
 
@@ -1201,11 +1124,11 @@ select:focus{
       type="email"
       placeholder="E-posta"
       style="
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
+        width:100%;
+        padding:12px;
+        margin-bottom:10px;
+        border:1px solid #ddd;
+        border-radius:8px;
       "
     >
 
@@ -1214,11 +1137,11 @@ select:focus{
       type="password"
       placeholder="Şifre"
       style="
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
+        width:100%;
+        padding:12px;
+        margin-bottom:10px;
+        border:1px solid #ddd;
+        border-radius:8px;
       "
     >
 
@@ -1226,44 +1149,44 @@ select:focus{
       id="authButton"
       onclick="handleAuth()"
       style="
-        width: 100%;
-        padding: 12px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
+        width:100%;
+        padding:12px;
+        border:none;
+        border-radius:8px;
+        cursor:pointer;
       "
     >
       Giriş Yap
     </button>
 
     <button
-      onclick="toggleAuthMode()"
       id="authToggle"
+      onclick="toggleAuthMode()"
       style="
-        width: 100%;
-        margin-top: 10px;
-        padding: 10px;
-        border: none;
-        background: transparent;
-        cursor: pointer;
+        width:100%;
+        margin-top:10px;
+        padding:10px;
+        border:none;
+        background:transparent;
+        cursor:pointer;
       "
     >
       Hesabın yok mu? Kayıt ol
     </button>
 
-    <p id="authMessage" style="
-      margin-top: 15px;
-      font-size: 14px;
-    "></p>
+    <p
+      id="authMessage"
+      style="
+        margin-top:15px;
+        font-size:14px;
+      "
+    ></p>
+
   </div>
+
 </div>
 
 <div class="app">
-
-
-<!-- ==================================================
-     SIDEBAR
-================================================== -->
 
 <aside class="sidebar">
 
@@ -1274,6 +1197,7 @@ select:focus{
       viewBox="0 0 64 64"
       aria-hidden="true"
     >
+
       <rect
         x="4"
         y="8"
@@ -1305,8 +1229,8 @@ select:focus{
         stroke-linecap="round"
         stroke-linejoin="round"
       />
-    </svg>
 
+    </svg>
 
     <div class="logo-text">
       Günlük<span>Plan</span>
@@ -1314,11 +1238,9 @@ select:focus{
 
   </div>
 
-
   <div class="menu-title">
     Menü
   </div>
-
 
   <button
     class="menu-item active"
@@ -1327,14 +1249,12 @@ select:focus{
     🏠 Ana Sayfa
   </button>
 
-
   <button
     class="menu-item"
     onclick="showPage('tasks',this)"
   >
     📋 Görevler
   </button>
-
 
   <button
     class="menu-item"
@@ -1343,14 +1263,12 @@ select:focus{
     📅 Haftalık
   </button>
 
-
   <button
     class="menu-item"
     onclick="showPage('stats',this)"
   >
     📊 İstatistikler
   </button>
-
 
   <div class="sidebar-bottom">
 
@@ -1365,26 +1283,14 @@ select:focus{
 
 </aside>
 
-
-<!-- ==================================================
-     ANA
-================================================== -->
-
 <main class="main">
-
-
-<!-- ==================================================
-     HOME
-================================================== -->
 
 <section
   id="home"
   class="page active"
 >
 
-
   <div class="topbar">
-
 
     <div class="welcome">
 
@@ -1396,7 +1302,6 @@ select:focus{
 
     </div>
 
-
     <div class="date-navigation">
 
       <button
@@ -1406,7 +1311,6 @@ select:focus{
         ‹
       </button>
 
-
       <input
         type="date"
         id="selectedDate"
@@ -1414,14 +1318,12 @@ select:focus{
         onchange="selectDate(this.value)"
       >
 
-
       <button
         class="date-button"
         onclick="changeDate(1)"
       >
         ›
       </button>
-
 
       <button
         class="today-button"
@@ -1434,9 +1336,7 @@ select:focus{
 
   </div>
 
-
   <div class="stats">
-
 
     <div class="stat">
 
@@ -1453,7 +1353,6 @@ select:focus{
 
     </div>
 
-
     <div class="stat">
 
       <div class="stat-title">
@@ -1468,7 +1367,6 @@ select:focus{
       </div>
 
     </div>
-
 
     <div class="stat">
 
@@ -1487,7 +1385,6 @@ select:focus{
 
   </div>
 
-
   <div class="progress-box">
 
     <div class="progress-header">
@@ -1502,7 +1399,6 @@ select:focus{
 
     </div>
 
-
     <div class="progress">
 
       <div
@@ -1514,16 +1410,13 @@ select:focus{
 
   </div>
 
-
   <div class="card">
-
 
     <div class="section-heading">
 
       <div class="section-title">
         Bu Günün Görevleri
       </div>
-
 
       <button
         class="primary-btn"
@@ -1534,24 +1427,16 @@ select:focus{
 
     </div>
 
-
     <div id="homeTaskList"></div>
-
 
   </div>
 
 </section>
 
-
-<!-- ==================================================
-     TASKS
-================================================== -->
-
 <section
   id="tasks"
   class="page"
 >
-
 
   <div class="page-header">
 
@@ -1569,7 +1454,6 @@ select:focus{
 
       </div>
 
-
       <button
         class="primary-btn"
         onclick="openNewTask()"
@@ -1581,9 +1465,7 @@ select:focus{
 
   </div>
 
-
   <div class="card">
-
 
     <div class="filters">
 
@@ -1593,7 +1475,6 @@ select:focus{
         placeholder="🔎 Görevlerde ara..."
         oninput="renderAllTasks()"
       >
-
 
       <select
         id="filterStatus"
@@ -1613,7 +1494,6 @@ select:focus{
         </option>
 
       </select>
-
 
       <select
         id="filterCategory"
@@ -1652,41 +1532,28 @@ select:focus{
 
     </div>
 
-
     <div class="section-title">
       Tekrarlayan Planlar
     </div>
 
-    <div
-      id="recurringTaskList"
-    ></div>
-
+    <div id="recurringTaskList"></div>
 
     <br>
-
 
     <div class="section-title">
       Tek Seferlik Görevler
     </div>
 
-    <div
-      id="allTaskList"
-    ></div>
+    <div id="allTaskList"></div>
 
   </div>
 
 </section>
 
-
-<!-- ==================================================
-     WEEK
-================================================== -->
-
 <section
   id="week"
   class="page"
 >
-
 
   <div class="page-header">
 
@@ -1700,9 +1567,7 @@ select:focus{
 
   </div>
 
-
   <div class="card">
-
 
     <div class="week-toolbar">
 
@@ -1710,7 +1575,6 @@ select:focus{
         class="week-title"
         id="weekTitle"
       ></div>
-
 
       <div class="week-buttons">
 
@@ -1721,14 +1585,12 @@ select:focus{
           ‹ Önceki
         </button>
 
-
         <button
           class="secondary-btn"
           onclick="weekToday()"
         >
           Bu Hafta
         </button>
-
 
         <button
           class="secondary-btn"
@@ -1741,7 +1603,6 @@ select:focus{
 
     </div>
 
-
     <div
       id="weekGrid"
       class="week-grid"
@@ -1751,16 +1612,10 @@ select:focus{
 
 </section>
 
-
-<!-- ==================================================
-     STATS
-================================================== -->
-
 <section
   id="stats"
   class="page"
 >
-
 
   <div class="page-header">
 
@@ -1774,9 +1629,7 @@ select:focus{
 
   </div>
 
-
   <div class="statistics-grid">
-
 
     <div class="stat-card">
 
@@ -1795,9 +1648,7 @@ select:focus{
         Tek seferlik görev
       </div>
 
-
       <br>
-
 
       <div
         class="big-number"
@@ -1810,9 +1661,7 @@ select:focus{
         Tamamlanan görev
       </div>
 
-
       <br>
-
 
       <div
         class="big-number"
@@ -1826,7 +1675,6 @@ select:focus{
       </div>
 
     </div>
-
 
     <div class="stat-card">
 
@@ -1847,19 +1695,15 @@ select:focus{
 
     </div>
 
-
     <div class="stat-card">
 
       <h3>
         Kategoriler
       </h3>
 
-      <div
-        id="categoryStats"
-      ></div>
+      <div id="categoryStats"></div>
 
     </div>
-
 
     <div class="stat-card">
 
@@ -1867,12 +1711,9 @@ select:focus{
         Son 7 Gün
       </h3>
 
-      <div
-        id="lastSevenStats"
-      ></div>
+      <div id="lastSevenStats"></div>
 
     </div>
-
 
     <div class="stat-card">
 
@@ -1880,9 +1721,7 @@ select:focus{
         Öncelikler
       </h3>
 
-      <div
-        id="priorityStats"
-      ></div>
+      <div id="priorityStats"></div>
 
     </div>
 
@@ -1890,15 +1729,9 @@ select:focus{
 
 </section>
 
-
 </main>
 
 </div>
-
-
-<!-- ==================================================
-     MOBILE NAV
-================================================== -->
 
 <nav class="mobile-nav">
 
@@ -1910,7 +1743,6 @@ select:focus{
     Ana Sayfa
   </button>
 
-
   <button
     onclick="showMobilePage('tasks',this)"
   >
@@ -1918,14 +1750,12 @@ select:focus{
     Görevler
   </button>
 
-
   <button
     onclick="showMobilePage('week',this)"
   >
     📅<br>
     Haftalık
   </button>
-
 
   <button
     onclick="showMobilePage('stats',this)"
@@ -1936,23 +1766,16 @@ select:focus{
 
 </nav>
 
-
-<!-- ==================================================
-     MODAL
-================================================== -->
-
 <div
   class="modal-overlay"
   id="modalOverlay"
   onclick="closeModalOutside(event)"
 >
 
-
   <div
     class="modal"
     onclick="event.stopPropagation()"
   >
-
 
     <div class="modal-header">
 
@@ -1963,7 +1786,6 @@ select:focus{
         Yeni Görev
       </div>
 
-
       <button
         class="modal-close"
         onclick="closeModal()"
@@ -1973,7 +1795,6 @@ select:focus{
 
     </div>
 
-
     <div
       id="recurringEditNote"
       class="recurring-edit-note"
@@ -1982,18 +1803,15 @@ select:focus{
       Yaptığın değişiklikler bu planın tamamına uygulanır.
     </div>
 
-
     <form
       id="taskForm"
       onsubmit="saveFromModal(event)"
     >
 
-
       <input
         id="modalTaskId"
         type="hidden"
       >
-
 
       <div class="form-group">
 
@@ -2014,9 +1832,7 @@ select:focus{
 
       </div>
 
-
       <div class="form-grid">
-
 
         <div class="form-group">
 
@@ -2035,7 +1851,6 @@ select:focus{
 
         </div>
 
-
         <div class="form-group">
 
           <label
@@ -2052,12 +1867,9 @@ select:focus{
 
         </div>
 
-
       </div>
 
-
       <div class="form-grid">
-
 
         <div class="form-group">
 
@@ -2098,7 +1910,6 @@ select:focus{
 
         </div>
 
-
         <div class="form-group">
 
           <label
@@ -2114,7 +1925,10 @@ select:focus{
               🟢 Düşük
             </option>
 
-            <option value="medium" selected>
+            <option
+              value="medium"
+              selected
+            >
               🟡 Orta
             </option>
 
@@ -2127,7 +1941,6 @@ select:focus{
         </div>
 
       </div>
-
 
       <div class="form-group">
 
@@ -2153,7 +1966,6 @@ select:focus{
 
         </select>
 
-
         <div
           id="repeatEndArea"
           style="display:none;margin-top:12px;"
@@ -2170,7 +1982,6 @@ select:focus{
             id="modalRepeatEnd"
             type="date"
           >
-
 
           <div class="repeat-options">
 
@@ -2208,7 +2019,6 @@ select:focus{
 
           </div>
 
-
           <div class="repeat-info">
             Örneğin "3 gün" seçersen görev,
             başlangıç günü dahil olmak üzere 3 gün görünür.
@@ -2217,7 +2027,6 @@ select:focus{
         </div>
 
       </div>
-
 
       <div class="modal-actions">
 
@@ -2228,7 +2037,6 @@ select:focus{
         >
           Vazgeç
         </button>
-
 
         <button
           type="submit"
@@ -2245,7 +2053,6 @@ select:focus{
 
 </div>
 
-
 <script>
 
 /* ======================================================
@@ -2257,20 +2064,19 @@ let tasks =
     localStorage.getItem("plannerTasks")
   ) || [];
 
-
 let selectedDate =
   getTodayKey();
-
 
 let weekAnchor =
   selectedDate;
 
-
 let draggedTaskId =
   null;
 
-
 let editingTaskId =
+  null;
+
+let loadTasksPromise =
   null;
 
 
@@ -2349,7 +2155,6 @@ function getTodayKey(){
 
 }
 
-
 function dateKeyFromDate(d){
 
   return (
@@ -2361,7 +2166,6 @@ function dateKeyFromDate(d){
   );
 
 }
-
 
 function dateObject(key){
 
@@ -2376,7 +2180,6 @@ function dateObject(key){
 
 }
 
-
 function addDays(key,amount){
 
   const d =
@@ -2389,7 +2192,6 @@ function addDays(key,amount){
   return dateKeyFromDate(d);
 
 }
-
 
 function formatDate(key){
 
@@ -2407,7 +2209,6 @@ function formatDate(key){
   );
 
 }
-
 
 function shortDate(key){
 
@@ -2437,7 +2238,6 @@ function updateGreeting(){
   let text =
     "Günlük Planım 👋";
 
-
   if(hour<12){
 
     text =
@@ -2454,7 +2254,6 @@ function updateGreeting(){
       "İyi akşamlar 👋";
 
   }
-
 
   document.getElementById(
     "welcomeTitle"
@@ -2484,7 +2283,6 @@ function changeDate(amount){
 
 }
 
-
 function selectDate(value){
 
   if(!value)return;
@@ -2498,7 +2296,6 @@ function selectDate(value){
   renderHome();
 
 }
-
 
 function goToday(){
 
@@ -2514,14 +2311,12 @@ function goToday(){
 
 }
 
-
 function updateDateUI(){
 
   document.getElementById(
     "selectedDate"
   ).value =
     selectedDate;
-
 
   document.getElementById(
     "welcomeDate"
@@ -2531,102 +2326,352 @@ function updateDateUI(){
 }
 
 
-async function saveTasks() {
+/* ======================================================
+   SUPABASE SATIRI
+====================================================== */
+
+function taskToRow(task,userId){
+
+  return {
+
+    task_id:
+      task.id,
+
+    user_id:
+      userId,
+
+    title:
+      task.text,
+
+    completed:
+      task.completed,
+
+    task_date:
+      task.date,
+
+    task_time:
+      task.time || null,
+
+    category:
+      task.category || null,
+
+    priority:
+      task.priority || null,
+
+    task_order:
+      task.order ?? 0,
+
+    recurring:
+      task.recurring || false,
+
+    repeat_type:
+      task.repeatType || null,
+
+    repeat_end:
+      task.repeatEnd || null,
+
+    completed_dates:
+      task.completedDates || []
+
+  };
+
+}
+
+
+/* ======================================================
+   KAYDET
+====================================================== */
+
+async function saveTasks(){
+
   localStorage.setItem(
     "plannerTasks",
     JSON.stringify(tasks)
   );
 
-  const { data: sessionData } =
+  const { data:sessionData } =
     await supabaseClient.auth.getSession();
 
-  const user = sessionData.session?.user;
+  const user =
+    sessionData.session?.user;
 
-  if (!user) {
+  if(!user){
     return;
   }
 
-  const rows = tasks.map(task => ({
-    task_id: task.id,
-    user_id: user.id,
-    title: task.text,
-    completed: task.completed,
-    task_date: task.date,
-    task_time: task.time || null,
-    category: task.category || null,
-    priority: task.priority || null,
-    task_order: task.order ?? 0,
-    recurring: task.recurring || false,
-    repeat_type: task.repeatType || null,
-    repeat_end: task.repeatEnd || null,
-    completed_dates: task.completedDates || []
-  }));
+  const rows =
+    tasks.map(
+      task=>taskToRow(
+        task,
+        user.id
+      )
+    );
 
-  const { error } = await supabaseClient
-    .from("tasks")
-    .upsert(rows, {
-      onConflict: "user_id,task_id"
-    });
+  if(rows.length===0){
+    return;
+  }
 
-  if (error) {
+  const { error } =
+    await supabaseClient
+      .from("tasks")
+      .upsert(
+        rows,
+        {
+          onConflict:
+            "user_id,task_id"
+        }
+      );
+
+  if(error){
+
     console.error(
       "Supabase görev kaydetme hatası:",
       error
     );
+
   }
+
 }
 
-async function loadTasks() {
-  const { data: sessionData } =
-    await supabaseClient.auth.getSession();
 
-  const user = sessionData.session?.user;
+/* ======================================================
+   SUPABASE'DEN YÜKLE
+====================================================== */
 
-  if (!user) {
-    return;
+async function loadTasks(){
+
+  if(loadTasksPromise){
+
+    return loadTasksPromise;
+
   }
 
-  const { data, error } = await supabaseClient
-    .from("tasks")
-    .select("*")
-    .eq("user_id", user.id)
-    .order("task_order", { ascending: true });
+  loadTasksPromise =
+    (async()=>{
 
-  if (error) {
-    console.error(
-      "Supabase görev yükleme hatası:",
-      error
-    );
-    return;
+      const { data:sessionData } =
+        await supabaseClient.auth.getSession();
+
+      const user =
+        sessionData.session?.user;
+
+      if(!user){
+        return;
+      }
+
+
+      let { data, error } =
+        await supabaseClient
+          .from("tasks")
+          .select("*")
+          .eq(
+            "user_id",
+            user.id
+          )
+          .order(
+            "task_order",
+            {
+              ascending:true
+            }
+          );
+
+
+      if(error){
+
+        console.error(
+          "Supabase görev yükleme hatası:",
+          error
+        );
+
+        return;
+
+      }
+
+
+      /* ==================================================
+         ESKİ TARAYICI GÖREVLERİNİ BİR KEZ AKTAR
+      ================================================== */
+
+      const migrationKey =
+        "plannerSupabaseMigrationDone_" +
+        user.id;
+
+      const alreadyMigrated =
+        localStorage.getItem(
+          migrationKey
+        ) === "true";
+
+
+      if(!alreadyMigrated){
+
+        const remoteIds =
+          new Set(
+            (data || []).map(
+              row=>String(row.task_id)
+            )
+          );
+
+
+        const localOnlyTasks =
+          tasks.filter(
+            task =>
+              !remoteIds.has(
+                String(task.id)
+              )
+          );
+
+
+        if(localOnlyTasks.length>0){
+
+          const migrationRows =
+            localOnlyTasks.map(
+              task =>
+                taskToRow(
+                  task,
+                  user.id
+                )
+            );
+
+
+          const { error:migrationError } =
+            await supabaseClient
+              .from("tasks")
+              .upsert(
+                migrationRows,
+                {
+                  onConflict:
+                    "user_id,task_id"
+                }
+              );
+
+
+          if(migrationError){
+
+            console.error(
+              "Eski görev aktarım hatası:",
+              migrationError
+            );
+
+          }
+
+        }
+
+
+        localStorage.setItem(
+          migrationKey,
+          "true"
+        );
+
+
+        const refreshed =
+          await supabaseClient
+            .from("tasks")
+            .select("*")
+            .eq(
+              "user_id",
+              user.id
+            )
+            .order(
+              "task_order",
+              {
+                ascending:true
+              }
+            );
+
+
+        if(!refreshed.error){
+
+          data =
+            refreshed.data || [];
+
+        }
+
+      }
+
+
+      tasks =
+        (data || []).map(
+          row=>({
+
+            id:
+              row.task_id,
+
+            text:
+              row.title,
+
+            date:
+              row.task_date,
+
+            time:
+              row.task_time || "",
+
+            category:
+              row.category || "",
+
+            priority:
+              row.priority || "",
+
+            order:
+              row.task_order ?? 0,
+
+            completed:
+              !!row.completed,
+
+            recurring:
+              !!row.recurring,
+
+            repeatType:
+              row.repeat_type || "",
+
+            repeatEnd:
+              row.repeat_end || "",
+
+            completedDates:
+              Array.isArray(
+                row.completed_dates
+              )
+                ? row.completed_dates
+                : []
+
+          })
+        );
+
+
+      normalizeOrders();
+
+
+      localStorage.setItem(
+        "plannerTasks",
+        JSON.stringify(tasks)
+      );
+
+
+      updateDateUI();
+
+      renderHome();
+
+      renderAllTasks();
+
+      renderWeek();
+
+      renderStatistics();
+
+    })();
+
+
+  try{
+
+    await loadTasksPromise;
+
+  }finally{
+
+    loadTasksPromise =
+      null;
+
   }
 
-  tasks = data.map(row => ({
-    id: row.task_id,
-    text: row.title,
-    date: row.task_date,
-    time: row.task_time || "",
-    category: row.category || "",
-    priority: row.priority || "",
-    order: row.task_order ?? 0,
-    completed: !!row.completed,
-    recurring: !!row.recurring,
-    repeatType: row.repeat_type || "",
-    repeatEnd: row.repeat_end || "",
-    completedDates: row.completed_dates || []
-  }));
-
-  localStorage.setItem(
-    "plannerTasks",
-    JSON.stringify(tasks)
-  );
-
-  normalizeOrders();
-  updateDateUI();
-  renderHome();
-  renderAllTasks();
-  renderWeek();
-  renderStatistics();
 }
+
 
 /* ======================================================
    SAYFALAR
@@ -2640,11 +2685,9 @@ function showPage(page,button){
       p=>p.classList.remove("active")
     );
 
-
   document
     .getElementById(page)
     .classList.add("active");
-
 
   document
     .querySelectorAll(".menu-item")
@@ -2652,13 +2695,11 @@ function showPage(page,button){
       b=>b.classList.remove("active")
     );
 
-
   if(button){
 
     button.classList.add("active");
 
   }
-
 
   if(page==="tasks"){
 
@@ -2666,13 +2707,11 @@ function showPage(page,button){
 
   }
 
-
   if(page==="week"){
 
     renderWeek();
 
   }
-
 
   if(page==="stats"){
 
@@ -2681,7 +2720,6 @@ function showPage(page,button){
   }
 
 }
-
 
 function showMobilePage(page,button){
 
@@ -2692,13 +2730,11 @@ function showMobilePage(page,button){
     )
   );
 
-
   document
     .querySelectorAll(".mobile-nav button")
     .forEach(
       b=>b.classList.remove("active")
     );
-
 
   button.classList.add("active");
 
@@ -2714,7 +2750,6 @@ function getSourceId(task){
   return task.sourceId || task.id;
 
 }
-
 
 function getDayTasks(date){
 
@@ -2738,7 +2773,6 @@ function getDayTasks(date){
 
         })
       );
-
 
   const recurringTasks =
     tasks
@@ -2769,17 +2803,12 @@ function getDayTasks(date){
         })
       );
 
-
   return [
-
     ...normalTasks,
-
     ...recurringTasks
-
   ].sort(compareTasks);
 
 }
-
 
 function compareTasks(a,b){
 
@@ -2789,13 +2818,11 @@ function compareTasks(a,b){
   const timeB =
     b.time || "99:99";
 
-
   if(timeA!==timeB){
 
     return timeA.localeCompare(timeB);
 
   }
-
 
   return (
     (a.order||0) -
@@ -2813,66 +2840,53 @@ function openNewTask(){
 
   editingTaskId=null;
 
-
   document.getElementById(
     "modalTitle"
   ).textContent =
     "Yeni Görev";
 
-
   document.getElementById(
     "modalTaskId"
   ).value="";
 
-
   document.getElementById(
     "modalTaskName"
   ).value="";
-
 
   document.getElementById(
     "modalDate"
   ).value =
     selectedDate;
 
-
   document.getElementById(
     "modalTime"
   ).value="";
-
 
   document.getElementById(
     "modalCategory"
   ).value="Genel";
 
-
   document.getElementById(
     "modalPriority"
   ).value="medium";
-
 
   document.getElementById(
     "modalRepeat"
   ).value="none";
 
-
   document.getElementById(
     "modalRepeatEnd"
   ).value="";
-
 
   document.getElementById(
     "recurringEditNote"
   ).classList.remove("show");
 
-
   updateRepeatFields();
-
 
   document.getElementById(
     "modalOverlay"
   ).classList.add("open");
-
 
   setTimeout(
     ()=>{
@@ -2897,53 +2911,43 @@ function openEditTask(id){
       t=>t.id===id
     );
 
-
   if(!task)return;
 
-
   editingTaskId=id;
-
 
   document.getElementById(
     "modalTitle"
   ).textContent =
     "Görevi Düzenle";
 
-
   document.getElementById(
     "modalTaskId"
   ).value=id;
-
 
   document.getElementById(
     "modalTaskName"
   ).value=
     task.text;
 
-
   document.getElementById(
     "modalDate"
   ).value=
     task.date;
-
 
   document.getElementById(
     "modalTime"
   ).value=
     task.time;
 
-
   document.getElementById(
     "modalCategory"
   ).value=
     task.category;
 
-
   document.getElementById(
     "modalPriority"
   ).value=
     task.priority;
-
 
   document.getElementById(
     "modalRepeat"
@@ -2952,12 +2956,10 @@ function openEditTask(id){
       ? "daily"
       : "none";
 
-
   document.getElementById(
     "modalRepeatEnd"
   ).value =
     task.repeatEnd || "";
-
 
   document.getElementById(
     "recurringEditNote"
@@ -2966,9 +2968,7 @@ function openEditTask(id){
     task.recurring
   );
 
-
   updateRepeatFields();
-
 
   document.getElementById(
     "modalOverlay"
@@ -2989,7 +2989,6 @@ function closeModal(){
 
 }
 
-
 function closeModalOutside(event){
 
   if(
@@ -3005,7 +3004,7 @@ function closeModalOutside(event){
 
 
 /* ======================================================
-   TEKRAR ALANI
+   TEKRAR
 ====================================================== */
 
 function updateRepeatFields(){
@@ -3015,12 +3014,10 @@ function updateRepeatFields(){
       "modalRepeat"
     ).value;
 
-
   const area =
     document.getElementById(
       "repeatEndArea"
     );
-
 
   if(repeat==="daily"){
 
@@ -3036,11 +3033,9 @@ function updateRepeatFields(){
 
   }
 
-
   updateRepeatEndMin();
 
 }
-
 
 function updateRepeatEndMin(){
 
@@ -3049,14 +3044,12 @@ function updateRepeatEndMin(){
       "modalDate"
     ).value;
 
-
   document.getElementById(
     "modalRepeatEnd"
   ).min =
     start || "";
 
 }
-
 
 function setRepeatDays(days){
 
@@ -3065,19 +3058,15 @@ function setRepeatDays(days){
       "modalRepeat"
     );
 
-
   repeatSelect.value="daily";
 
-
   updateRepeatFields();
-
 
   const start =
     document.getElementById(
       "modalDate"
     ).value ||
     selectedDate;
-
 
   if(days===0){
 
@@ -3088,7 +3077,6 @@ function setRepeatDays(days){
     return;
 
   }
-
 
   document.getElementById(
     "modalRepeatEnd"
@@ -3109,48 +3097,40 @@ function saveFromModal(event){
 
   event.preventDefault();
 
-
   const text =
     document.getElementById(
       "modalTaskName"
     ).value.trim();
-
 
   const date =
     document.getElementById(
       "modalDate"
     ).value;
 
-
   const time =
     document.getElementById(
       "modalTime"
     ).value;
-
 
   const category =
     document.getElementById(
       "modalCategory"
     ).value;
 
-
   const priority =
     document.getElementById(
       "modalPriority"
     ).value;
-
 
   const repeatType =
     document.getElementById(
       "modalRepeat"
     ).value;
 
-
   const repeatEnd =
     document.getElementById(
       "modalRepeatEnd"
     ).value;
-
 
   if(!text){
 
@@ -3162,7 +3142,6 @@ function saveFromModal(event){
 
   }
 
-
   if(!date){
 
     alert(
@@ -3172,7 +3151,6 @@ function saveFromModal(event){
     return;
 
   }
-
 
   if(
     repeatType==="daily" &&
@@ -3188,14 +3166,12 @@ function saveFromModal(event){
 
   }
 
-
   if(editingTaskId!==null){
 
     const task =
       tasks.find(
         t=>t.id===editingTaskId
       );
-
 
     if(task){
 
@@ -3220,7 +3196,6 @@ function saveFromModal(event){
           ? repeatEnd
           : "";
 
-
       if(
         task.recurring &&
         !Array.isArray(task.completedDates)
@@ -3237,7 +3212,6 @@ function saveFromModal(event){
     const dayTasks =
       getDayTasks(date);
 
-
     const maxOrder =
       dayTasks.length
         ? Math.max(
@@ -3246,7 +3220,6 @@ function saveFromModal(event){
             )
           )
         : -1;
-
 
     tasks.push({
 
@@ -3287,11 +3260,9 @@ function saveFromModal(event){
 
   }
 
-
   selectedDate=date;
 
   weekAnchor=date;
-
 
   saveTasks();
 
@@ -3325,9 +3296,7 @@ function toggleTask(
       t=>t.id===sourceId
     );
 
-
   if(!task)return;
-
 
   if(isRecurring){
 
@@ -3341,12 +3310,10 @@ function toggleTask(
 
     }
 
-
     const index =
       task.completedDates.indexOf(
         occurrenceDate
       );
-
 
     if(index===-1){
 
@@ -3370,7 +3337,6 @@ function toggleTask(
 
   }
 
-
   saveTasks();
 
   renderHome();
@@ -3388,7 +3354,7 @@ function toggleTask(
    SİL
 ====================================================== */
 
-function deleteTask(
+async function deleteTask(
   sourceId,
   recurring=false
 ){
@@ -3398,9 +3364,9 @@ function deleteTask(
       t=>t.id===sourceId
     );
 
-
-  if(!task)return;
-
+  if(!task){
+    return;
+  }
 
   if(recurring){
 
@@ -3409,8 +3375,48 @@ function deleteTask(
         "Bu tekrarlayan planın tamamı silinsin mi?"
       );
 
+    if(!okay){
+      return;
+    }
 
-    if(!okay)return;
+  }
+
+
+  const { data:sessionData } =
+    await supabaseClient.auth.getSession();
+
+  const user =
+    sessionData.session?.user;
+
+
+  if(user){
+
+    const { error } =
+      await supabaseClient
+        .from("tasks")
+        .delete()
+        .eq(
+          "user_id",
+          user.id
+        )
+        .eq(
+          "task_id",
+          sourceId
+        );
+
+    if(error){
+
+      console.error(
+        "Supabase görev silme hatası:",
+        error
+      );
+
+      alert(
+        "Görev Supabase'den silinemedi. Görev silinmedi."
+      );
+
+      return;
+    }
 
   }
 
@@ -3423,7 +3429,12 @@ function deleteTask(
 
   normalizeOrders();
 
-  saveTasks();
+
+  localStorage.setItem(
+    "plannerTasks",
+    JSON.stringify(tasks)
+  );
+
 
   renderHome();
 
@@ -3449,19 +3460,15 @@ function moveTask(
   const day =
     getDayTasks(date);
 
-
   const index =
     day.findIndex(
       t=>getSourceId(t)===sourceId
     );
 
-
   if(index===-1)return;
-
 
   const newIndex =
     index+direction;
-
 
   if(
     newIndex<0 ||
@@ -3472,26 +3479,21 @@ function moveTask(
 
   }
 
-
   const first =
     day[index];
 
-
   const second =
     day[newIndex];
-
 
   const firstSource =
     tasks.find(
       t=>t.id===getSourceId(first)
     );
 
-
   const secondSource =
     tasks.find(
       t=>t.id===getSourceId(second)
     );
-
 
   if(
     !firstSource ||
@@ -3502,18 +3504,14 @@ function moveTask(
 
   }
 
-
   const temp =
     firstSource.order;
-
 
   firstSource.order =
     secondSource.order;
 
-
   secondSource.order =
     temp;
-
 
   saveTasks();
 
@@ -3536,13 +3534,11 @@ function startDrag(id){
 
 }
 
-
 function allowDrop(event){
 
   event.preventDefault();
 
 }
-
 
 function dropTask(
   targetId,
@@ -3558,22 +3554,18 @@ function dropTask(
 
   }
 
-
   const day =
     getDayTasks(date);
-
 
   const from =
     day.findIndex(
       t=>getSourceId(t)===draggedTaskId
     );
 
-
   const to =
     day.findIndex(
       t=>getSourceId(t)===targetId
     );
-
 
   if(
     from===-1 ||
@@ -3586,10 +3578,8 @@ function dropTask(
 
   }
 
-
   const reordered =
     [...day];
-
 
   const [item] =
     reordered.splice(
@@ -3597,13 +3587,11 @@ function dropTask(
       1
     );
 
-
   reordered.splice(
     to,
     0,
     item
   );
-
 
   reordered.forEach(
     (item,index)=>{
@@ -3613,7 +3601,6 @@ function dropTask(
           t=>t.id===getSourceId(item)
         );
 
-
       if(source){
 
         source.order=index;
@@ -3622,7 +3609,6 @@ function dropTask(
 
     }
   );
-
 
   saveTasks();
 
@@ -3638,7 +3624,7 @@ function dropTask(
 
 
 /* ======================================================
-   ORDER NORMALIZE
+   ORDER
 ====================================================== */
 
 function normalizeOrders(){
@@ -3650,10 +3636,11 @@ function normalizeOrders(){
           .filter(
             t=>!t.recurring
           )
-          .map(t=>t.date)
+          .map(
+            t=>t.date
+          )
       )
     ];
-
 
   dates.forEach(date=>{
 
@@ -3666,15 +3653,15 @@ function normalizeOrders(){
         )
         .sort(compareTasks);
 
-
     day.forEach(
       (task,index)=>{
+
         task.order=index;
+
       }
     );
 
   });
-
 
   tasks
     .filter(
@@ -3687,7 +3674,9 @@ function normalizeOrders(){
     )
     .forEach(
       (task,index)=>{
+
         task.order=index;
+
       }
     );
 
@@ -3744,7 +3733,6 @@ function taskHTML(task){
       `
       : "";
 
-
   const repeatTag =
     task.isRecurring
       ? `
@@ -3753,7 +3741,6 @@ function taskHTML(task){
         </span>
       `
       : "";
-
 
   const dateTag =
     task.isRecurring
@@ -3772,17 +3759,27 @@ function taskHTML(task){
         </span>
       `;
 
-
   return `
 
     <div
-      class="task ${task.completed ? "completed" : ""}"
+      class="
+        task
+        ${task.completed ? "completed" : ""}
+      "
       draggable="true"
-      ondragstart="startDrag(${task.sourceId})"
-      ondragover="allowDrop(event)"
-      ondrop="dropTask(${task.sourceId},'${task.occurrenceDate}')"
+      ondragstart="
+        startDrag(${task.sourceId})
+      "
+      ondragover="
+        allowDrop(event)
+      "
+      ondrop="
+        dropTask(
+          ${task.sourceId},
+          '${task.occurrenceDate}'
+        )
+      "
     >
-
 
       <input
         class="task-check"
@@ -3797,31 +3794,25 @@ function taskHTML(task){
         "
       >
 
-
       <div class="task-info">
 
         <div class="task-name">
           ${escapeHTML(task.text)}
         </div>
 
-
         <div class="task-meta">
 
           ${timeTag}
-
 
           <span class="tag">
             ${escapeHTML(task.category)}
           </span>
 
-
           <span class="tag priority-${task.priority}">
             ${priorityText(task.priority)}
           </span>
 
-
           ${repeatTag}
-
 
           ${dateTag}
 
@@ -3829,9 +3820,7 @@ function taskHTML(task){
 
       </div>
 
-
       <div class="task-actions">
-
 
         <span
           class="drag-handle"
@@ -3839,7 +3828,6 @@ function taskHTML(task){
         >
           ⋮⋮
         </span>
-
 
         <button
           class="action-btn"
@@ -3855,7 +3843,6 @@ function taskHTML(task){
           ↑
         </button>
 
-
         <button
           class="action-btn"
           onclick="
@@ -3870,7 +3857,6 @@ function taskHTML(task){
           ↓
         </button>
 
-
         <button
           class="action-btn"
           onclick="
@@ -3882,7 +3868,6 @@ function taskHTML(task){
         >
           ✏️
         </button>
-
 
         <button
           class="action-btn"
@@ -3896,7 +3881,6 @@ function taskHTML(task){
         >
           🗑️
         </button>
-
 
       </div>
 
@@ -3918,12 +3902,10 @@ function renderHome(){
       "homeTaskList"
     );
 
-
   const dayTasks =
     getDayTasks(
       selectedDate
     );
-
 
   if(dayTasks.length===0){
 
@@ -3955,7 +3937,6 @@ function renderHome(){
 
   }
 
-
   updateStats(dayTasks);
 
 }
@@ -3970,12 +3951,10 @@ function updateStats(dayTasks){
   const total =
     dayTasks.length;
 
-
   const completed =
     dayTasks.filter(
       t=>t.completed
     ).length;
-
 
   const percentage =
     total===0
@@ -3984,28 +3963,23 @@ function updateStats(dayTasks){
         completed/total*100
       );
 
-
   document.getElementById(
     "totalTasks"
   ).textContent=total;
 
-
   document.getElementById(
     "completedTasks"
   ).textContent=completed;
-
 
   document.getElementById(
     "percentage"
   ).textContent=
     percentage+"%";
 
-
   document.getElementById(
     "progressText"
   ).textContent=
     completed+" / "+total;
-
 
   document.getElementById(
     "progressBar"
@@ -4026,12 +4000,10 @@ function renderAllTasks(){
       "allTaskList"
     );
 
-
   const recurringList =
     document.getElementById(
       "recurringTaskList"
     );
-
 
   const search =
     (
@@ -4040,18 +4012,15 @@ function renderAllTasks(){
       )?.value || ""
     ).toLowerCase();
 
-
   const status =
     document.getElementById(
       "filterStatus"
     )?.value || "all";
 
-
   const category =
     document.getElementById(
       "filterCategory"
     )?.value || "all";
-
 
   const normalTasks =
     tasks
@@ -4064,7 +4033,6 @@ function renderAllTasks(){
           task.text
             .toLowerCase()
             .includes(search);
-
 
         const matchesStatus =
           status==="all" ||
@@ -4079,11 +4047,9 @@ function renderAllTasks(){
             task.completed
           );
 
-
         const matchesCategory =
           category==="all" ||
           task.category===category;
-
 
         return (
           matchesSearch &&
@@ -4093,7 +4059,6 @@ function renderAllTasks(){
 
       })
       .sort(compareTasks);
-
 
   const recurringTasks =
     tasks
@@ -4107,11 +4072,9 @@ function renderAllTasks(){
             .toLowerCase()
             .includes(search);
 
-
         const matchesCategory =
           category==="all" ||
           task.category===category;
-
 
         return (
           matchesSearch &&
@@ -4124,7 +4087,6 @@ function renderAllTasks(){
           (a.order||0)-
           (b.order||0)
       );
-
 
   if(normalTasks.length===0){
 
@@ -4159,7 +4121,6 @@ function renderAllTasks(){
         .join("");
 
   }
-
 
   if(recurringTasks.length===0){
 
@@ -4196,7 +4157,6 @@ function recurringHTML(task){
       ? `${shortDate(task.date)} → ${shortDate(task.repeatEnd)}`
       : `${shortDate(task.date)} → Süresiz`;
 
-
   const timeTag =
     task.time
       ? `
@@ -4206,11 +4166,9 @@ function recurringHTML(task){
       `
       : "";
 
-
   return `
 
     <div class="task">
-
 
       <div class="task-info">
 
@@ -4220,26 +4178,21 @@ function recurringHTML(task){
 
         </div>
 
-
         <div class="task-meta">
 
           ${timeTag}
-
 
           <span class="tag">
             ${escapeHTML(task.category)}
           </span>
 
-
           <span class="tag priority-${task.priority}">
             ${priorityText(task.priority)}
           </span>
 
-
           <span class="tag repeat-tag">
             Her gün
           </span>
-
 
           <span class="tag">
             📅 ${rangeText}
@@ -4249,9 +4202,7 @@ function recurringHTML(task){
 
       </div>
 
-
       <div class="task-actions">
-
 
         <button
           class="action-btn"
@@ -4262,7 +4213,6 @@ function recurringHTML(task){
         >
           ✏️
         </button>
-
 
         <button
           class="action-btn"
@@ -4276,7 +4226,6 @@ function recurringHTML(task){
         >
           🗑️
         </button>
-
 
       </div>
 
@@ -4296,26 +4245,21 @@ function getMonday(key){
   const d =
     dateObject(key);
 
-
   const day =
     d.getDay();
-
 
   const diff =
     day===0
       ? -6
       : 1-day;
 
-
   d.setDate(
     d.getDate()+diff
   );
 
-
   return d;
 
 }
-
 
 function changeWeek(amount){
 
@@ -4324,23 +4268,19 @@ function changeWeek(amount){
       weekAnchor
     );
 
-
   monday.setDate(
     monday.getDate()+
     amount*7
   );
-
 
   weekAnchor =
     dateKeyFromDate(
       monday
     );
 
-
   renderWeek();
 
 }
-
 
 function weekToday(){
 
@@ -4351,7 +4291,6 @@ function weekToday(){
 
 }
 
-
 function renderWeek(){
 
   const grid =
@@ -4359,21 +4298,17 @@ function renderWeek(){
       "weekGrid"
     );
 
-
   const monday =
     getMonday(
       weekAnchor
     );
 
-
   const sunday =
     new Date(monday);
-
 
   sunday.setDate(
     sunday.getDate()+6
   );
-
 
   document.getElementById(
     "weekTitle"
@@ -4386,7 +4321,6 @@ function renderWeek(){
       dateKeyFromDate(sunday)
     );
 
-
   const dayNames=[
     "Pzt",
     "Sal",
@@ -4397,9 +4331,7 @@ function renderWeek(){
     "Paz"
   ];
 
-
   let html="";
-
 
   for(
     let i=0;
@@ -4410,29 +4342,23 @@ function renderWeek(){
     const current =
       new Date(monday);
 
-
     current.setDate(
       monday.getDate()+i
     );
-
 
     const key =
       dateKeyFromDate(
         current
       );
 
-
     const dayTasks =
       getDayTasks(key);
-
 
     const selected =
       key===selectedDate;
 
-
     const today =
       key===getTodayKey();
-
 
     html += `
 
@@ -4447,35 +4373,27 @@ function renderWeek(){
         "
       >
 
-
         <div class="day-name">
           ${dayNames[i]}
         </div>
-
 
         <div class="day-number">
           ${current.getDate()}
         </div>
 
-
         <div class="day-count">
           ${dayTasks.length} görev
         </div>
 
-
         ${
           dayTasks.length===0
-
           ?
-
           `
             <div class="week-empty">
               Plan yok
             </div>
           `
-
           :
-
           dayTasks.map(
             task=>`
 
@@ -4521,11 +4439,9 @@ function renderWeek(){
 
   }
 
-
   grid.innerHTML=html;
 
 }
-
 
 function selectWeekDay(key){
 
@@ -4539,7 +4455,6 @@ function selectWeekDay(key){
 
 }
 
-
 function showHomeFromCode(){
 
   document
@@ -4548,11 +4463,9 @@ function showHomeFromCode(){
       p=>p.classList.remove("active")
     );
 
-
   document
     .getElementById("home")
     .classList.add("active");
-
 
   document
     .querySelectorAll(".menu-item")
@@ -4560,11 +4473,9 @@ function showHomeFromCode(){
       b=>b.classList.remove("active")
     );
 
-
   document
     .querySelectorAll(".menu-item")[0]
     .classList.add("active");
-
 
   document
     .querySelectorAll(".mobile-nav button")
@@ -4572,11 +4483,9 @@ function showHomeFromCode(){
       b=>b.classList.remove("active")
     );
 
-
   document
     .querySelectorAll(".mobile-nav button")[0]
     .classList.add("active");
-
 
   renderHome();
 
@@ -4594,16 +4503,13 @@ function renderStatistics(){
       t=>!t.recurring
     );
 
-
   const total =
     normalTasks.length;
-
 
   const completed =
     normalTasks.filter(
       t=>t.completed
     ).length;
-
 
   const percentage =
     total===0
@@ -4612,22 +4518,18 @@ function renderStatistics(){
         completed/total*100
       );
 
-
   document.getElementById(
     "allTotal"
   ).textContent=total;
-
 
   document.getElementById(
     "allCompleted"
   ).textContent=completed;
 
-
   document.getElementById(
     "allPercentage"
   ).textContent=
     percentage+"%";
-
 
   document.getElementById(
     "recurringCount"
@@ -4636,7 +4538,6 @@ function renderStatistics(){
       t=>t.recurring
     ).length;
 
-
   renderCategoryStats();
 
   renderLastSevenStats();
@@ -4644,7 +4545,6 @@ function renderStatistics(){
   renderPriorityStats();
 
 }
-
 
 function renderCategoryStats(){
 
@@ -4657,15 +4557,12 @@ function renderCategoryStats(){
     "Kişisel"
   ];
 
-
   const container =
     document.getElementById(
       "categoryStats"
     );
 
-
   container.innerHTML="";
-
 
   categories.forEach(category=>{
 
@@ -4676,12 +4573,10 @@ function renderCategoryStats(){
           t.category===category
       );
 
-
     const done =
       normalTasks.filter(
         t=>t.completed
       ).length;
-
 
     const percent =
       normalTasks.length===0
@@ -4692,7 +4587,6 @@ function renderCategoryStats(){
           100
         );
 
-
     container.innerHTML+=`
 
       <div class="category-row">
@@ -4701,7 +4595,6 @@ function renderCategoryStats(){
           ${category}
         </div>
 
-
         <div class="stat-bar">
 
           <div
@@ -4709,7 +4602,6 @@ function renderCategoryStats(){
           ></div>
 
         </div>
-
 
         <div class="stat-count">
           ${done}/${normalTasks.length}
@@ -4723,7 +4615,6 @@ function renderCategoryStats(){
 
 }
 
-
 function renderLastSevenStats(){
 
   const container =
@@ -4731,15 +4622,12 @@ function renderLastSevenStats(){
       "lastSevenStats"
     );
 
-
   container.innerHTML="";
-
 
   const end =
     dateObject(
       selectedDate
     );
-
 
   for(
     let i=6;
@@ -4750,29 +4638,23 @@ function renderLastSevenStats(){
     const d =
       new Date(end);
 
-
     d.setDate(
       d.getDate()-i
     );
 
-
     const key =
       dateKeyFromDate(d);
 
-
     const dayTasks =
       getDayTasks(key);
-
 
     const done =
       dayTasks.filter(
         t=>t.completed
       ).length;
 
-
     const total =
       dayTasks.length;
-
 
     const percent =
       total===0
@@ -4782,7 +4664,6 @@ function renderLastSevenStats(){
           total*100
         );
 
-
     const label =
       d.toLocaleDateString(
         "tr-TR",
@@ -4790,7 +4671,6 @@ function renderLastSevenStats(){
           weekday:"short"
         }
       );
-
 
     container.innerHTML+=`
 
@@ -4800,7 +4680,6 @@ function renderLastSevenStats(){
           ${label}
         </div>
 
-
         <div class="stat-bar">
 
           <div
@@ -4808,7 +4687,6 @@ function renderLastSevenStats(){
           ></div>
 
         </div>
-
 
         <div class="day-stat-value">
           ${done}/${total}
@@ -4821,7 +4699,6 @@ function renderLastSevenStats(){
   }
 
 }
-
 
 function renderPriorityStats(){
 
@@ -4840,15 +4717,12 @@ function renderPriorityStats(){
     }
   ];
 
-
   const container =
     document.getElementById(
       "priorityStats"
     );
 
-
   container.innerHTML="";
-
 
   priorities.forEach(priority=>{
 
@@ -4860,12 +4734,10 @@ function renderPriorityStats(){
           priority.key
       );
 
-
     const done =
       normalTasks.filter(
         t=>t.completed
       ).length;
-
 
     const percent =
       normalTasks.length===0
@@ -4876,7 +4748,6 @@ function renderPriorityStats(){
           100
         );
 
-
     container.innerHTML+=`
 
       <div class="category-row">
@@ -4885,7 +4756,6 @@ function renderPriorityStats(){
           ${priority.name}
         </div>
 
-
         <div class="stat-bar">
 
           <div
@@ -4893,7 +4763,6 @@ function renderPriorityStats(){
           ></div>
 
         </div>
-
 
         <div class="stat-count">
           ${done}/${normalTasks.length}
@@ -4918,7 +4787,6 @@ function toggleDarkMode(){
     "dark"
   );
 
-
   localStorage.setItem(
     "darkMode",
     document.body.classList.contains(
@@ -4927,7 +4795,6 @@ function toggleDarkMode(){
   );
 
 }
-
 
 if(
   localStorage.getItem(
@@ -4985,114 +4852,264 @@ updateGreeting();
 updateDateUI();
 
 renderHome();
-let authMode = "login";
 
-function toggleAuthMode() {
-  authMode = authMode === "login" ? "signup" : "login";
 
-  const title = document.getElementById("authTitle");
-  const button = document.getElementById("authButton");
-  const toggle = document.getElementById("authToggle");
-  const message = document.getElementById("authMessage");
+/* ======================================================
+   AUTH
+====================================================== */
 
-  message.textContent = "";
+let authMode =
+  "login";
 
-  if (authMode === "signup") {
-    title.textContent = "Yeni hesap oluştur";
-    button.textContent = "Kayıt Ol";
-    toggle.textContent = "Zaten hesabın var mı? Giriş yap";
-  } else {
-    title.textContent = "Hesabına giriş yap";
-    button.textContent = "Giriş Yap";
-    toggle.textContent = "Hesabın yok mu? Kayıt ol";
+function toggleAuthMode(){
+
+  authMode =
+    authMode==="login"
+      ? "signup"
+      : "login";
+
+  const title =
+    document.getElementById(
+      "authTitle"
+    );
+
+  const button =
+    document.getElementById(
+      "authButton"
+    );
+
+  const toggle =
+    document.getElementById(
+      "authToggle"
+    );
+
+  const message =
+    document.getElementById(
+      "authMessage"
+    );
+
+  message.textContent="";
+
+  if(authMode==="signup"){
+
+    title.textContent =
+      "Yeni hesap oluştur";
+
+    button.textContent =
+      "Kayıt Ol";
+
+    toggle.textContent =
+      "Zaten hesabın var mı? Giriş yap";
+
+  }else{
+
+    title.textContent =
+      "Hesabına giriş yap";
+
+    button.textContent =
+      "Giriş Yap";
+
+    toggle.textContent =
+      "Hesabın yok mu? Kayıt ol";
+
   }
+
 }
 
-async function handleAuth() {
-  const email = document.getElementById("authEmail").value.trim();
-  const password = document.getElementById("authPassword").value;
-  const message = document.getElementById("authMessage");
-  const button = document.getElementById("authButton");
+async function handleAuth(){
 
-  if (!email || !password) {
-    message.textContent = "Lütfen e-posta ve şifreni gir.";
+  const email =
+    document.getElementById(
+      "authEmail"
+    ).value.trim();
+
+  const password =
+    document.getElementById(
+      "authPassword"
+    ).value;
+
+  const message =
+    document.getElementById(
+      "authMessage"
+    );
+
+  const button =
+    document.getElementById(
+      "authButton"
+    );
+
+  if(!email || !password){
+
+    message.textContent =
+      "Lütfen e-posta ve şifreni gir.";
+
     return;
+
   }
 
-  if (password.length < 6) {
-    message.textContent = "Şifre en az 6 karakter olmalı.";
+  if(password.length<6){
+
+    message.textContent =
+      "Şifre en az 6 karakter olmalı.";
+
     return;
+
   }
 
-  button.disabled = true;
-  message.textContent = "İşlem yapılıyor...";
+  button.disabled=true;
 
-  try {
-    if (authMode === "signup") {
-      const { data, error } = await supabaseClient.auth.signUp({
-        email: email,
-        password: password
-      });
+  message.textContent =
+    "İşlem yapılıyor...";
 
-      if (error) {
+  try{
+
+    if(authMode==="signup"){
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth.signUp({
+
+          email:email,
+
+          password:password
+
+        });
+
+      if(error){
+
         throw error;
+
       }
 
-      if (data.session) {
-        document.getElementById("authScreen").style.display = "none";
-        message.textContent = "";
-      } else {
+      if(data.session){
+
+        document.getElementById(
+          "authScreen"
+        ).style.display="none";
+
+        message.textContent="";
+
+        await loadTasks();
+
+      }else{
+
         message.textContent =
           "Hesabın oluşturuldu. Şimdi giriş yapabilirsin.";
+
         toggleAuthMode();
-      }
-    } else {
-      const { error } = await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
 
-      if (error) {
+      }
+
+    }else{
+
+      const { error } =
+        await supabaseClient
+          .auth
+          .signInWithPassword({
+
+            email:email,
+
+            password:password
+
+          });
+
+      if(error){
+
         throw error;
+
       }
 
-      document.getElementById("authScreen").style.display = "none";
-      message.textContent = "";
+      document.getElementById(
+        "authScreen"
+      ).style.display="none";
+
+      message.textContent="";
+
+      await loadTasks();
+
     }
-  } catch (error) {
-    message.textContent = error.message;
-  } finally {
-    button.disabled = false;
+
+  }catch(error){
+
+    message.textContent =
+      error.message;
+
+  }finally{
+
+    button.disabled=false;
+
   }
+
 }
 
-async function checkAuth() {
-  const { data } = await supabaseClient.auth.getSession();
 
-  if (data.session) {
-    document.getElementById("authScreen").style.display = "none";
+/* ======================================================
+   AUTH KONTROL
+====================================================== */
+
+async function checkAuth(){
+
+  const { data } =
+    await supabaseClient.auth.getSession();
+
+  if(data.session){
+
+    document.getElementById(
+      "authScreen"
+    ).style.display="none";
 
     await loadTasks();
-  } else {
-    document.getElementById("authScreen").style.display = "flex";
+
+  }else{
+
+    document.getElementById(
+      "authScreen"
+    ).style.display="flex";
+
   }
+
 }
 
-supabaseClient.auth.onAuthStateChange((event, session) => {
-  const authScreen = document.getElementById("authScreen");
 
- if (session) {
-  authScreen.style.display = "none";
+/* ======================================================
+   AUTH STATE
+====================================================== */
 
-  setTimeout(() => {
-    loadTasks();
-  }, 0);
-} else {
-  authScreen.style.display = "flex";
-}
-});
+supabaseClient.auth.onAuthStateChange(
+  (
+    event,
+    session
+  )=>{
+
+    const authScreen =
+      document.getElementById(
+        "authScreen"
+      );
+
+    if(session){
+
+      authScreen.style.display="none";
+
+      setTimeout(
+        ()=>{
+          loadTasks();
+        },
+        0
+      );
+
+    }else{
+
+      authScreen.style.display="flex";
+
+    }
+
+  }
+);
 
 checkAuth();
+
 </script>
 
 </body>
