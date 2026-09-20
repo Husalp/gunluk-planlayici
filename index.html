@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+  const SUPABASE_URL = "https://zibtfmksgciyfnllnxea.supabase.co";
+
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_MdE_-LkQuqvDi43nUboXzw_13WyB1sv";
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+</script>
 <meta charset="UTF-8">
 
 <meta
