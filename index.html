@@ -5,24 +5,24 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  const SUPABASE_URL =
-    "https://zibtfmksgciyfnllnxea.supabase.co";
+const SUPABASE_URL =
+  "https://zibtfmksgciyfnllnxea.supabase.co";
 
-  const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_MdE_-LkQuqvDi43nUboXzw_13WyB1sv";
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_MdE_-LkQuqvDi43nUboXzw_13WyB1sv";
 
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 </script>
 
 <meta charset="UTF-8">
 
 <meta
   name="viewport"
-  content="width=device-width, initial-scale=1.0"
+  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
 >
 
 <meta
@@ -50,7 +50,7 @@
 <link
   rel="icon"
   type="image/svg+xml"
-  href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20x%3D%224%22%20y%3D%228%22%20width%3D%2256%22%20height%3D%2252%22%20rx%3D%2212%22%20fill%3D%22rgb%2879%2C70%2C229%29%22%2F%3E%3Cpath%20d%3D%22M16%205v14M48%205v14%22%20stroke%3D%22white%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M13%2026h38%22%20stroke%3D%22white%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M17%2040l9%209%2021-21%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E"
+  href="data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 viewBox%3D%220 0 64 64%22%3E%3Crect x%3D%224%22 y%3D%228%22 width%3D%2256%22 height%3D%2252%22 rx%3D%2212%22 fill%3D%22rgb%2879%2C70%2C229%29%22%2F%3E%3Cpath d%3D%22M16 5v14M48 5v14%22 stroke%3D%22white%22 stroke-width%3D%226%22 stroke-linecap%3D%22round%22%2F%3E%3Cpath d%3D%22M13 26h38%22 stroke%3D%22white%22 stroke-width%3D%225%22 stroke-linecap%3D%22round%22%2F%3E%3Cpath d%3D%22M17 40l9 9 21-21%22 fill%3D%22none%22 stroke%3D%22white%22 stroke-width%3D%226%22 stroke-linecap%3D%22round%22 stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E"
 >
 
 <style>
@@ -59,33 +59,30 @@
   --primary:#4f46e5;
   --primary-dark:#4338ca;
   --primary-soft:#eef0ff;
+  --primary-soft-dark:#2d2d4d;
 
   --bg:#f4f6fb;
   --surface:#ffffff;
   --surface-soft:#f8f9fc;
 
   --text:#1f2430;
-  --muted:#7b8190;
+  --muted:#7c8390;
 
-  --border:#e6e8ee;
-  --border-strong:#d9dce5;
+  --border:#e4e7ee;
+  --border-strong:#d7dbe4;
 
-  --success:#2f8f5b;
-  --warning:#a76a00;
-  --danger:#c83b3b;
+  --success:#3a8d5d;
+  --danger:#c53c3c;
 
   --shadow-sm:
-    0 3px 12px rgba(25,32,56,.05);
+    0 5px 18px rgba(25,32,56,.055);
 
   --shadow-md:
-    0 12px 35px rgba(25,32,56,.08);
+    0 14px 38px rgba(25,32,56,.10);
 
   --radius-sm:10px;
   --radius-md:14px;
   --radius-lg:18px;
-
-  --transition:
-    .2s ease;
 }
 
 *{
@@ -111,13 +108,16 @@ body{
   background:
     radial-gradient(
       circle at top left,
-      #eef0ff 0,
-      transparent 28%
+      #edf0ff 0,
+      transparent 30%
     ),
     var(--bg);
 
   color:var(--text);
+
   min-height:100vh;
+
+  -webkit-font-smoothing:antialiased;
 
   transition:
     background .25s ease,
@@ -126,20 +126,20 @@ body{
 
 body.dark{
   --bg:#121417;
-  --surface:#1d2024;
-  --surface-soft:#24282d;
+  --surface:#1c2024;
+  --surface-soft:#252a2f;
 
   --text:#f3f4f6;
-  --muted:#a1a7b0;
+  --muted:#a3a9b2;
 
   --border:#30353b;
-  --border-strong:#3a4047;
+  --border-strong:#3c4249;
 
   background:
     radial-gradient(
       circle at top left,
-      rgba(79,70,229,.15) 0,
-      transparent 30%
+      rgba(79,70,229,.16) 0,
+      transparent 32%
     ),
     var(--bg);
 }
@@ -154,12 +154,26 @@ button{
   -webkit-tap-highlight-color:transparent;
 }
 
+button,
+input,
+select{
+  outline:none;
+}
+
 button:focus-visible,
 input:focus-visible,
 select:focus-visible{
-  outline:3px solid rgba(79,70,229,.18);
+  outline:
+    3px solid
+    rgba(79,70,229,.16);
+
   outline-offset:2px;
 }
+
+
+/* ======================================================
+   LAYOUT
+====================================================== */
 
 .app{
   display:flex;
@@ -170,103 +184,104 @@ select:focus-visible{
   position:sticky;
   top:0;
 
-  width:250px;
+  width:248px;
   height:100vh;
 
-  background:
-    rgba(255,255,255,.92);
+  flex-shrink:0;
 
-  backdrop-filter:blur(18px);
-
-  border-right:1px solid var(--border);
-
-  padding:24px 16px;
+  padding:22px 14px;
 
   display:flex;
   flex-direction:column;
 
-  flex-shrink:0;
+  background:
+    rgba(255,255,255,.92);
 
-  z-index:50;
+  backdrop-filter:
+    blur(18px);
+
+  border-right:
+    1px solid var(--border);
+
+  z-index:100;
 }
 
 .dark .sidebar{
-  background:rgba(29,32,36,.94);
+  background:
+    rgba(28,32,36,.95);
 }
 
 .logo{
   display:flex;
   align-items:center;
-  gap:11px;
-
-  font-size:20px;
-  font-weight:800;
+  gap:10px;
 
   padding:
-    2px 8px
-    22px;
+    3px 10px 23px;
 
-  margin-bottom:12px;
+  margin-bottom:11px;
+
+  font-size:20px;
+  font-weight:850;
+  letter-spacing:-.4px;
 }
 
-.logo-text{
-  letter-spacing:-.4px;
+.logo-mark{
+  width:38px;
+  height:38px;
+
+  flex-shrink:0;
+
+  filter:
+    drop-shadow(
+      0 7px 13px
+      rgba(79,70,229,.20)
+    );
 }
 
 .logo-text span{
   color:var(--primary);
 }
 
-.logo-mark{
-  width:38px;
-  height:38px;
-  flex-shrink:0;
-
-  filter:
-    drop-shadow(
-      0 5px 8px
-      rgba(79,70,229,.22)
-    );
-}
-
 .menu-title{
+  padding:
+    0 11px 9px;
+
   font-size:10px;
   font-weight:800;
-  letter-spacing:.08em;
 
-  color:#989eaa;
+  letter-spacing:.09em;
 
-  padding:
-    0 11px
-    9px;
+  color:#9aa0a9;
 
   text-transform:uppercase;
 }
 
 .menu-item,
 .theme-btn{
+  width:100%;
+
   border:0;
+
   background:transparent;
 
   color:inherit;
-
-  width:100%;
 
   text-align:left;
 
   padding:
     11px 12px;
 
-  border-radius:11px;
-
   margin-bottom:5px;
+
+  border-radius:11px;
 
   cursor:pointer;
 
   transition:
-    background var(--transition),
-    color var(--transition),
-    transform var(--transition);
+    background .2s ease,
+    color .2s ease,
+    transform .2s ease;
 }
 
 .menu-item:hover,
@@ -278,30 +293,38 @@ select:focus-visible{
 .menu-item.active{
   background:var(--primary-soft);
   color:var(--primary);
-  font-weight:750;
+  font-weight:800;
 }
 
 .dark .menu-item.active{
-  background:#2c2c4c;
+  background:var(--primary-soft-dark);
 }
 
 .sidebar-bottom{
   margin-top:auto;
 
-  border-top:1px solid var(--border);
+  border-top:
+    1px solid var(--border);
 
-  padding-top:14px;
+  padding-top:12px;
 }
+
+
+/* ======================================================
+   MAIN
+====================================================== */
 
 .main{
   flex:1;
+
   width:100%;
-  max-width:1420px;
+
+  max-width:1450px;
 
   margin:0 auto;
 
   padding:
-    30px 34px 40px;
+    28px 34px 45px;
 
   min-width:0;
 }
@@ -312,11 +335,12 @@ select:focus-visible{
 
 .page.active{
   display:block;
+
   animation:
-    pageFade .22s ease;
+    pageIn .2s ease;
 }
 
-@keyframes pageFade{
+@keyframes pageIn{
   from{
     opacity:0;
     transform:translateY(4px);
@@ -328,160 +352,328 @@ select:focus-visible{
   }
 }
 
+.mobile-header{
+  display:none;
+}
+
+
+/* ======================================================
+   HEADER
+====================================================== */
+
 .topbar{
   display:flex;
+
   justify-content:space-between;
   align-items:flex-end;
 
-  gap:24px;
+  gap:20px;
 
-  margin-bottom:22px;
-}
-
-.welcome{
-  min-width:0;
+  margin-bottom:20px;
 }
 
 .welcome h1{
   font-size:31px;
-  line-height:1.15;
+  line-height:1.12;
 
-  letter-spacing:-.8px;
+  letter-spacing:-.9px;
 
-  margin-bottom:7px;
+  margin-bottom:6px;
 }
 
 .welcome p{
+  font-size:13px;
   color:var(--muted);
-  font-size:14px;
 }
 
 .date-navigation{
   display:flex;
   align-items:center;
-  justify-content:flex-end;
 
-  gap:8px;
+  gap:7px;
+
   flex-wrap:wrap;
 }
 
 .date-button{
-  border:1px solid var(--border);
+  width:42px;
+  height:42px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:11px;
 
   background:var(--surface);
   color:var(--text);
 
-  width:42px;
-  height:42px;
-
-  border-radius:11px;
-
   cursor:pointer;
 
-  box-shadow:var(--shadow-sm);
+  box-shadow:
+    0 4px 12px
+    rgba(25,32,56,.04);
 
   transition:
-    transform var(--transition),
-    border-color var(--transition),
-    background var(--transition);
+    transform .2s ease,
+    border-color .2s ease;
 }
 
 .date-button:hover{
   transform:translateY(-1px);
-  border-color:var(--border-strong);
+
+  border-color:
+    var(--border-strong);
 }
 
 .today-button{
+  padding:
+    11px 15px;
+
   border:0;
+
+  border-radius:11px;
 
   background:
     linear-gradient(
       135deg,
       var(--primary),
-      #6257eb
+      #7067ef
     );
 
   color:#fff;
 
-  padding:
-    11px 16px;
-
-  border-radius:11px;
+  font-weight:800;
 
   cursor:pointer;
 
-  font-weight:750;
-
   box-shadow:
-    0 8px 18px
+    0 8px 19px
     rgba(79,70,229,.20);
 
   transition:
-    transform var(--transition),
-    box-shadow var(--transition);
+    transform .2s ease,
+    box-shadow .2s ease;
 }
 
 .today-button:hover{
   transform:translateY(-1px);
 
   box-shadow:
-    0 11px 22px
+    0 11px 23px
     rgba(79,70,229,.25);
 }
 
 .date-input{
-  border:1px solid var(--border);
-
-  background:var(--surface);
-  color:var(--text);
+  min-height:42px;
 
   padding:
     10px 12px;
 
+  border:
+    1px solid var(--border);
+
   border-radius:11px;
 
-  min-height:42px;
+  background:var(--surface);
+
+  color:var(--text);
+
+  box-shadow:
+    0 4px 12px
+    rgba(25,32,56,.04);
+}
+
+
+/* ======================================================
+   STAT CARDS
+====================================================== */
+
+.stats{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,minmax(0,1fr));
+
+  gap:13px;
+
+  margin-bottom:14px;
+}
+
+.stat{
+  position:relative;
+
+  padding:
+    18px 19px;
+
+  overflow:hidden;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    var(--radius-md);
+
+  background:var(--surface);
 
   box-shadow:var(--shadow-sm);
 }
 
+.stat::after{
+  content:"";
+
+  position:absolute;
+
+  top:-25px;
+  right:-25px;
+
+  width:80px;
+  height:80px;
+
+  border-radius:50%;
+
+  background:
+    rgba(79,70,229,.055);
+}
+
+.stat-title{
+  position:relative;
+  z-index:1;
+
+  font-size:12px;
+
+  color:var(--muted);
+
+  font-weight:700;
+
+  margin-bottom:8px;
+}
+
+.stat-value{
+  position:relative;
+  z-index:1;
+
+  font-size:29px;
+
+  line-height:1;
+
+  font-weight:850;
+
+  letter-spacing:-.7px;
+}
+
+
+/* ======================================================
+   PROGRESS
+====================================================== */
+
+.progress-box{
+  margin-bottom:15px;
+
+  padding:
+    17px 19px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    var(--radius-md);
+
+  background:var(--surface);
+
+  box-shadow:var(--shadow-sm);
+}
+
+.progress-header{
+  display:flex;
+
+  justify-content:space-between;
+  align-items:center;
+
+  gap:10px;
+
+  margin-bottom:10px;
+
+  font-size:13px;
+}
+
+.progress-header span{
+  color:var(--muted);
+  font-weight:700;
+}
+
+.progress-header strong{
+  font-size:13px;
+}
+
+.progress{
+  height:9px;
+
+  overflow:hidden;
+
+  border-radius:30px;
+
+  background:#e9ebf0;
+}
+
+.dark .progress{
+  background:#31353a;
+}
+
+.progress-bar{
+  width:0;
+  height:100%;
+
+  border-radius:30px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--primary),
+      #7a71ef
+    );
+
+  transition:
+    width .35s ease;
+}
+
+
+/* ======================================================
+   CARDS / BUTTONS
+====================================================== */
+
 .card,
-.stat,
-.progress-box,
 .stat-card{
   background:var(--surface);
 
   border:
     1px solid var(--border);
 
-  box-shadow:var(--shadow-sm);
+  border-radius:
+    var(--radius-lg);
+
+  box-shadow:
+    var(--shadow-sm);
 }
 
 .card{
-  border-radius:var(--radius-lg);
-  padding:22px;
+  padding:21px;
 }
 
 .section-heading{
   display:flex;
+
   justify-content:space-between;
   align-items:center;
 
-  gap:15px;
+  gap:12px;
 
-  margin-bottom:14px;
-}
-
-.section-title{
-  font-size:17px;
-  font-weight:800;
-
-  letter-spacing:-.2px;
+  margin-bottom:11px;
 }
 
 .section-title-wrap{
   display:flex;
   align-items:center;
+
   gap:10px;
 }
 
@@ -495,38 +687,45 @@ select:focus-visible{
 
   box-shadow:
     0 0 0 5px
-    rgba(79,70,229,.09);
+    rgba(79,70,229,.08);
+}
+
+.section-title{
+  font-size:17px;
+
+  font-weight:850;
+
+  letter-spacing:-.2px;
 }
 
 .primary-btn{
+  padding:
+    11px 15px;
+
   border:0;
+
+  border-radius:11px;
 
   background:
     linear-gradient(
       135deg,
       var(--primary),
-      #6257eb
+      #7168ef
     );
 
   color:#fff;
 
-  padding:
-    11px 16px;
-
-  border-radius:11px;
+  font-weight:800;
 
   cursor:pointer;
-
-  font-weight:750;
 
   box-shadow:
     0 7px 18px
     rgba(79,70,229,.18);
 
   transition:
-    transform var(--transition),
-    box-shadow var(--transition),
-    filter var(--transition);
+    transform .2s ease,
+    box-shadow .2s ease;
 }
 
 .primary-btn:hover{
@@ -535,174 +734,52 @@ select:focus-visible{
   box-shadow:
     0 10px 22px
     rgba(79,70,229,.23);
-
-  filter:saturate(1.05);
-}
-
-.primary-btn:active,
-.today-button:active,
-.secondary-btn:active,
-.date-button:active{
-  transform:translateY(0);
 }
 
 .secondary-btn{
+  padding:
+    10px 13px;
+
   border:
     1px solid var(--border);
+
+  border-radius:10px;
 
   background:var(--surface);
 
   color:var(--text);
 
-  border-radius:10px;
-
-  padding:
-    10px 13px;
-
   cursor:pointer;
 
   transition:
-    background var(--transition),
-    border-color var(--transition),
-    transform var(--transition);
+    background .2s ease,
+    border-color .2s ease,
+    transform .2s ease;
 }
 
 .secondary-btn:hover{
   background:var(--surface-soft);
-  border-color:var(--border-strong);
+
+  border-color:
+    var(--border-strong);
+
   transform:translateY(-1px);
 }
 
-.stats{
-  display:grid;
 
-  grid-template-columns:
-    repeat(3,minmax(0,1fr));
-
-  gap:14px;
-
-  margin-bottom:16px;
-}
-
-.stat{
-  border-radius:var(--radius-md);
-
-  padding:19px 20px;
-
-  position:relative;
-  overflow:hidden;
-}
-
-.stat::after{
-  content:"";
-
-  position:absolute;
-
-  right:-28px;
-  top:-28px;
-
-  width:90px;
-  height:90px;
-
-  border-radius:50%;
-
-  background:
-    rgba(79,70,229,.055);
-}
-
-.stat-title{
-  font-size:12px;
-  color:var(--muted);
-
-  margin-bottom:8px;
-
-  font-weight:650;
-
-  position:relative;
-  z-index:1;
-}
-
-.stat-value{
-  font-size:30px;
-  line-height:1;
-
-  font-weight:800;
-
-  letter-spacing:-.7px;
-
-  position:relative;
-  z-index:1;
-}
-
-.progress-box{
-  border-radius:var(--radius-md);
-
-  padding:18px 20px;
-
-  margin-bottom:16px;
-}
-
-.progress-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-
-  gap:12px;
-
-  font-size:13px;
-
-  margin-bottom:11px;
-}
-
-.progress-header span{
-  color:var(--muted);
-  font-weight:650;
-}
-
-.progress-header strong{
-  font-size:13px;
-}
-
-.progress{
-  height:9px;
-
-  background:#e9ebf1;
-
-  border-radius:50px;
-
-  overflow:hidden;
-}
-
-.dark .progress{
-  background:#30343a;
-}
-
-.progress-bar{
-  height:100%;
-
-  width:0;
-
-  background:
-    linear-gradient(
-      90deg,
-      var(--primary),
-      #756df0
-    );
-
-  border-radius:50px;
-
-  transition:
-    width .35s ease;
-}
+/* ======================================================
+   TASK
+====================================================== */
 
 .task{
   display:flex;
+
   align-items:center;
 
-  gap:12px;
+  gap:11px;
 
   padding:
-    14px 5px;
+    13px 5px;
 
   border-bottom:
     1px solid var(--border);
@@ -710,8 +787,12 @@ select:focus-visible{
   border-radius:10px;
 
   transition:
-    background var(--transition),
-    transform var(--transition);
+    background .2s ease,
+    transform .2s ease;
+}
+
+.task:last-child{
+  border-bottom:0;
 }
 
 .task:hover{
@@ -722,10 +803,6 @@ select:focus-visible{
     translateX(2px);
 }
 
-.task:last-child{
-  border-bottom:0;
-}
-
 .task.dragging{
   opacity:.45;
 }
@@ -734,41 +811,43 @@ select:focus-visible{
   width:20px;
   height:20px;
 
-  cursor:pointer;
-
   flex-shrink:0;
+
+  cursor:pointer;
 
   accent-color:var(--primary);
 }
 
 .task-info{
   flex:1;
+
   min-width:0;
 }
 
 .task-name{
-  font-size:15px;
+  font-size:14px;
 
   line-height:1.45;
 
-  font-weight:600;
+  font-weight:650;
 
-  word-break:break-word;
+  overflow-wrap:anywhere;
 }
 
 .task.completed .task-name{
   text-decoration:line-through;
 
-  color:#969ba4;
+  color:#989da6;
 }
 
 .task-meta{
   display:flex;
-  gap:6px;
-
-  margin-top:6px;
 
   flex-wrap:wrap;
+
+  gap:5px;
+
+  margin-top:6px;
 }
 
 .tag{
@@ -779,73 +858,76 @@ select:focus-visible{
 
   border-radius:50px;
 
-  background:#f0f2f5;
+  background:#f1f3f6;
 
-  color:#616773;
+  color:#626873;
 
-  font-weight:650;
-
-  border:1px solid
-    rgba(0,0,0,.025);
+  font-weight:700;
 }
 
 .dark .tag{
   background:#30343a;
-  color:#bcc1ca;
+
+  color:#c0c5cd;
 }
 
 .priority-high{
   background:#fff0f0;
-  color:#c13a3a;
+  color:#c43d3d;
 }
 
 .priority-medium{
-  background:#fff5e5;
-  color:#9b6200;
+  background:#fff5e7;
+  color:#9d6500;
 }
 
 .priority-low{
-  background:#ebf8ef;
-  color:#39764f;
+  background:#edf8f0;
+  color:#39744f;
 }
 
 .dark .priority-high{
-  background:#462a2a;
-  color:#ff9f9f;
+  background:#472a2a;
+  color:#ffaaaa;
 }
 
 .dark .priority-medium{
-  background:#463823;
-  color:#efbe69;
+  background:#483925;
+  color:#efc06e;
 }
 
 .dark .priority-low{
-  background:#273c2e;
-  color:#98d3aa;
+  background:#273d2f;
+  color:#9ed9b0;
 }
 
 .repeat-tag{
-  background:#eeeafe;
-  color:#5b4acb;
+  background:#eeebff;
+  color:#5c4bc9;
 }
 
 .dark .repeat-tag{
-  background:#302d4a;
-  color:#bbb2ff;
+  background:#302d4c;
+  color:#bdb6ff;
 }
 
 .task-actions{
   display:flex;
 
-  gap:2px;
-
   align-items:center;
+
+  gap:2px;
 
   flex-shrink:0;
 }
 
 .action-btn{
-  border:0;
+  min-width:33px;
+  min-height:33px;
+
+  padding:7px;
+
+  border-radius:8px;
 
   background:transparent;
 
@@ -853,60 +935,59 @@ select:focus-visible{
 
   cursor:pointer;
 
-  padding:7px;
-
-  min-width:32px;
-  min-height:32px;
-
-  border-radius:8px;
-
   transition:
-    background var(--transition),
-    transform var(--transition);
+    background .2s ease,
+    transform .2s ease;
 }
 
 .action-btn:hover{
   background:
-    rgba(79,70,229,.08);
+    rgba(79,70,229,.09);
 
-  transform:translateY(-1px);
+  transform:
+    translateY(-1px);
 }
 
 .drag-handle{
-  cursor:grab;
+  padding:
+    4px 3px;
 
-  color:#9aa0aa;
+  color:#9aa0a8;
 
   user-select:none;
 
-  padding:
-    4px 3px;
+  cursor:grab;
 }
+
+
+/* ======================================================
+   EMPTY
+====================================================== */
 
 .empty{
   text-align:center;
 
   padding:
-    42px 15px;
+    38px 12px;
+
+  font-size:13px;
 
   color:var(--muted);
-
-  font-size:14px;
 }
 
 .empty::before{
   content:"✓";
+
+  width:48px;
+  height:48px;
 
   display:flex;
 
   align-items:center;
   justify-content:center;
 
-  width:48px;
-  height:48px;
-
   margin:
-    0 auto 13px;
+    0 auto 12px;
 
   border-radius:50%;
 
@@ -916,15 +997,21 @@ select:focus-visible{
 
   font-size:21px;
 
-  font-weight:800;
+  font-weight:900;
 }
 
 .dark .empty::before{
-  background:#2c2c4c;
+  background:
+    var(--primary-soft-dark);
 }
 
+
+/* ======================================================
+   PAGE HEADER / FILTERS
+====================================================== */
+
 .page-header{
-  margin-bottom:20px;
+  margin-bottom:19px;
 }
 
 .page-header-top{
@@ -937,53 +1024,52 @@ select:focus-visible{
 }
 
 .page-header h2{
-  font-size:27px;
+  font-size:26px;
 
-  letter-spacing:-.6px;
+  letter-spacing:-.7px;
 
   margin-bottom:5px;
 }
 
 .page-header p{
-  color:var(--muted);
+  font-size:13px;
 
-  font-size:14px;
+  color:var(--muted);
 }
 
 .filters{
   display:flex;
 
-  gap:9px;
-
   flex-wrap:wrap;
 
-  margin-bottom:22px;
+  gap:9px;
+
+  margin-bottom:20px;
 }
 
 .filters input{
   flex:1;
+
   min-width:220px;
 }
 
 input,
 select{
-  border:
-    1px solid var(--border-strong);
-
-  border-radius:10px;
-
   padding:
     11px 12px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:10px;
 
   background:var(--surface);
 
   color:var(--text);
 
-  outline:none;
-
   transition:
-    border-color var(--transition),
-    box-shadow var(--transition);
+    border-color .2s ease,
+    box-shadow .2s ease;
 }
 
 input:focus,
@@ -992,16 +1078,7 @@ select:focus{
 
   box-shadow:
     0 0 0 3px
-    rgba(79,70,229,.09);
-}
-
-.section-divider{
-  height:1px;
-
-  background:var(--border);
-
-  margin:
-    19px 0;
+    rgba(79,70,229,.08);
 }
 
 .task-section-heading{
@@ -1010,28 +1087,44 @@ select:focus{
   justify-content:space-between;
   align-items:center;
 
-  margin-bottom:8px;
+  margin-bottom:6px;
 }
 
-.task-section-heading .count-badge{
+.count-badge{
   min-width:28px;
-  padding:4px 8px;
+
+  padding:
+    4px 8px;
+
+  border:
+    1px solid var(--border);
 
   border-radius:50px;
 
   background:var(--surface-soft);
 
-  border:
-    1px solid var(--border);
-
   color:var(--muted);
-
-  font-size:11px;
 
   text-align:center;
 
-  font-weight:700;
+  font-size:10px;
+
+  font-weight:800;
 }
+
+.section-divider{
+  height:1px;
+
+  margin:
+    18px 0;
+
+  background:var(--border);
+}
+
+
+/* ======================================================
+   WEEK
+====================================================== */
 
 .week-toolbar{
   display:flex;
@@ -1039,24 +1132,24 @@ select:focus{
   justify-content:space-between;
   align-items:center;
 
-  gap:10px;
-
-  margin-bottom:18px;
+  gap:12px;
 
   flex-wrap:wrap;
+
+  margin-bottom:18px;
 }
 
 .week-title{
   font-size:18px;
 
-  font-weight:800;
-
-  letter-spacing:-.2px;
+  font-weight:850;
 }
 
 .week-buttons{
   display:flex;
-  gap:8px;
+
+  gap:7px;
+
   flex-wrap:wrap;
 }
 
@@ -1064,9 +1157,12 @@ select:focus{
   display:grid;
 
   grid-template-columns:
-    repeat(7,minmax(145px,1fr));
+    repeat(
+      7,
+      minmax(145px,1fr)
+    );
 
-  gap:10px;
+  gap:9px;
 
   overflow-x:auto;
 
@@ -1074,23 +1170,23 @@ select:focus{
 }
 
 .day-card{
-  background:var(--surface);
+  min-height:214px;
+
+  padding:13px;
 
   border:
     1px solid var(--border);
 
   border-radius:14px;
 
-  padding:14px;
-
-  min-height:215px;
+  background:var(--surface);
 
   cursor:pointer;
 
   transition:
-    transform var(--transition),
-    border-color var(--transition),
-    box-shadow var(--transition);
+    transform .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
 }
 
 .day-card:hover{
@@ -1104,7 +1200,7 @@ select:focus{
   border:
     2px solid var(--primary);
 
-  padding:13px;
+  padding:12px;
 }
 
 .day-card.today{
@@ -1114,21 +1210,21 @@ select:focus{
 }
 
 .day-name{
-  font-size:11px;
+  font-size:10px;
 
   color:var(--muted);
 
   text-transform:uppercase;
 
-  margin-bottom:3px;
+  font-weight:800;
 
-  font-weight:750;
+  margin-bottom:3px;
 }
 
 .day-number{
   font-size:23px;
 
-  font-weight:800;
+  font-weight:850;
 
   line-height:1;
 
@@ -1140,29 +1236,29 @@ select:focus{
 
   color:var(--muted);
 
-  margin-bottom:12px;
+  font-weight:650;
 
-  font-weight:600;
+  margin-bottom:12px;
 }
 
 .week-task{
   padding:
     8px 9px;
 
-  background:var(--surface-soft);
+  margin-bottom:6px;
 
   border:
     1px solid var(--border);
 
   border-radius:8px;
 
-  font-size:11px;
+  background:var(--surface-soft);
 
-  margin-bottom:6px;
-
-  overflow:hidden;
+  font-size:10px;
 
   white-space:nowrap;
+
+  overflow:hidden;
 
   text-overflow:ellipsis;
 }
@@ -1174,44 +1270,46 @@ select:focus{
 }
 
 .week-empty{
-  color:#9ba0a8;
+  margin-top:17px;
+
+  color:#9ca2aa;
 
   font-size:11px;
-
-  margin-top:17px;
 }
+
+
+/* ======================================================
+   STATISTICS
+====================================================== */
 
 .statistics-grid{
   display:grid;
 
   grid-template-columns:
-    repeat(2,minmax(0,1fr));
+    repeat(
+      2,
+      minmax(0,1fr)
+    );
 
-  gap:16px;
+  gap:15px;
 }
 
 .stat-card{
-  border-radius:var(--radius-lg);
-
-  padding:22px;
-
-  min-width:0;
+  padding:21px;
 }
 
 .stat-card h3{
   font-size:15px;
 
-  margin-bottom:18px;
-
-  letter-spacing:-.1px;
+  margin-bottom:17px;
 }
 
 .big-number{
-  font-size:39px;
+  font-size:38px;
 
   line-height:1;
 
-  font-weight:850;
+  font-weight:900;
 
   letter-spacing:-1px;
 
@@ -1229,11 +1327,9 @@ select:focus{
 
   align-items:center;
 
-  justify-content:space-between;
+  gap:11px;
 
-  gap:12px;
-
-  padding:12px 0;
+  padding:11px 0;
 
   border-bottom:
     1px solid var(--border);
@@ -1244,50 +1340,54 @@ select:focus{
 }
 
 .stat-bar{
-  flex:1;
-
   height:8px;
 
-  background:#eaecf1;
+  flex:1;
 
-  border-radius:20px;
+  min-width:70px;
 
   overflow:hidden;
 
-  min-width:80px;
+  border-radius:20px;
+
+  background:#e9ebf0;
 }
 
 .dark .stat-bar{
-  background:#34383e;
+  background:#34383d;
 }
 
 .stat-bar div{
   height:100%;
 
+  border-radius:20px;
+
   background:
     linear-gradient(
       90deg,
       var(--primary),
-      #7a71f0
+      #7a72ef
     );
-
-  border-radius:20px;
 }
 
 .stat-label{
   width:90px;
 
-  font-size:12px;
+  flex-shrink:0;
+
+  font-size:11px;
 
   font-weight:650;
 }
 
 .stat-count{
-  width:65px;
+  width:55px;
+
+  flex-shrink:0;
 
   text-align:right;
 
-  font-size:12px;
+  font-size:11px;
 
   color:var(--muted);
 }
@@ -1297,13 +1397,15 @@ select:focus{
 
   align-items:center;
 
-  gap:10px;
+  gap:9px;
 
-  margin-bottom:12px;
+  margin-bottom:11px;
 }
 
 .day-stat-label{
-  width:65px;
+  width:58px;
+
+  flex-shrink:0;
 
   font-size:11px;
 
@@ -1313,25 +1415,26 @@ select:focus{
 }
 
 .day-stat-value{
-  width:42px;
+  width:38px;
 
-  font-size:11px;
+  flex-shrink:0;
 
   text-align:right;
 
+  font-size:11px;
+
   color:var(--muted);
 }
+
+
+/* ======================================================
+   MODAL
+====================================================== */
 
 .modal-overlay{
   position:fixed;
 
   inset:0;
-
-  background:
-    rgba(12,16,28,.52);
-
-  backdrop-filter:
-    blur(4px);
 
   display:none;
 
@@ -1339,6 +1442,12 @@ select:focus{
   justify-content:center;
 
   padding:18px;
+
+  background:
+    rgba(9,13,22,.56);
+
+  backdrop-filter:
+    blur(5px);
 
   z-index:1000;
 }
@@ -1350,24 +1459,26 @@ select:focus{
 .modal{
   width:100%;
 
-  max-width:590px;
+  max-width:600px;
 
   max-height:92vh;
 
   overflow:auto;
 
-  background:var(--surface);
+  padding:24px;
 
   border:
     1px solid var(--border);
 
   border-radius:20px;
 
-  padding:24px;
+  background:var(--surface);
+
+  color:var(--text);
 
   box-shadow:
-    0 24px 70px
-    rgba(0,0,0,.20);
+    0 25px 80px
+    rgba(0,0,0,.23);
 
   animation:
     modalIn .18s ease;
@@ -1376,6 +1487,7 @@ select:focus{
 @keyframes modalIn{
   from{
     opacity:0;
+
     transform:
       translateY(8px)
       scale(.985);
@@ -1383,6 +1495,7 @@ select:focus{
 
   to{
     opacity:1;
+
     transform:none;
   }
 }
@@ -1393,38 +1506,39 @@ select:focus{
   justify-content:space-between;
   align-items:center;
 
-  gap:15px;
+  gap:12px;
 
-  margin-bottom:21px;
+  margin-bottom:20px;
 }
 
 .modal-title{
   font-size:21px;
 
-  font-weight:850;
+  font-weight:900;
 
   letter-spacing:-.4px;
 }
 
 .modal-close{
+  width:38px;
+  height:38px;
+
   border:0;
 
-  background:var(--surface-soft);
+  border-radius:10px;
 
-  color:var(--text);
+  background:
+    var(--surface-soft);
+
+  color:inherit;
 
   font-size:22px;
 
   cursor:pointer;
 
-  width:38px;
-  height:38px;
-
-  border-radius:10px;
-
   transition:
-    background var(--transition),
-    transform var(--transition);
+    background .2s ease,
+    transform .2s ease;
 }
 
 .modal-close:hover{
@@ -1435,19 +1549,17 @@ select:focus{
 }
 
 .form-group{
-  margin-bottom:16px;
+  margin-bottom:15px;
 }
 
 .form-label{
   display:block;
 
+  margin-bottom:7px;
+
   font-size:12px;
 
   font-weight:800;
-
-  margin-bottom:7px;
-
-  color:var(--text);
 }
 
 .form-grid{
@@ -1466,40 +1578,35 @@ select:focus{
 
   flex-wrap:wrap;
 
-  margin-top:10px;
+  margin-top:9px;
 }
 
 .quick-repeat{
+  padding:
+    7px 10px;
+
   border:
-    1px solid var(--border-strong);
+    1px solid var(--border);
+
+  border-radius:8px;
 
   background:var(--surface);
 
   color:var(--text);
 
-  border-radius:8px;
-
-  padding:
-    7px 10px;
-
-  cursor:pointer;
-
   font-size:11px;
 
   font-weight:700;
 
-  transition:
-    border-color var(--transition),
-    background var(--transition),
-    transform var(--transition);
+  cursor:pointer;
 }
 
 .quick-repeat:hover{
-  border-color:var(--primary);
+  border-color:
+    var(--primary);
 
-  background:var(--primary-soft);
-
-  transform:translateY(-1px);
+  background:
+    var(--primary-soft);
 }
 
 .custom-days{
@@ -1514,30 +1621,28 @@ select:focus{
 }
 
 .custom-day{
+  padding:
+    9px 3px;
+
   border:
-    1px solid var(--border-strong);
+    1px solid var(--border);
+
+  border-radius:9px;
 
   background:var(--surface);
 
   color:var(--text);
 
-  border-radius:9px;
+  font-size:11px;
 
-  padding:
-    9px 4px;
+  font-weight:750;
 
   cursor:pointer;
 
-  font-size:11px;
-
-  text-align:center;
-
-  font-weight:700;
-
   transition:
-    background var(--transition),
-    color var(--transition),
-    border-color var(--transition);
+    background .2s ease,
+    border-color .2s ease,
+    color .2s ease;
 }
 
 .custom-day.selected{
@@ -1549,22 +1654,18 @@ select:focus{
 }
 
 .dark .custom-day{
-  background:var(--surface-soft);
-}
-
-.dark .custom-day.selected{
-  background:var(--primary);
-  color:#fff;
+  background:
+    var(--surface-soft);
 }
 
 .repeat-info{
-  font-size:11px;
-
-  color:var(--muted);
-
   margin-top:8px;
 
+  font-size:11px;
+
   line-height:1.55;
+
+  color:var(--muted);
 }
 
 .modal-actions{
@@ -1574,41 +1675,45 @@ select:focus{
 
   gap:9px;
 
-  margin-top:22px;
+  padding-top:5px;
 
-  padding-top:6px;
+  margin-top:20px;
 }
 
 .recurring-edit-note{
   display:none;
 
-  margin-bottom:15px;
-
   padding:
     11px 12px;
+
+  margin-bottom:15px;
+
+  border-radius:10px;
 
   background:var(--primary-soft);
 
   color:#5547b3;
 
-  border-radius:10px;
-
   font-size:11px;
 
   line-height:1.5;
-
-  border:
-    1px solid rgba(79,70,229,.09);
 }
 
 .dark .recurring-edit-note{
-  background:#302d4a;
-  color:#c0b8ff;
+  background:
+    #302d4c;
+
+  color:#c4bdff;
 }
 
 .recurring-edit-note.show{
   display:block;
 }
+
+
+/* ======================================================
+   TOAST
+====================================================== */
 
 .toast-container{
   position:fixed;
@@ -1617,28 +1722,30 @@ select:focus{
   bottom:18px;
 
   display:flex;
+
   flex-direction:column;
 
-  gap:9px;
+  gap:8px;
 
-  z-index:2000;
+  z-index:2200;
 
   pointer-events:none;
 }
 
 .toast{
   min-width:220px;
-  max-width:320px;
 
-  background:
-    rgba(29,32,36,.95);
-
-  color:#fff;
-
-  border-radius:12px;
+  max-width:330px;
 
   padding:
     11px 13px;
+
+  border-radius:12px;
+
+  background:
+    rgba(29,32,36,.96);
+
+  color:#fff;
 
   font-size:12px;
 
@@ -1650,11 +1757,20 @@ select:focus{
     toastIn .2s ease;
 }
 
+.toast.success{
+  border-left:
+    3px solid #62cc8d;
+}
+
+.toast.error{
+  border-left:
+    3px solid #ff7777;
+}
+
 @keyframes toastIn{
   from{
     opacity:0;
-    transform:
-      translateY(8px);
+    transform:translateY(8px);
   }
 
   to{
@@ -1663,52 +1779,32 @@ select:focus{
   }
 }
 
-.toast.success{
-  border-left:
-    3px solid #5ac987;
-}
 
-.toast.error{
-  border-left:
-    3px solid #ff7777;
-}
-
-.mobile-nav{
-  display:none;
-}
+/* ======================================================
+   AUTH
+====================================================== */
 
 #authScreen{
-  transition:
-    background .25s ease;
-}
+  position:fixed;
 
-#authCard{
-  transition:
-    background .25s ease,
-    color .25s ease,
-    border-color .25s ease;
-}
+  inset:0;
 
-body.dark #authScreen{
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  z-index:99999;
+
+  padding:18px;
+
   background:
-    #121417 !important;
-}
-
-body.dark #authCard{
-  background:
-    #1d2024 !important;
-
-  border-color:
-    #30353b !important;
-
-  color:#f3f4f6;
-}
-
-body.dark #authEmail,
-body.dark #authPassword{
-  background:#24282d !important;
-  color:#fff !important;
-  border-color:#3a4047 !important;
+    radial-gradient(
+      circle at top left,
+      #edf0ff 0,
+      transparent 32%
+    ),
+    var(--bg);
 }
 
 .auth-shell{
@@ -1719,32 +1815,81 @@ body.dark #authPassword{
   padding:12px;
 }
 
+.auth-card{
+  padding:28px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:20px;
+
+  background:var(--surface);
+
+  box-shadow:
+    var(--shadow-md);
+}
+
 .auth-icon{
   width:54px;
   height:54px;
 
-  border-radius:16px;
-
   display:flex;
+
   align-items:center;
   justify-content:center;
+
+  margin-bottom:17px;
+
+  border-radius:16px;
 
   background:
     linear-gradient(
       135deg,
       var(--primary),
-      #766ff0
+      #756cf0
     );
 
   color:#fff;
 
   font-size:25px;
 
-  margin-bottom:17px;
-
   box-shadow:
     0 10px 22px
     rgba(79,70,229,.20);
+}
+
+.auth-title{
+  margin-bottom:7px;
+
+  font-size:26px;
+
+  letter-spacing:-.5px;
+}
+
+.auth-subtitle{
+  margin-bottom:20px;
+
+  font-size:13px;
+
+  color:var(--muted);
+}
+
+.auth-input{
+  width:100%;
+
+  margin-bottom:10px;
+
+  padding:
+    12px;
+
+  border:
+    1px solid var(--border-strong);
+
+  border-radius:10px;
+
+  background:var(--surface);
+
+  color:var(--text);
 }
 
 .auth-button{
@@ -1761,26 +1906,19 @@ body.dark #authPassword{
     linear-gradient(
       135deg,
       var(--primary),
-      #6257eb
+      #7067ef
     );
 
   color:#fff;
 
+  font-weight:800;
+
   cursor:pointer;
-
-  font-weight:750;
-
-  transition:
-    transform var(--transition),
-    opacity var(--transition);
-}
-
-.auth-button:hover{
-  transform:translateY(-1px);
 }
 
 .auth-button:disabled{
   opacity:.65;
+
   cursor:not-allowed;
 }
 
@@ -1799,26 +1937,22 @@ body.dark #authPassword{
 
   cursor:pointer;
 
-  font-weight:650;
+  font-weight:700;
 }
 
-@media(max-width:1100px){
 
-  .sidebar{
-    width:220px;
-  }
+/* ======================================================
+   MOBILE QUICK BUTTON
+====================================================== */
 
-  .main{
-    padding:
-      26px 24px 35px;
-  }
-
-  .week-grid{
-    grid-template-columns:
-      repeat(7,minmax(135px,1fr));
-  }
-
+.mobile-fab{
+  display:none;
 }
+
+
+/* ======================================================
+   MOBILE
+====================================================== */
 
 @media(max-width:900px){
 
@@ -1858,171 +1992,462 @@ body.dark #authPassword{
     font-size:20px;
   }
 
-  .sidebar-bottom{
-    padding-top:12px;
-  }
-
   .main{
     padding:
-      22px 18px 30px;
+      22px 18px 35px;
   }
 
 }
 
 @media(max-width:700px){
 
+  body{
+    padding-bottom:
+      env(safe-area-inset-bottom);
+  }
+
+  .sidebar{
+    display:none;
+  }
+
   .main{
     padding:
-      17px 13px 88px;
+      12px
+      12px
+      calc(
+        88px
+        + env(safe-area-inset-bottom)
+      );
   }
 
   .topbar{
+    display:block;
+
+    margin-bottom:15px;
+  }
+
+  .welcome{
+    display:flex;
+
+    justify-content:space-between;
     align-items:flex-start;
 
-    flex-direction:column;
+    gap:12px;
 
-    gap:15px;
-
-    margin-bottom:17px;
+    margin-bottom:13px;
   }
 
   .welcome h1{
-    font-size:25px;
+    font-size:23px;
 
     letter-spacing:-.6px;
   }
 
-  .date-navigation{
-    width:100%;
+  .welcome p{
+    margin-top:4px;
 
-    justify-content:flex-start;
+    font-size:12px;
+  }
+
+  .date-navigation{
+    display:grid;
+
+    grid-template-columns:
+      42px
+      minmax(0,1fr)
+      42px;
+
+    gap:7px;
+
+    width:100%;
+  }
+
+  .date-button{
+    width:42px;
+    height:42px;
   }
 
   .date-input{
-    flex:1;
+    width:100%;
 
-    min-width:120px;
+    min-width:0;
+
+    height:42px;
+
+    padding:
+      9px 8px;
+  }
+
+  .today-button{
+    grid-column:
+      1 / -1;
+
+    width:100%;
+
+    height:40px;
   }
 
   .stats{
     grid-template-columns:
-      1fr;
+      repeat(3,minmax(0,1fr));
 
-    gap:9px;
+    gap:7px;
+
+    margin-bottom:10px;
   }
 
   .stat{
     padding:
-      16px 17px;
+      13px 10px;
+
+    border-radius:13px;
+
+    text-align:center;
+  }
+
+  .stat-title{
+    font-size:10px;
+
+    margin-bottom:7px;
+  }
+
+  .stat-value{
+    font-size:23px;
   }
 
   .progress-box{
     padding:
-      16px 17px;
+      14px;
+
+    margin-bottom:11px;
+
+    border-radius:13px;
+  }
+
+  .progress-header{
+    font-size:11px;
+  }
+
+  .progress-header strong{
+    font-size:11px;
   }
 
   .card{
     padding:
-      17px;
+      15px;
+
+    border-radius:15px;
   }
 
   .section-heading{
     align-items:flex-start;
+
+    margin-bottom:9px;
+  }
+
+  .section-title{
+    font-size:15px;
+  }
+
+  .section-dot{
+    width:8px;
+    height:8px;
   }
 
   .section-heading .primary-btn{
-    white-space:nowrap;
-  }
-
-  .page-header-top{
-    flex-direction:column;
-  }
-
-  .page-header h2{
-    font-size:24px;
-  }
-
-  .filters{
-    flex-direction:column;
-  }
-
-  .filters input{
-    width:100%;
-    min-width:0;
-  }
-
-  .filters select{
-    width:100%;
+    display:none;
   }
 
   .task{
     align-items:flex-start;
 
-    gap:10px;
+    gap:9px;
 
     padding:
-      13px 2px;
+      13px
+      1px;
+  }
+
+  .task-check{
+    width:22px;
+    height:22px;
+
+    margin-top:2px;
+  }
+
+  .task-info{
+    min-width:0;
+  }
+
+  .task-name{
+    font-size:14px;
+
+    line-height:1.4;
+  }
+
+  .task-meta{
+    gap:4px;
+
+    margin-top:5px;
+  }
+
+  .tag{
+    font-size:9px;
+
+    padding:
+      4px 7px;
   }
 
   .task-actions{
-    gap:0;
-
     flex-direction:column;
+
+    gap:0;
+  }
+
+  .action-btn{
+    width:35px;
+    min-width:35px;
+
+    height:35px;
+    min-height:35px;
+
+    padding:6px;
   }
 
   .drag-handle{
     display:none;
   }
 
-  .action-btn{
-    width:34px;
-    min-width:34px;
-    min-height:34px;
+  .page-header{
+    margin-bottom:15px;
   }
 
-  .task-name{
-    font-size:14px;
+  .page-header-top{
+    display:block;
   }
 
-  .task-meta{
-    gap:5px;
+  .page-header h2{
+    font-size:23px;
+
+    margin-bottom:4px;
   }
 
-  .tag{
+  .page-header p{
+    font-size:12px;
+  }
+
+  .page-header-top .primary-btn{
+    display:none;
+  }
+
+  .filters{
+    flex-direction:column;
+
+    gap:8px;
+
+    margin-bottom:16px;
+  }
+
+  .filters input,
+  .filters select{
+    width:100%;
+
+    min-width:0;
+
+    min-height:44px;
+  }
+
+  .task-section-heading{
+    margin-bottom:4px;
+  }
+
+  .count-badge{
+    min-width:25px;
+
+    padding:
+      3px 7px;
+
     font-size:9px;
-    padding:
-      4px 7px;
-  }
-
-  .statistics-grid{
-    grid-template-columns:
-      1fr;
-  }
-
-  .stat-card{
-    padding:
-      19px;
   }
 
   .week-toolbar{
-    align-items:flex-start;
     flex-direction:column;
+
+    align-items:stretch;
+
+    gap:10px;
+
+    margin-bottom:13px;
+  }
+
+  .week-title{
+    font-size:16px;
   }
 
   .week-buttons{
-    width:100%;
+    display:grid;
+
+    grid-template-columns:
+      repeat(3,1fr);
+
+    gap:6px;
   }
 
   .week-buttons .secondary-btn{
-    flex:1;
+    width:100%;
+
+    padding:
+      10px 6px;
+
+    font-size:10px;
   }
 
   .week-grid{
     grid-template-columns:
       repeat(
         7,
-        minmax(150px,1fr)
+        minmax(142px,1fr)
       );
+
+    gap:8px;
+  }
+
+  .day-card{
+    min-height:205px;
+
+    padding:12px;
+
+    border-radius:13px;
+  }
+
+  .day-card.selected{
+    padding:11px;
+  }
+
+  .day-number{
+    font-size:21px;
+  }
+
+  .day-count{
+    font-size:10px;
+  }
+
+  .week-task{
+    font-size:9px;
+
+    padding:
+      7px 8px;
+  }
+
+  .statistics-grid{
+    grid-template-columns:
+      1fr;
+
+    gap:11px;
+  }
+
+  .stat-card{
+    padding:
+      17px;
+  }
+
+  .big-number{
+    font-size:34px;
+  }
+
+  .category-row{
+    gap:8px;
+  }
+
+  .stat-label{
+    width:70px;
+
+    font-size:10px;
+  }
+
+  .stat-count{
+    width:48px;
+
+    font-size:10px;
+  }
+
+  .day-stat-label{
+    width:48px;
+
+    font-size:10px;
+  }
+
+  .day-stat-value{
+    width:34px;
+
+    font-size:10px;
+  }
+
+  .modal-overlay{
+    align-items:flex-end;
+
+    padding:0;
+  }
+
+  .modal{
+    width:100%;
+
+    max-width:none;
+
+    max-height:
+      calc(
+        94vh
+        - env(safe-area-inset-top)
+      );
+
+    padding:
+      18px
+      16px
+      calc(
+        20px
+        + env(safe-area-inset-bottom)
+      );
+
+    border-radius:
+      20px
+      20px
+      0
+      0;
+
+    box-shadow:
+      0 -14px 45px
+      rgba(0,0,0,.20);
+  }
+
+  .modal::before{
+    content:"";
+
+    display:block;
+
+    width:42px;
+    height:4px;
+
+    margin:
+      -4px
+      auto
+      15px;
+
+    border-radius:20px;
+
+    background:
+      #cdd1d8;
+  }
+
+  .dark .modal::before{
+    background:#4b525a;
+  }
+
+  .modal-header{
+    margin-bottom:16px;
+  }
+
+  .modal-title{
+    font-size:19px;
   }
 
   .form-grid{
@@ -2030,24 +2455,126 @@ body.dark #authPassword{
       1fr;
   }
 
+  .form-group{
+    margin-bottom:13px;
+  }
+
+  .form-label{
+    font-size:11px;
+  }
+
+  input,
+  select{
+    min-height:44px;
+  }
+
   .custom-days{
     grid-template-columns:
       repeat(4,1fr);
+
+    gap:6px;
   }
 
-  .modal{
-    padding:
-      19px;
+  .custom-day{
+    min-height:40px;
+  }
 
-    border-radius:17px;
+  .repeat-options{
+    display:grid;
+
+    grid-template-columns:
+      repeat(2,1fr);
+
+    gap:6px;
+  }
+
+  .quick-repeat{
+    min-height:40px;
   }
 
   .modal-actions{
-    flex-direction:column-reverse;
+    display:grid;
+
+    grid-template-columns:
+      1fr 1fr;
+
+    gap:8px;
   }
 
   .modal-actions button{
     width:100%;
+
+    min-height:45px;
+  }
+
+  .toast-container{
+    left:10px;
+    right:10px;
+
+    bottom:
+      calc(
+        78px
+        + env(safe-area-inset-bottom)
+      );
+  }
+
+  .toast{
+    width:100%;
+
+    max-width:none;
+
+    min-width:0;
+  }
+
+  .mobile-fab{
+    position:fixed;
+
+    right:18px;
+
+    bottom:
+      calc(
+        84px
+        + env(safe-area-inset-bottom)
+      );
+
+    width:57px;
+    height:57px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:18px;
+
+    background:
+      linear-gradient(
+        135deg,
+        var(--primary),
+        #746bf0
+      );
+
+    color:#fff;
+
+    font-size:27px;
+
+    font-weight:400;
+
+    cursor:pointer;
+
+    box-shadow:
+      0 13px 30px
+      rgba(79,70,229,.30);
+
+    z-index:850;
+
+    transition:
+      transform .2s ease,
+      box-shadow .2s ease;
+  }
+
+  .mobile-fab:active{
+    transform:scale(.95);
   }
 
   .mobile-nav{
@@ -2055,145 +2582,188 @@ body.dark #authPassword{
 
     left:9px;
     right:9px;
-    bottom:9px;
 
-    height:67px;
+    bottom:
+      calc(
+        9px
+        + env(safe-area-inset-bottom)
+      );
 
-    background:
-      rgba(255,255,255,.94);
-
-    backdrop-filter:
-      blur(16px);
-
-    border:
-      1px solid var(--border);
-
-    border-radius:18px;
+    height:65px;
 
     display:grid;
 
     grid-template-columns:
       repeat(4,1fr);
 
-    z-index:900;
+    padding:5px;
+
+    border:
+      1px solid var(--border);
+
+    border-radius:18px;
+
+    background:
+      rgba(255,255,255,.94);
+
+    backdrop-filter:
+      blur(18px);
 
     box-shadow:
-      0 14px 35px
-      rgba(24,30,50,.14);
+      0 14px 38px
+      rgba(25,32,56,.16);
 
-    padding:
-      5px;
+    z-index:900;
   }
 
   .dark .mobile-nav{
     background:
-      rgba(29,32,36,.95);
+      rgba(28,32,36,.96);
   }
 
   .mobile-nav button{
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:3px;
+
     border:0;
+
+    border-radius:13px;
 
     background:transparent;
 
     color:var(--muted);
 
-    cursor:pointer;
-
-    border-radius:13px;
-
-    margin:0;
-
-    font-size:10px;
-
-    line-height:1.25;
+    font-size:9px;
 
     font-weight:650;
 
-    transition:
-      background var(--transition),
-      color var(--transition),
-      transform var(--transition);
+    line-height:1.1;
+
+    cursor:pointer;
   }
 
-  .mobile-nav button span{
-    display:block;
-
-    font-size:20px;
+  .mobile-nav button .nav-icon{
+    font-size:19px;
 
     line-height:1;
-
-    margin-bottom:4px;
   }
 
   .mobile-nav button.active{
-    background:var(--primary-soft);
+    background:
+      var(--primary-soft);
 
-    color:var(--primary);
+    color:
+      var(--primary);
 
     font-weight:800;
   }
 
   .dark .mobile-nav button.active{
-    background:#2c2c4c;
-    color:#bcb7ff;
-  }
+    background:
+      var(--primary-soft-dark);
 
-  .toast-container{
-    left:12px;
-    right:12px;
-
-    bottom:84px;
-  }
-
-  .toast{
-    max-width:none;
-    width:100%;
+    color:#bdb8ff;
   }
 
 }
 
-@media(max-width:430px){
+@media(max-width:380px){
 
-  .welcome h1{
-    font-size:23px;
+  .stats{
+    gap:5px;
   }
 
-  .date-navigation{
-    gap:6px;
-  }
-
-  .date-button{
-    width:38px;
-    height:38px;
-  }
-
-  .today-button{
+  .stat{
     padding:
-      10px 12px;
+      12px 7px;
   }
 
-  .date-input{
-    min-width:0;
-    padding:
-      9px 8px;
+  .stat-title{
+    font-size:9px;
   }
 
-  .section-heading{
-    flex-direction:column;
+  .stat-value{
+    font-size:21px;
   }
 
-  .section-heading .primary-btn{
-    width:100%;
-  }
-
-  .mobile-nav{
-    height:64px;
+  .mobile-fab{
+    right:14px;
   }
 
 }
+
 
 /* ======================================================
-   AUTH
+   MOBILE HEADER / EXTRA
+====================================================== */
+
+@media(max-width:700px){
+
+  .mobile-header{
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    gap:12px;
+
+    margin-bottom:7px;
+  }
+
+  .mobile-brand{
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    font-size:16px;
+
+    font-weight:850;
+
+    letter-spacing:-.3px;
+  }
+
+  .mobile-brand-mark{
+    width:30px;
+    height:30px;
+
+    flex-shrink:0;
+  }
+
+  .mobile-theme{
+    width:38px;
+    height:38px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border:
+      1px solid var(--border);
+
+    border-radius:11px;
+
+    background:
+      var(--surface);
+
+    color:var(--text);
+
+    cursor:pointer;
+  }
+
+}
+
+
+/* ======================================================
+   END CSS
 ====================================================== */
 
 </style>
@@ -2201,84 +2771,46 @@ body.dark #authPassword{
 
 <body>
 
-<div
-  id="authScreen"
-  style="
-    position:fixed;
-    inset:0;
-    background:#f4f6fb;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:99999;
-    padding:18px;
-  "
->
 
-  <div
-    id="authCard"
-    class="auth-shell"
-  >
+<!-- ====================================================
+     AUTH
+===================================================== -->
 
-    <div
-      style="
-        background:#fff;
-        border:1px solid #e6e8ee;
-        border-radius:20px;
-        padding:28px;
-        box-shadow:0 18px 50px rgba(25,32,56,.09);
-      "
-    >
+<div id="authScreen">
+
+  <div class="auth-shell">
+
+    <div class="auth-card">
 
       <div class="auth-icon">
         ✓
       </div>
 
-      <h1
-        style="
-          margin-bottom:7px;
-          font-size:26px;
-          letter-spacing:-.5px;
-        "
-      >
+      <h1 class="auth-title">
         Günlük Planlayıcı
       </h1>
 
       <p
         id="authTitle"
-        style="
-          margin-bottom:20px;
-          color:#7b8190;
-          font-size:13px;
-        "
+        class="auth-subtitle"
       >
         Hesabına giriş yap
       </p>
 
       <input
         id="authEmail"
+        class="auth-input"
         type="email"
         placeholder="E-posta"
-        style="
-          width:100%;
-          padding:12px;
-          margin-bottom:10px;
-          border:1px solid #d9dce5;
-          border-radius:10px;
-        "
+        autocomplete="email"
       >
 
       <input
         id="authPassword"
+        class="auth-input"
         type="password"
         placeholder="Şifre"
-        style="
-          width:100%;
-          padding:12px;
-          margin-bottom:10px;
-          border:1px solid #d9dce5;
-          border-radius:10px;
-        "
+        autocomplete="current-password"
       >
 
       <button
@@ -2302,7 +2834,7 @@ body.dark #authPassword{
         style="
           margin-top:13px;
           font-size:12px;
-          color:#7b8190;
+          color:var(--muted);
           line-height:1.5;
         "
       ></p>
@@ -2313,580 +2845,711 @@ body.dark #authPassword{
 
 </div>
 
+
+<!-- ====================================================
+     APP
+===================================================== -->
+
 <div class="app">
 
-<aside class="sidebar">
 
-  <div class="logo">
+  <!-- SIDEBAR -->
 
-    <svg
-      class="logo-mark"
-      viewBox="0 0 64 64"
-      aria-hidden="true"
-    >
+  <aside class="sidebar">
 
-      <rect
-        x="4"
-        y="8"
-        width="56"
-        height="52"
-        rx="12"
-        fill="rgb(79,70,229)"
-      />
+    <div class="logo">
 
-      <path
-        d="M16 5v14M48 5v14"
-        stroke="white"
-        stroke-width="6"
-        stroke-linecap="round"
-      />
+      <svg
+        class="logo-mark"
+        viewBox="0 0 64 64"
+        aria-hidden="true"
+      >
 
-      <path
-        d="M13 26h38"
-        stroke="white"
-        stroke-width="5"
-        stroke-linecap="round"
-      />
+        <rect
+          x="4"
+          y="8"
+          width="56"
+          height="52"
+          rx="12"
+          fill="rgb(79,70,229)"
+        />
 
-      <path
-        d="M17 40l9 9 21-21"
-        fill="none"
-        stroke="white"
-        stroke-width="6"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
+        <path
+          d="M16 5v14M48 5v14"
+          stroke="white"
+          stroke-width="6"
+          stroke-linecap="round"
+        />
 
-    </svg>
+        <path
+          d="M13 26h38"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
 
-    <div class="logo-text">
-      Günlük<span>Plan</span>
+        <path
+          d="M17 40l9 9 21-21"
+          fill="none"
+          stroke="white"
+          stroke-width="6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+
+      </svg>
+
+      <div class="logo-text">
+        Günlük<span>Plan</span>
+      </div>
+
     </div>
 
-  </div>
 
-  <div class="menu-title">
-    Menü
-  </div>
+    <div class="menu-title">
+      Menü
+    </div>
 
-  <button
-    class="menu-item active"
-    onclick="showPage('home',this)"
-  >
-    🏠 Ana Sayfa
-  </button>
-
-  <button
-    class="menu-item"
-    onclick="showPage('tasks',this)"
-  >
-    📋 Görevler
-  </button>
-
-  <button
-    class="menu-item"
-    onclick="showPage('week',this)"
-  >
-    📅 Haftalık
-  </button>
-
-  <button
-    class="menu-item"
-    onclick="showPage('stats',this)"
-  >
-    📊 İstatistikler
-  </button>
-
-  <div class="sidebar-bottom">
 
     <button
-      class="theme-btn"
-      onclick="toggleDarkMode()"
+      class="menu-item active"
+      onclick="showPage('home',this)"
     >
-      🌙 Karanlık Mod
+      🏠 Ana Sayfa
     </button>
 
-  </div>
 
-</aside>
+    <button
+      class="menu-item"
+      onclick="showPage('tasks',this)"
+    >
+      📋 Görevler
+    </button>
 
-<main class="main">
 
-<section
-  id="home"
-  class="page active"
->
+    <button
+      class="menu-item"
+      onclick="showPage('week',this)"
+    >
+      📅 Haftalık
+    </button>
 
-  <div class="topbar">
 
-    <div class="welcome">
+    <button
+      class="menu-item"
+      onclick="showPage('stats',this)"
+    >
+      📊 İstatistikler
+    </button>
 
-      <h1 id="welcomeTitle">
-        Günlük Planım 👋
-      </h1>
 
-      <p id="welcomeDate"></p>
-
-    </div>
-
-    <div class="date-navigation">
-
-      <button
-        class="date-button"
-        onclick="changeDate(-1)"
-      >
-        ‹
-      </button>
-
-      <input
-        type="date"
-        id="selectedDate"
-        class="date-input"
-        onchange="selectDate(this.value)"
-      >
+    <div class="sidebar-bottom">
 
       <button
-        class="date-button"
-        onclick="changeDate(1)"
+        class="theme-btn"
+        onclick="toggleDarkMode()"
       >
-        ›
-      </button>
-
-      <button
-        class="today-button"
-        onclick="goToday()"
-      >
-        Bugün
+        🌙 Karanlık Mod
       </button>
 
     </div>
 
-  </div>
+  </aside>
 
-  <div class="stats">
 
-    <div class="stat">
+  <!-- MAIN -->
 
-      <div class="stat-title">
-        Toplam Görev
+  <main class="main">
+
+
+    <!-- MOBILE HEADER -->
+
+    <div class="mobile-header">
+
+      <div class="mobile-brand">
+
+        <svg
+          class="mobile-brand-mark"
+          viewBox="0 0 64 64"
+          aria-hidden="true"
+        >
+
+          <rect
+            x="4"
+            y="8"
+            width="56"
+            height="52"
+            rx="12"
+            fill="rgb(79,70,229)"
+          />
+
+          <path
+            d="M16 5v14M48 5v14"
+            stroke="white"
+            stroke-width="6"
+            stroke-linecap="round"
+          />
+
+          <path
+            d="M13 26h38"
+            stroke="white"
+            stroke-width="5"
+            stroke-linecap="round"
+          />
+
+          <path
+            d="M17 40l9 9 21-21"
+            fill="none"
+            stroke="white"
+            stroke-width="6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+
+        </svg>
+
+        <span>
+          Günlük<span style="color:var(--primary)">Plan</span>
+        </span>
+
       </div>
 
-      <div
-        class="stat-value"
-        id="totalTasks"
+
+      <button
+        class="mobile-theme"
+        onclick="toggleDarkMode()"
+        title="Tema değiştir"
       >
-        0
-      </div>
+        🌙
+      </button>
 
     </div>
 
-    <div class="stat">
 
-      <div class="stat-title">
-        Tamamlanan
-      </div>
+    <!-- HOME -->
 
-      <div
-        class="stat-value"
-        id="completedTasks"
-      >
-        0
-      </div>
+    <section
+      id="home"
+      class="page active"
+    >
 
-    </div>
+      <div class="topbar">
 
-    <div class="stat">
+        <div class="welcome">
 
-      <div class="stat-title">
-        İlerleme
-      </div>
+          <div>
 
-      <div
-        class="stat-value"
-        id="percentage"
-      >
-        0%
-      </div>
+            <h1 id="welcomeTitle">
+              Günlük Planım 👋
+            </h1>
 
-    </div>
+            <p id="welcomeDate"></p>
 
-  </div>
+          </div>
 
-  <div class="progress-box">
+        </div>
 
-    <div class="progress-header">
 
-      <span>
-        Günlük ilerleme
-      </span>
+        <div class="date-navigation">
 
-      <strong id="progressText">
-        0 / 0
-      </strong>
+          <button
+            class="date-button"
+            onclick="changeDate(-1)"
+          >
+            ‹
+          </button>
 
-    </div>
+          <input
+            type="date"
+            id="selectedDate"
+            class="date-input"
+            onchange="selectDate(this.value)"
+          >
 
-    <div class="progress">
+          <button
+            class="date-button"
+            onclick="changeDate(1)"
+          >
+            ›
+          </button>
 
-      <div
-        class="progress-bar"
-        id="progressBar"
-      ></div>
+          <button
+            class="today-button"
+            onclick="goToday()"
+          >
+            Bugün
+          </button>
 
-    </div>
-
-  </div>
-
-  <div class="card">
-
-    <div class="section-heading">
-
-      <div class="section-title-wrap">
-
-        <span class="section-dot"></span>
-
-        <div class="section-title">
-          Bu Günün Görevleri
         </div>
 
       </div>
 
-      <button
-        class="primary-btn"
-        onclick="openNewTask()"
-      >
-        + Yeni Görev
-      </button>
 
-    </div>
+      <div class="stats">
 
-    <div id="homeTaskList"></div>
+        <div class="stat">
 
-  </div>
+          <div class="stat-title">
+            Toplam Görev
+          </div>
 
-</section>
+          <div
+            class="stat-value"
+            id="totalTasks"
+          >
+            0
+          </div>
 
-<section
-  id="tasks"
-  class="page"
->
+        </div>
 
-  <div class="page-header">
 
-    <div class="page-header-top">
+        <div class="stat">
 
-      <div>
+          <div class="stat-title">
+            Tamamlanan
+          </div>
+
+          <div
+            class="stat-value"
+            id="completedTasks"
+          >
+            0
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-title">
+            İlerleme
+          </div>
+
+          <div
+            class="stat-value"
+            id="percentage"
+          >
+            0%
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="progress-box">
+
+        <div class="progress-header">
+
+          <span>
+            Günlük ilerleme
+          </span>
+
+          <strong id="progressText">
+            0 / 0
+          </strong>
+
+        </div>
+
+        <div class="progress">
+
+          <div
+            id="progressBar"
+            class="progress-bar"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="section-heading">
+
+          <div class="section-title-wrap">
+
+            <span class="section-dot"></span>
+
+            <div class="section-title">
+              Bu Günün Görevleri
+            </div>
+
+          </div>
+
+          <button
+            class="primary-btn"
+            onclick="openNewTask()"
+          >
+            + Yeni Görev
+          </button>
+
+        </div>
+
+        <div id="homeTaskList"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- TASKS -->
+
+    <section
+      id="tasks"
+      class="page"
+    >
+
+      <div class="page-header">
+
+        <div class="page-header-top">
+
+          <div>
+
+            <h2>
+              Tüm Görevler
+            </h2>
+
+            <p>
+              Planladığın tüm görevleri yönet.
+            </p>
+
+          </div>
+
+          <button
+            class="primary-btn"
+            onclick="openNewTask()"
+          >
+            + Yeni Görev
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="filters">
+
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="🔎 Görevlerde ara..."
+            oninput="renderAllTasks()"
+          >
+
+
+          <select
+            id="filterStatus"
+            onchange="renderAllTasks()"
+          >
+
+            <option value="all">
+              Tüm görevler
+            </option>
+
+            <option value="active">
+              Tamamlanmayanlar
+            </option>
+
+            <option value="completed">
+              Tamamlananlar
+            </option>
+
+          </select>
+
+
+          <select
+            id="filterCategory"
+            onchange="renderAllTasks()"
+          >
+
+            <option value="all">
+              Tüm kategoriler
+            </option>
+
+            <option value="Genel">
+              Genel
+            </option>
+
+            <option value="Ders">
+              Ders
+            </option>
+
+            <option value="Python">
+              Python
+            </option>
+
+            <option value="İngilizce">
+              İngilizce
+            </option>
+
+            <option value="Spor">
+              Spor
+            </option>
+
+            <option value="Kişisel">
+              Kişisel
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="task-section-heading">
+
+          <div class="section-title">
+            Tekrarlayan Planlar
+          </div>
+
+          <div
+            id="recurringSectionCount"
+            class="count-badge"
+          >
+            0
+          </div>
+
+        </div>
+
+
+        <div id="recurringTaskList"></div>
+
+
+        <div class="section-divider"></div>
+
+
+        <div class="task-section-heading">
+
+          <div class="section-title">
+            Tek Seferlik Görevler
+          </div>
+
+          <div
+            id="normalSectionCount"
+            class="count-badge"
+          >
+            0
+          </div>
+
+        </div>
+
+
+        <div id="allTaskList"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- WEEK -->
+
+    <section
+      id="week"
+      class="page"
+    >
+
+      <div class="page-header">
 
         <h2>
-          Tüm Görevler
+          Haftalık Plan
         </h2>
 
         <p>
-          Planladığın tüm görevleri yönet.
+          Haftanın tamamını tek ekranda gör.
         </p>
 
       </div>
 
-      <button
-        class="primary-btn"
-        onclick="openNewTask()"
-      >
-        + Yeni Görev
-      </button>
 
-    </div>
+      <div class="card">
 
-  </div>
+        <div class="week-toolbar">
 
-  <div class="card">
+          <div
+            id="weekTitle"
+            class="week-title"
+          ></div>
 
-    <div class="filters">
 
-      <input
-        id="searchInput"
-        type="text"
-        placeholder="🔎 Görevlerde ara..."
-        oninput="renderAllTasks()"
-      >
+          <div class="week-buttons">
 
-      <select
-        id="filterStatus"
-        onchange="renderAllTasks()"
-      >
+            <button
+              class="secondary-btn"
+              onclick="changeWeek(-1)"
+            >
+              ‹ Önceki
+            </button>
 
-        <option value="all">
-          Tüm görevler
-        </option>
+            <button
+              class="secondary-btn"
+              onclick="weekToday()"
+            >
+              Bu Hafta
+            </button>
 
-        <option value="active">
-          Tamamlanmayanlar
-        </option>
+            <button
+              class="secondary-btn"
+              onclick="changeWeek(1)"
+            >
+              Sonraki ›
+            </button>
 
-        <option value="completed">
-          Tamamlananlar
-        </option>
+          </div>
 
-      </select>
+        </div>
 
-      <select
-        id="filterCategory"
-        onchange="renderAllTasks()"
-      >
 
-        <option value="all">
-          Tüm kategoriler
-        </option>
-
-        <option value="Genel">
-          Genel
-        </option>
-
-        <option value="Ders">
-          Ders
-        </option>
-
-        <option value="Python">
-          Python
-        </option>
-
-        <option value="İngilizce">
-          İngilizce
-        </option>
-
-        <option value="Spor">
-          Spor
-        </option>
-
-        <option value="Kişisel">
-          Kişisel
-        </option>
-
-      </select>
-
-    </div>
-
-    <div class="task-section-heading">
-
-      <div class="section-title">
-        Tekrarlayan Planlar
-      </div>
-
-      <div
-        class="count-badge"
-        id="recurringSectionCount"
-      >
-        0
-      </div>
-
-    </div>
-
-    <div id="recurringTaskList"></div>
-
-    <div class="section-divider"></div>
-
-    <div class="task-section-heading">
-
-      <div class="section-title">
-        Tek Seferlik Görevler
-      </div>
-
-      <div
-        class="count-badge"
-        id="normalSectionCount"
-      >
-        0
-      </div>
-
-    </div>
-
-    <div id="allTaskList"></div>
-
-  </div>
-
-</section>
-
-<section
-  id="week"
-  class="page"
->
-
-  <div class="page-header">
-
-    <h2>
-      Haftalık Plan
-    </h2>
-
-    <p>
-      Haftanın tamamını tek ekranda gör.
-    </p>
-
-  </div>
-
-  <div class="card">
-
-    <div class="week-toolbar">
-
-      <div
-        class="week-title"
-        id="weekTitle"
-      ></div>
-
-      <div class="week-buttons">
-
-        <button
-          class="secondary-btn"
-          onclick="changeWeek(-1)"
-        >
-          ‹ Önceki
-        </button>
-
-        <button
-          class="secondary-btn"
-          onclick="weekToday()"
-        >
-          Bu Hafta
-        </button>
-
-        <button
-          class="secondary-btn"
-          onclick="changeWeek(1)"
-        >
-          Sonraki ›
-        </button>
+        <div
+          id="weekGrid"
+          class="week-grid"
+        ></div>
 
       </div>
 
-    </div>
+    </section>
 
-    <div
-      id="weekGrid"
-      class="week-grid"
-    ></div>
 
-  </div>
+    <!-- STATS -->
 
-</section>
+    <section
+      id="stats"
+      class="page"
+    >
 
-<section
-  id="stats"
-  class="page"
->
+      <div class="page-header">
 
-  <div class="page-header">
+        <h2>
+          İstatistikler
+        </h2>
 
-    <h2>
-      İstatistikler
-    </h2>
+        <p>
+          Planlarını ve çalışma düzenini takip et.
+        </p>
 
-    <p>
-      Planlarını ve çalışma düzenini takip et.
-    </p>
-
-  </div>
-
-  <div class="statistics-grid">
-
-    <div class="stat-card">
-
-      <h3>
-        Genel Durum
-      </h3>
-
-      <div
-        class="big-number"
-        id="allTotal"
-      >
-        0
       </div>
 
-      <div class="muted">
-        Tek seferlik görev
+
+      <div class="statistics-grid">
+
+
+        <div class="stat-card">
+
+          <h3>
+            Genel Durum
+          </h3>
+
+          <div
+            id="allTotal"
+            class="big-number"
+          >
+            0
+          </div>
+
+          <div class="muted">
+            Tek seferlik görev
+          </div>
+
+
+          <br>
+
+
+          <div
+            id="allCompleted"
+            class="big-number"
+          >
+            0
+          </div>
+
+          <div class="muted">
+            Tamamlanan görev
+          </div>
+
+
+          <br>
+
+
+          <div
+            id="allPercentage"
+            class="big-number"
+          >
+            0%
+          </div>
+
+          <div class="muted">
+            Tamamlanma oranı
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <h3>
+            Tekrarlayan Planlar
+          </h3>
+
+          <div
+            id="recurringCount"
+            class="big-number"
+          >
+            0
+          </div>
+
+          <div class="muted">
+            Aktif tekrarlayan plan
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <h3>
+            Kategoriler
+          </h3>
+
+          <div id="categoryStats"></div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <h3>
+            Son 7 Gün
+          </h3>
+
+          <div id="lastSevenStats"></div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <h3>
+            Öncelikler
+          </h3>
+
+          <div id="priorityStats"></div>
+
+        </div>
+
+
       </div>
 
-      <br>
+    </section>
 
-      <div
-        class="big-number"
-        id="allCompleted"
-      >
-        0
-      </div>
 
-      <div class="muted">
-        Tamamlanan görev
-      </div>
-
-      <br>
-
-      <div
-        class="big-number"
-        id="allPercentage"
-      >
-        0%
-      </div>
-
-      <div class="muted">
-        Tamamlanma oranı
-      </div>
-
-    </div>
-
-    <div class="stat-card">
-
-      <h3>
-        Tekrarlayan Planlar
-      </h3>
-
-      <div
-        class="big-number"
-        id="recurringCount"
-      >
-        0
-      </div>
-
-      <div class="muted">
-        Aktif tekrarlayan plan
-      </div>
-
-    </div>
-
-    <div class="stat-card">
-
-      <h3>
-        Kategoriler
-      </h3>
-
-      <div id="categoryStats"></div>
-
-    </div>
-
-    <div class="stat-card">
-
-      <h3>
-        Son 7 Gün
-      </h3>
-
-      <div id="lastSevenStats"></div>
-
-    </div>
-
-    <div class="stat-card">
-
-      <h3>
-        Öncelikler
-      </h3>
-
-      <div id="priorityStats"></div>
-
-    </div>
-
-  </div>
-
-</section>
-
-</main>
+  </main>
 
 </div>
+
+
+<!-- ====================================================
+     MOBILE NAV
+===================================================== -->
 
 <nav class="mobile-nav">
 
@@ -2894,36 +3557,82 @@ body.dark #authPassword{
     class="active"
     onclick="showMobilePage('home',this)"
   >
-    <span>🏠</span>
-    Ana Sayfa
+    <span class="nav-icon">
+      🏠
+    </span>
+
+    <span>
+      Ana Sayfa
+    </span>
+
   </button>
+
 
   <button
     onclick="showMobilePage('tasks',this)"
   >
-    <span>📋</span>
-    Görevler
+
+    <span class="nav-icon">
+      📋
+    </span>
+
+    <span>
+      Görevler
+    </span>
+
   </button>
+
 
   <button
     onclick="showMobilePage('week',this)"
   >
-    <span>📅</span>
-    Haftalık
+
+    <span class="nav-icon">
+      📅
+    </span>
+
+    <span>
+      Haftalık
+    </span>
+
   </button>
+
 
   <button
     onclick="showMobilePage('stats',this)"
   >
-    <span>📊</span>
-    İstatistik
+
+    <span class="nav-icon">
+      📊
+    </span>
+
+    <span>
+      İstatistik
+    </span>
+
   </button>
 
 </nav>
 
+
+<!-- MOBILE FAB -->
+
+<button
+  class="mobile-fab"
+  onclick="openNewTask()"
+  aria-label="Yeni görev ekle"
+>
+  +
+</button>
+
+
+<!-- ====================================================
+     MODAL
+===================================================== -->
+
 <div
-  class="modal-overlay"
   id="modalOverlay"
+  class="modal-overlay"
   onclick="closeModalOutside(event)"
 >
 
@@ -2935,8 +3644,8 @@ body.dark #authPassword{
     <div class="modal-header">
 
       <div
-        class="modal-title"
         id="modalTitle"
+        class="modal-title"
       >
         Yeni Görev
       </div>
@@ -2950,6 +3659,7 @@ body.dark #authPassword{
 
     </div>
 
+
     <div
       id="recurringEditNote"
       class="recurring-edit-note"
@@ -2957,6 +3667,7 @@ body.dark #authPassword{
       🔁 Bu bir tekrarlayan plandır.
       Yaptığın değişiklikler bu planın tamamına uygulanır.
     </div>
+
 
     <form
       id="taskForm"
@@ -2967,6 +3678,7 @@ body.dark #authPassword{
         id="modalTaskId"
         type="hidden"
       >
+
 
       <div class="form-group">
 
@@ -2980,12 +3692,13 @@ body.dark #authPassword{
         <input
           id="modalTaskName"
           type="text"
-          placeholder="Örneğin: Python çalış"
           maxlength="120"
           required
+          placeholder="Örneğin: Python çalış"
         >
 
       </div>
+
 
       <div class="form-grid">
 
@@ -3006,6 +3719,7 @@ body.dark #authPassword{
 
         </div>
 
+
         <div class="form-group">
 
           <label
@@ -3023,6 +3737,7 @@ body.dark #authPassword{
         </div>
 
       </div>
+
 
       <div class="form-grid">
 
@@ -3065,6 +3780,7 @@ body.dark #authPassword{
 
         </div>
 
+
         <div class="form-group">
 
           <label
@@ -3097,6 +3813,7 @@ body.dark #authPassword{
 
       </div>
 
+
       <div class="form-group">
 
         <label
@@ -3105,6 +3822,7 @@ body.dark #authPassword{
         >
           Tekrar
         </label>
+
 
         <select
           id="modalRepeat"
@@ -3133,6 +3851,7 @@ body.dark #authPassword{
 
         </select>
 
+
         <div
           id="customDaysArea"
           style="
@@ -3144,6 +3863,7 @@ body.dark #authPassword{
           <div class="form-label">
             Hangi günlerde?
           </div>
+
 
           <div class="custom-days">
 
@@ -3214,6 +3934,7 @@ body.dark #authPassword{
 
         </div>
 
+
         <div
           id="repeatEndArea"
           style="
@@ -3233,6 +3954,7 @@ body.dark #authPassword{
             id="modalRepeatEnd"
             type="date"
           >
+
 
           <div class="repeat-options">
 
@@ -3270,6 +3992,7 @@ body.dark #authPassword{
 
           </div>
 
+
           <div class="repeat-info">
             Bitiş tarihi başlangıç günü dahil edilir.
             Süresiz seçersen bir bitiş tarihi olmaz.
@@ -3278,6 +4001,7 @@ body.dark #authPassword{
         </div>
 
       </div>
+
 
       <div class="modal-actions">
 
@@ -3304,10 +4028,12 @@ body.dark #authPassword{
 
 </div>
 
+
 <div
   id="toastContainer"
   class="toast-container"
 ></div>
+
 
 <script>
 
@@ -3317,7 +4043,9 @@ body.dark #authPassword{
 
 let tasks =
   JSON.parse(
-    localStorage.getItem("plannerTasks")
+    localStorage.getItem(
+      "plannerTasks"
+    )
   ) || [];
 
 let selectedDate =
@@ -3341,73 +4069,78 @@ let loadTasksPromise =
 ====================================================== */
 
 tasks =
-  tasks.map((task,index)=>{
+  tasks.map(
+    (task,index)=>{
 
-    let repeatType =
-      task.repeatType ||
-      (task.recurring ? "daily" : "none");
+      let repeatType =
+        task.repeatType ||
+        (
+          task.recurring
+            ? "daily"
+            : "none"
+        );
 
-    if(
-      repeatType==="daily" &&
-      !task.recurring
-    ){
+      return {
 
-      repeatType="none";
+        id:
+          task.id ||
+          Date.now()+index,
+
+        text:
+          task.text ||
+          "Görev",
+
+        category:
+          task.category ||
+          "Genel",
+
+        priority:
+          task.priority ||
+          "medium",
+
+        completed:
+          Boolean(
+            task.completed
+          ),
+
+        date:
+          task.date ||
+          getTodayKey(),
+
+        time:
+          task.time ||
+          "",
+
+        order:
+          Number.isFinite(
+            task.order
+          )
+            ? task.order
+            : index,
+
+        recurring:
+          Boolean(
+            task.recurring
+          ),
+
+        repeatType:
+          repeatType,
+
+        repeatEnd:
+          task.repeatEnd ||
+          "",
+
+        completedDates:
+          Array.isArray(
+            task.completedDates
+          )
+            ? task.completedDates
+            : []
+
+      };
 
     }
-
-    return {
-
-      id:
-        task.id ||
-        Date.now()+index,
-
-      text:
-        task.text ||
-        "Görev",
-
-      category:
-        task.category ||
-        "Genel",
-
-      priority:
-        task.priority ||
-        "medium",
-
-      completed:
-        Boolean(task.completed),
-
-      date:
-        task.date ||
-        getTodayKey(),
-
-      time:
-        task.time ||
-        "",
-
-      order:
-        Number.isFinite(task.order)
-          ? task.order
-          : index,
-
-      recurring:
-        Boolean(task.recurring),
-
-      repeatType:
-        repeatType,
-
-      repeatEnd:
-        task.repeatEnd ||
-        "",
-
-      completedDates:
-        Array.isArray(task.completedDates)
-          ? task.completedDates
-          : []
-
-    };
-
-  });
+  );
 
 
 /* ======================================================
@@ -3416,10 +4149,9 @@ tasks =
 
 function getTodayKey(){
 
-  const d =
-    new Date();
-
-  return dateKeyFromDate(d);
+  return dateKeyFromDate(
+    new Date()
+  );
 
 }
 
@@ -3428,9 +4160,13 @@ function dateKeyFromDate(d){
   return (
     d.getFullYear() +
     "-" +
-    String(d.getMonth()+1).padStart(2,"0") +
+    String(
+      d.getMonth()+1
+    ).padStart(2,"0") +
     "-" +
-    String(d.getDate()).padStart(2,"0")
+    String(
+      d.getDate()
+    ).padStart(2,"0")
   );
 
 }
@@ -3448,7 +4184,10 @@ function dateObject(key){
 
 }
 
-function addDays(key,amount){
+function addDays(
+  key,
+  amount
+){
 
   const d =
     dateObject(key);
@@ -3463,10 +4202,9 @@ function addDays(key,amount){
 
 function formatDate(key){
 
-  const d =
-    dateObject(key);
-
-  return d.toLocaleDateString(
+  return dateObject(
+    key
+  ).toLocaleDateString(
     "tr-TR",
     {
       weekday:"long",
@@ -3480,10 +4218,9 @@ function formatDate(key){
 
 function shortDate(key){
 
-  const d =
-    dateObject(key);
-
-  return d.toLocaleDateString(
+  return dateObject(
+    key
+  ).toLocaleDateString(
     "tr-TR",
     {
       day:"numeric",
@@ -3508,23 +4245,33 @@ function showToast(
       "toastContainer"
     );
 
-  if(!container)return;
+  if(!container){
+    return;
+  }
 
   const toast =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   toast.className =
-    "toast "+type;
+    "toast " +
+    type;
 
   toast.textContent =
     message;
 
-  container.appendChild(toast);
+  container.appendChild(
+    toast
+  );
 
   setTimeout(
     ()=>{
-      toast.style.opacity="0";
-      toast.style.transform="translateY(5px)";
+      toast.style.opacity =
+        "0";
+
+      toast.style.transform =
+        "translateY(5px)";
 
       setTimeout(
         ()=>{
@@ -3571,16 +4318,19 @@ function updateGreeting(){
 
   document.getElementById(
     "welcomeTitle"
-  ).textContent=text;
+  ).textContent =
+    text;
 
 }
 
 
 /* ======================================================
-   TARİH NAVİGASYONU
+   TARİH
 ====================================================== */
 
-function changeDate(amount){
+function changeDate(
+  amount
+){
 
   selectedDate =
     addDays(
@@ -3597,13 +4347,19 @@ function changeDate(amount){
 
 }
 
-function selectDate(value){
+function selectDate(
+  value
+){
 
-  if(!value)return;
+  if(!value){
+    return;
+  }
 
-  selectedDate=value;
+  selectedDate =
+    value;
 
-  weekAnchor=value;
+  weekAnchor =
+    value;
 
   updateDateUI();
 
@@ -3635,16 +4391,21 @@ function updateDateUI(){
   document.getElementById(
     "welcomeDate"
   ).textContent =
-    formatDate(selectedDate);
+    formatDate(
+      selectedDate
+    );
 
 }
 
 
 /* ======================================================
-   SUPABASE SATIRI
+   SUPABASE
 ====================================================== */
 
-function taskToRow(task,userId){
+function taskToRow(
+  task,
+  userId
+){
 
   return {
 
@@ -3664,41 +4425,46 @@ function taskToRow(task,userId){
       task.date,
 
     task_time:
-      task.time || null,
+      task.time ||
+      null,
 
     category:
-      task.category || null,
+      task.category ||
+      null,
 
     priority:
-      task.priority || null,
+      task.priority ||
+      null,
 
     task_order:
-      Number.isFinite(task.order)
+      Number.isFinite(
+        task.order
+      )
         ? task.order
         : 0,
 
     recurring:
-      task.recurring || false,
+      task.recurring ||
+      false,
 
     repeat_type:
-      task.repeatType || null,
+      task.repeatType ||
+      null,
 
     repeat_end:
-      task.repeatEnd || null,
+      task.repeatEnd ||
+      null,
 
     completed_dates:
-      Array.isArray(task.completedDates)
+      Array.isArray(
+        task.completedDates
+      )
         ? task.completedDates
         : []
 
   };
 
 }
-
-
-/* ======================================================
-   KAYDET
-====================================================== */
 
 async function saveTasks(){
 
@@ -3707,7 +4473,9 @@ async function saveTasks(){
     JSON.stringify(tasks)
   );
 
-  const { data:sessionData } =
+  const {
+    data:sessionData
+  } =
     await supabaseClient.auth.getSession();
 
   const user =
@@ -3719,17 +4487,20 @@ async function saveTasks(){
 
   const rows =
     tasks.map(
-      task=>taskToRow(
-        task,
-        user.id
-      )
+      task =>
+        taskToRow(
+          task,
+          user.id
+        )
     );
 
   if(rows.length===0){
     return;
   }
 
-  const { error } =
+  const {
+    error
+  } =
     await supabaseClient
       .from("tasks")
       .upsert(
@@ -3751,11 +4522,6 @@ async function saveTasks(){
 
 }
 
-
-/* ======================================================
-   SUPABASE'DEN YÜKLE
-====================================================== */
-
 async function loadTasks(){
 
   if(loadTasksPromise){
@@ -3767,8 +4533,12 @@ async function loadTasks(){
   loadTasksPromise =
     (async()=>{
 
-      const { data:sessionData } =
-        await supabaseClient.auth.getSession();
+      const {
+        data:sessionData
+      } =
+        await supabaseClient
+          .auth
+          .getSession();
 
       const user =
         sessionData.session?.user;
@@ -3777,7 +4547,10 @@ async function loadTasks(){
         return;
       }
 
-      let { data, error } =
+      let {
+        data,
+        error
+      } =
         await supabaseClient
           .from("tasks")
           .select("*")
@@ -3810,35 +4583,35 @@ async function loadTasks(){
       const alreadyMigrated =
         localStorage.getItem(
           migrationKey
-        ) === "true";
+        ) ===
+        "true";
 
       if(!alreadyMigrated){
 
         const remoteIds =
           new Set(
-            (data || []).map(
-              row=>String(row.task_id)
-            )
+            (data || [])
+              .map(
+                row =>
+                  String(
+                    row.task_id
+                  )
+              )
           );
 
         const localOnlyTasks =
           tasks.filter(
             task =>
               !remoteIds.has(
-                String(task.id)
+                String(
+                  task.id
+                )
               )
           );
 
-        if(localOnlyTasks.length>0){
-
-          const migrationRows =
-            localOnlyTasks.map(
-              task =>
-                taskToRow(
-                  task,
-                  user.id
-                )
-            );
+        if(
+          localOnlyTasks.length
+        ){
 
           const {
             error:migrationError
@@ -3846,7 +4619,13 @@ async function loadTasks(){
             await supabaseClient
               .from("tasks")
               .upsert(
-                migrationRows,
+                localOnlyTasks.map(
+                  task =>
+                    taskToRow(
+                      task,
+                      user.id
+                    )
+                ),
                 {
                   onConflict:
                     "user_id,task_id"
@@ -3884,67 +4663,78 @@ async function loadTasks(){
               }
             );
 
-        if(!refreshed.error){
+        if(
+          !refreshed.error
+        ){
 
           data =
-            refreshed.data || [];
+            refreshed.data ||
+            [];
 
         }
 
       }
 
       tasks =
-        (data || []).map(
-          row=>({
+        (data || [])
+          .map(
+            row => ({
 
-            id:
-              row.task_id,
+              id:
+                row.task_id,
 
-            text:
-              row.title,
+              text:
+                row.title,
 
-            date:
-              row.task_date,
+              date:
+                row.task_date,
 
-            time:
-              row.task_time || "",
+              time:
+                row.task_time ||
+                "",
 
-            category:
-              row.category || "Genel",
+              category:
+                row.category ||
+                "Genel",
 
-            priority:
-              row.priority || "medium",
+              priority:
+                row.priority ||
+                "medium",
 
-            order:
-              Number.isFinite(row.task_order)
-                ? row.task_order
-                : 0,
+              order:
+                Number.isFinite(
+                  row.task_order
+                )
+                  ? row.task_order
+                  : 0,
 
-            completed:
-              !!row.completed,
+              completed:
+                !!row.completed,
 
-            recurring:
-              !!row.recurring,
+              recurring:
+                !!row.recurring,
 
-            repeatType:
-              row.repeat_type || (
-                row.recurring
-                  ? "daily"
-                  : "none"
-              ),
+              repeatType:
+                row.repeat_type ||
+                (
+                  row.recurring
+                    ? "daily"
+                    : "none"
+                ),
 
-            repeatEnd:
-              row.repeat_end || "",
+              repeatEnd:
+                row.repeat_end ||
+                "",
 
-            completedDates:
-              Array.isArray(
-                row.completed_dates
-              )
-                ? row.completed_dates
-                : []
+              completedDates:
+                Array.isArray(
+                  row.completed_dates
+                )
+                  ? row.completed_dates
+                  : []
 
-          })
-        );
+            })
+          );
 
       ensureOrders();
 
@@ -3983,32 +4773,51 @@ async function loadTasks(){
    SAYFALAR
 ====================================================== */
 
-function showPage(page,button){
+function showPage(
+  page,
+  button
+){
 
   document
-    .querySelectorAll(".page")
+    .querySelectorAll(
+      ".page"
+    )
     .forEach(
-      p=>p.classList.remove("active")
+      p =>
+        p.classList.remove(
+          "active"
+        )
     );
 
   const target =
-    document.getElementById(page);
+    document.getElementById(
+      page
+    );
 
   if(target){
 
-    target.classList.add("active");
+    target.classList.add(
+      "active"
+    );
 
   }
 
   document
-    .querySelectorAll(".menu-item")
+    .querySelectorAll(
+      ".menu-item"
+    )
     .forEach(
-      b=>b.classList.remove("active")
+      b =>
+        b.classList.remove(
+          "active"
+        )
     );
 
   if(button){
 
-    button.classList.add("active");
+    button.classList.add(
+      "active"
+    );
 
   }
 
@@ -4032,35 +4841,62 @@ function showPage(page,button){
 
 }
 
-function showMobilePage(page,button){
+function showMobilePage(
+  page,
+  button
+){
+
+  const sidebarButton =
+    document.querySelector(
+      `.menu-item[onclick*="'${page}'"]`
+    );
 
   showPage(
     page,
-    document.querySelector(
-      `.menu-item[onclick*="'${page}'"]`
-    )
+    sidebarButton
   );
 
   document
-    .querySelectorAll(".mobile-nav button")
+    .querySelectorAll(
+      ".mobile-nav button"
+    )
     .forEach(
-      b=>b.classList.remove("active")
+      b =>
+        b.classList.remove(
+          "active"
+        )
     );
 
-  button.classList.add("active");
+  if(button){
+
+    button.classList.add(
+      "active"
+    );
+
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
 }
 
 
 /* ======================================================
-   TEKRAR MANTIĞI
+   TEKRAR
 ====================================================== */
 
-function getCustomRepeatDays(repeatType){
+function getCustomRepeatDays(
+  repeatType
+){
 
   if(
-    typeof repeatType!=="string" ||
-    !repeatType.startsWith("custom:")
+    typeof repeatType !==
+    "string" ||
+    !repeatType.startsWith(
+      "custom:"
+    )
   ){
 
     return [];
@@ -4073,17 +4909,22 @@ function getCustomRepeatDays(repeatType){
     .map(Number)
     .filter(
       day =>
-        Number.isInteger(day) &&
+        Number.isInteger(
+          day
+        ) &&
         day>=0 &&
         day<=6
     );
 
 }
 
-function getRepeatLabel(task){
+function getRepeatLabel(
+  task
+){
 
   const type =
-    task.repeatType || "daily";
+    task.repeatType ||
+    "daily";
 
   if(type==="daily"){
 
@@ -4103,9 +4944,14 @@ function getRepeatLabel(task){
 
   }
 
-  if(type.startsWith("custom:")){
+  if(
+    type.startsWith(
+      "custom:"
+    )
+  ){
 
-    const names={
+    const names = {
+
       1:"Pzt",
       2:"Sal",
       3:"Çar",
@@ -4113,14 +4959,15 @@ function getRepeatLabel(task){
       5:"Cum",
       6:"Cmt",
       0:"Paz"
+
     };
 
-    const days =
-      getCustomRepeatDays(type);
-
-    return days
+    return getCustomRepeatDays(
+      type
+    )
       .map(
-        day=>names[day]
+        day =>
+          names[day]
       )
       .join(" • ");
 
@@ -4145,7 +4992,7 @@ function isRecurringActiveOnDate(
 
   if(
     !task.date ||
-    date<task.date
+    date < task.date
   ){
 
     return false;
@@ -4154,7 +5001,7 @@ function isRecurringActiveOnDate(
 
   if(
     task.repeatEnd &&
-    date>task.repeatEnd
+    date > task.repeatEnd
   ){
 
     return false;
@@ -4162,13 +5009,18 @@ function isRecurringActiveOnDate(
   }
 
   const current =
-    dateObject(date);
+    dateObject(
+      date
+    );
 
   const start =
-    dateObject(task.date);
+    dateObject(
+      task.date
+    );
 
   const type =
-    task.repeatType || "daily";
+    task.repeatType ||
+    "daily";
 
   if(type==="daily"){
 
@@ -4179,7 +5031,7 @@ function isRecurringActiveOnDate(
   if(type==="weekly"){
 
     return (
-      current.getDay()===
+      current.getDay() ===
       start.getDay()
     );
 
@@ -4188,13 +5040,17 @@ function isRecurringActiveOnDate(
   if(type==="monthly"){
 
     return (
-      current.getDate()===
+      current.getDate() ===
       start.getDate()
     );
 
   }
 
-  if(type.startsWith("custom:")){
+  if(
+    type.startsWith(
+      "custom:"
+    )
+  ){
 
     return getCustomRepeatDays(
       type
@@ -4215,11 +5071,16 @@ function isRecurringActiveOnDate(
 
 function getSourceId(task){
 
-  return task.sourceId || task.id;
+  return (
+    task.sourceId ||
+    task.id
+  );
 
 }
 
-function getDayTasks(date){
+function getDayTasks(
+  date
+){
 
   const normalTasks =
     tasks
@@ -4229,7 +5090,7 @@ function getDayTasks(date){
           t.date===date
       )
       .map(
-        t=>({
+        t => ({
 
           ...t,
 
@@ -4237,7 +5098,8 @@ function getDayTasks(date){
 
           sourceId:t.id,
 
-          occurrenceDate:date
+          occurrenceDate:
+            date
 
         })
       );
@@ -4253,7 +5115,7 @@ function getDayTasks(date){
           )
       )
       .map(
-        t=>({
+        t => ({
 
           ...t,
 
@@ -4261,13 +5123,16 @@ function getDayTasks(date){
 
           sourceId:t.id,
 
-          occurrenceDate:date,
+          occurrenceDate:
+            date,
 
           completed:
             Array.isArray(
               t.completedDates
             ) &&
-            t.completedDates.includes(date)
+            t.completedDates.includes(
+              date
+            )
 
         })
       );
@@ -4275,56 +5140,81 @@ function getDayTasks(date){
   return [
     ...normalTasks,
     ...recurringTasks
-  ].sort(compareTasks);
+  ].sort(
+    compareTasks
+  );
 
 }
 
-function compareTasks(a,b){
+function compareTasks(
+  a,
+  b
+){
 
   const orderA =
-    Number.isFinite(a.order)
+    Number.isFinite(
+      a.order
+    )
       ? a.order
       : 999999;
 
   const orderB =
-    Number.isFinite(b.order)
+    Number.isFinite(
+      b.order
+    )
       ? b.order
       : 999999;
 
-  if(orderA!==orderB){
+  if(
+    orderA !==
+    orderB
+  ){
 
-    return orderA-orderB;
+    return (
+      orderA -
+      orderB
+    );
 
   }
 
   const timeA =
-    a.time || "99:99";
+    a.time ||
+    "99:99";
 
   const timeB =
-    b.time || "99:99";
+    b.time ||
+    "99:99";
 
-  if(timeA!==timeB){
+  if(
+    timeA !==
+    timeB
+  ){
 
-    return timeA.localeCompare(timeB);
+    return timeA.localeCompare(
+      timeB
+    );
 
   }
 
   return String(
     getSourceId(a)
   ).localeCompare(
-    String(getSourceId(b))
+    String(
+      getSourceId(b)
+    )
   );
 
 }
 
 
 /* ======================================================
-   MODAL AÇ
+   MODAL
 ====================================================== */
 
 function openNewTask(){
 
-  editingTaskId=null;
+  editingTaskId =
+    null;
 
   document.getElementById(
     "modalTitle"
@@ -4333,11 +5223,13 @@ function openNewTask(){
 
   document.getElementById(
     "modalTaskId"
-  ).value="";
+  ).value =
+    "";
 
   document.getElementById(
     "modalTaskName"
-  ).value="";
+  ).value =
+    "";
 
   document.getElementById(
     "modalDate"
@@ -4346,27 +5238,34 @@ function openNewTask(){
 
   document.getElementById(
     "modalTime"
-  ).value="";
+  ).value =
+    "";
 
   document.getElementById(
     "modalCategory"
-  ).value="Genel";
+  ).value =
+    "Genel";
 
   document.getElementById(
     "modalPriority"
-  ).value="medium";
+  ).value =
+    "medium";
 
   document.getElementById(
     "modalRepeat"
-  ).value="none";
+  ).value =
+    "none";
 
   document.getElementById(
     "modalRepeatEnd"
-  ).value="";
+  ).value =
+    "";
 
   document.getElementById(
     "recurringEditNote"
-  ).classList.remove("show");
+  ).classList.remove(
+    "show"
+  );
 
   clearCustomDays();
 
@@ -4374,7 +5273,9 @@ function openNewTask(){
 
   document.getElementById(
     "modalOverlay"
-  ).classList.add("open");
+  ).classList.add(
+    "open"
+  );
 
   setTimeout(
     ()=>{
@@ -4382,28 +5283,28 @@ function openNewTask(){
         "modalTaskName"
       ).focus();
     },
-    50
+    80
   );
 
 }
 
-
-/* ======================================================
-   MODAL DÜZENLE
-====================================================== */
-
-function openEditTask(id){
+function openEditTask(
+  id
+){
 
   const task =
     tasks.find(
       t =>
-        String(t.id)===
+        String(t.id) ===
         String(id)
     );
 
-  if(!task)return;
+  if(!task){
+    return;
+  }
 
-  editingTaskId=task.id;
+  editingTaskId =
+    task.id;
 
   document.getElementById(
     "modalTitle"
@@ -4412,44 +5313,46 @@ function openEditTask(id){
 
   document.getElementById(
     "modalTaskId"
-  ).value=
+  ).value =
     task.id;
 
   document.getElementById(
     "modalTaskName"
-  ).value=
+  ).value =
     task.text;
 
   document.getElementById(
     "modalDate"
-  ).value=
+  ).value =
     task.date;
 
   document.getElementById(
     "modalTime"
-  ).value=
+  ).value =
     task.time;
 
   document.getElementById(
     "modalCategory"
-  ).value=
+  ).value =
     task.category;
 
   document.getElementById(
     "modalPriority"
-  ).value=
+  ).value =
     task.priority;
 
-  let repeatSelectValue =
-    task.repeatType || "none";
+  let repeatValue =
+    task.repeatType ||
+    "none";
 
   if(
-    repeatSelectValue.startsWith(
+    repeatValue.startsWith(
       "custom:"
     )
   ){
 
-    repeatSelectValue="custom";
+    repeatValue =
+      "custom";
 
   }
 
@@ -4457,23 +5360,26 @@ function openEditTask(id){
     "modalRepeat"
   ).value =
     task.recurring
-      ? repeatSelectValue
+      ? repeatValue
       : "none";
 
   document.getElementById(
     "modalRepeatEnd"
   ).value =
-    task.repeatEnd || "";
+    task.repeatEnd ||
+    "";
 
   clearCustomDays();
 
   if(
     task.recurring &&
     task.repeatType &&
-    task.repeatType.startsWith("custom:")
+    task.repeatType.startsWith(
+      "custom:"
+    )
   ){
 
-    const selectedDays =
+    const selected =
       getCustomRepeatDays(
         task.repeatType
       );
@@ -4491,7 +5397,9 @@ function openEditTask(id){
             );
 
           if(
-            selectedDays.includes(day)
+            selected.includes(
+              day
+            )
           ){
 
             button.classList.add(
@@ -4516,27 +5424,28 @@ function openEditTask(id){
 
   document.getElementById(
     "modalOverlay"
-  ).classList.add("open");
+  ).classList.add(
+    "open"
+  );
 
 }
-
-
-/* ======================================================
-   MODAL KAPAT
-====================================================== */
 
 function closeModal(){
 
   document.getElementById(
     "modalOverlay"
-  ).classList.remove("open");
+  ).classList.remove(
+    "open"
+  );
 
 }
 
-function closeModalOutside(event){
+function closeModalOutside(
+  event
+){
 
   if(
-    event.target.id===
+    event.target.id ===
     "modalOverlay"
   ){
 
@@ -4548,7 +5457,7 @@ function closeModalOutside(event){
 
 
 /* ======================================================
-   TEKRAR FORMU
+   TEKRAR FORM
 ====================================================== */
 
 function updateRepeatFields(){
@@ -4570,13 +5479,16 @@ function updateRepeatFields(){
 
   if(repeat==="none"){
 
-    endArea.style.display="none";
+    endArea.style.display =
+      "none";
 
-    customArea.style.display="none";
+    customArea.style.display =
+      "none";
 
     document.getElementById(
       "modalRepeatEnd"
-    ).value="";
+    ).value =
+      "";
 
     clearCustomDays();
 
@@ -4584,7 +5496,8 @@ function updateRepeatFields(){
 
   }
 
-  endArea.style.display="block";
+  endArea.style.display =
+    "block";
 
   customArea.style.display =
     repeat==="custom"
@@ -4605,22 +5518,27 @@ function updateRepeatEndMin(){
   document.getElementById(
     "modalRepeatEnd"
   ).min =
-    start || "";
+    start ||
+    "";
 
 }
 
-function setRepeatDays(days){
+function setRepeatDays(
+  days
+){
 
-  const repeatSelect =
+  const repeat =
     document.getElementById(
       "modalRepeat"
     );
 
   if(
-    repeatSelect.value==="none"
+    repeat.value ===
+    "none"
   ){
 
-    repeatSelect.value="daily";
+    repeat.value =
+      "daily";
 
   }
 
@@ -4632,27 +5550,21 @@ function setRepeatDays(days){
     ).value ||
     selectedDate;
 
-  if(days===0){
-
-    document.getElementById(
-      "modalRepeatEnd"
-    ).value="";
-
-    return;
-
-  }
-
   document.getElementById(
     "modalRepeatEnd"
   ).value =
-    addDays(
-      start,
-      days-1
-    );
+    days === 0
+      ? ""
+      : addDays(
+          start,
+          days-1
+        );
 
 }
 
-function toggleCustomDay(button){
+function toggleCustomDay(
+  button
+){
 
   button.classList.toggle(
     "selected"
@@ -4667,7 +5579,7 @@ function clearCustomDays(){
       ".custom-day"
     )
     .forEach(
-      button=>
+      button =>
         button.classList.remove(
           "selected"
         )
@@ -4691,9 +5603,16 @@ function getSelectedCustomDays(){
     .sort(
       (a,b)=>{
 
-        const order=[
-          1,2,3,4,5,6,0
-        ];
+        const order =
+          [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            0
+          ];
 
         return (
           order.indexOf(a) -
@@ -4707,10 +5626,12 @@ function getSelectedCustomDays(){
 
 
 /* ======================================================
-   MODAL KAYDET
+   KAYDET
 ====================================================== */
 
-function saveFromModal(event){
+async function saveFromModal(
+  event
+){
 
   event.preventDefault();
 
@@ -4749,9 +5670,6 @@ function saveFromModal(event){
       "modalRepeatEnd"
     ).value;
 
-  let repeatType =
-    repeatSelect;
-
   if(!text){
 
     alert(
@@ -4773,9 +5691,10 @@ function saveFromModal(event){
   }
 
   if(
-    repeatSelect!=="none" &&
+    repeatSelect !==
+      "none" &&
     repeatEnd &&
-    repeatEnd<date
+    repeatEnd < date
   ){
 
     alert(
@@ -4786,14 +5705,21 @@ function saveFromModal(event){
 
   }
 
+  let repeatType =
+    repeatSelect;
+
   if(
-    repeatSelect==="custom"
+    repeatSelect ===
+    "custom"
   ){
 
-    const customDays =
+    const selectedDays =
       getSelectedCustomDays();
 
-    if(customDays.length===0){
+    if(
+      selectedDays.length ===
+      0
+    ){
 
       alert(
         "Lütfen en az bir gün seç."
@@ -4805,20 +5731,29 @@ function saveFromModal(event){
 
     repeatType =
       "custom:" +
-      customDays.join(",");
+      selectedDays.join(",");
 
   }
 
   const isRecurring =
-    repeatSelect!=="none";
+    repeatSelect !==
+    "none";
 
-  if(editingTaskId!==null){
+  const currentEditingId =
+    editingTaskId;
+
+  if(
+    currentEditingId !==
+    null
+  ){
 
     const task =
       tasks.find(
         t =>
-          String(t.id)===
-          String(editingTaskId)
+          String(t.id) ===
+          String(
+            currentEditingId
+          )
       );
 
     if(task){
@@ -4826,15 +5761,20 @@ function saveFromModal(event){
       const wasRecurring =
         task.recurring;
 
-      task.text=text;
+      task.text =
+        text;
 
-      task.date=date;
+      task.date =
+        date;
 
-      task.time=time;
+      task.time =
+        time;
 
-      task.category=category;
+      task.category =
+        category;
 
-      task.priority=priority;
+      task.priority =
+        priority;
 
       task.recurring =
         isRecurring;
@@ -4850,26 +5790,27 @@ function saveFromModal(event){
           : "";
 
       if(
-        isRecurring
+        isRecurring &&
+        !Array.isArray(
+          task.completedDates
+        )
       ){
 
-        if(
-          !Array.isArray(
-            task.completedDates
-          )
-        ){
+        task.completedDates =
+          [];
 
-          task.completedDates=[];
+      }
 
-        }
-
-      }else if(
+      if(
+        !isRecurring &&
         wasRecurring
       ){
 
-        task.completedDates=[];
+        task.completedDates =
+          [];
 
-        task.completed=false;
+        task.completed =
+          false;
 
       }
 
@@ -4878,15 +5819,19 @@ function saveFromModal(event){
   }else{
 
     const dayTasks =
-      getDayTasks(date);
+      getDayTasks(
+        date
+      );
 
     const maxOrder =
       dayTasks.length
         ? Math.max(
             ...dayTasks.map(
-              t =>
-                Number.isFinite(t.order)
-                  ? t.order
+              task =>
+                Number.isFinite(
+                  task.order
+                )
+                  ? task.order
                   : -1
             )
           )
@@ -4897,47 +5842,69 @@ function saveFromModal(event){
       id:
         Date.now() +
         Math.floor(
-          Math.random()*1000
+          Math.random() *
+          1000
         ),
 
-      text:text,
+      text:
 
-      date:date,
+        text,
 
-      time:time,
+      date:
 
-      category:category,
+        date,
 
-      priority:priority,
+      time:
 
-      order:maxOrder+1,
+        time,
 
-      completed:false,
+      category:
+
+        category,
+
+      priority:
+
+        priority,
+
+      order:
+
+        maxOrder + 1,
+
+      completed:
+
+        false,
 
       recurring:
+
         isRecurring,
 
       repeatType:
+
         isRecurring
           ? repeatType
           : "none",
 
       repeatEnd:
+
         isRecurring
           ? repeatEnd
           : "",
 
-      completedDates:[]
+      completedDates:
+
+        []
 
     });
 
   }
 
-  selectedDate=date;
+  selectedDate =
+    date;
 
-  weekAnchor=date;
+  weekAnchor =
+    date;
 
-  saveTasks();
+  await saveTasks();
 
   closeModal();
 
@@ -4952,7 +5919,7 @@ function saveFromModal(event){
   renderStatistics();
 
   showToast(
-    editingTaskId!==null
+    currentEditingId !== null
       ? "Görev güncellendi."
       : "Görev eklendi."
   );
@@ -4964,7 +5931,7 @@ function saveFromModal(event){
    TAMAMLAMA
 ====================================================== */
 
-function toggleTask(
+async function toggleTask(
   sourceId,
   occurrenceDate,
   isRecurring
@@ -4973,13 +5940,17 @@ function toggleTask(
   const task =
     tasks.find(
       t =>
-        String(t.id)===
+        String(t.id) ===
         String(sourceId)
     );
 
-  if(!task)return;
+  if(!task){
+    return;
+  }
 
-  if(isRecurring){
+  if(
+    isRecurring
+  ){
 
     if(
       !Array.isArray(
@@ -4987,7 +5958,8 @@ function toggleTask(
       )
     ){
 
-      task.completedDates=[];
+      task.completedDates =
+        [];
 
     }
 
@@ -4996,7 +5968,7 @@ function toggleTask(
         occurrenceDate
       );
 
-    if(index===-1){
+    if(index === -1){
 
       task.completedDates.push(
         occurrenceDate
@@ -5018,7 +5990,7 @@ function toggleTask(
 
   }
 
-  saveTasks();
+  await saveTasks();
 
   renderHome();
 
@@ -5051,12 +6023,14 @@ async function deleteTask(
   const task =
     tasks.find(
       t =>
-        String(t.id)===
+        String(t.id) ===
         String(sourceId)
     );
 
   if(!task){
+
     return;
+
   }
 
   if(recurring){
@@ -5067,13 +6041,19 @@ async function deleteTask(
       );
 
     if(!okay){
+
       return;
+
     }
 
   }
 
-  const { data:sessionData } =
-    await supabaseClient.auth.getSession();
+  const {
+    data:sessionData
+  } =
+    await supabaseClient
+      .auth
+      .getSession();
 
   const user =
     sessionData.session?.user;
@@ -5111,11 +6091,12 @@ async function deleteTask(
       );
 
       return;
+
     }
 
     if(
       !deletedRows ||
-      deletedRows.length===0
+      deletedRows.length === 0
     ){
 
       console.error(
@@ -5127,6 +6108,7 @@ async function deleteTask(
       );
 
       return;
+
     }
 
   }
@@ -5134,7 +6116,7 @@ async function deleteTask(
   tasks =
     tasks.filter(
       t =>
-        String(t.id)!==
+        String(t.id) !==
         String(sourceId)
     );
 
@@ -5142,7 +6124,9 @@ async function deleteTask(
 
   localStorage.setItem(
     "plannerTasks",
-    JSON.stringify(tasks)
+    JSON.stringify(
+      tasks
+    )
   );
 
   renderHome();
@@ -5173,25 +6157,31 @@ function moveTask(
 ){
 
   const day =
-    getDayTasks(date);
+    getDayTasks(
+      date
+    );
 
   const index =
     day.findIndex(
-      t =>
+      task =>
         String(
-          getSourceId(t)
-        )===
+          getSourceId(task)
+        ) ===
         String(sourceId)
     );
 
-  if(index===-1)return;
+  if(index === -1){
+
+    return;
+
+  }
 
   const newIndex =
-    index+direction;
+    index + direction;
 
   if(
-    newIndex<0 ||
-    newIndex>=day.length
+    newIndex < 0 ||
+    newIndex >= day.length
   ){
 
     return;
@@ -5201,11 +6191,11 @@ function moveTask(
   const reordered =
     [...day];
 
-  const [item] =
+  const item =
     reordered.splice(
       index,
       1
-    );
+    )[0];
 
   reordered.splice(
     newIndex,
@@ -5218,8 +6208,8 @@ function moveTask(
 
       const source =
         tasks.find(
-          t =>
-            String(t.id)===
+          task =>
+            String(task.id) ===
             String(
               getSourceId(dayTask)
             )
@@ -5227,7 +6217,8 @@ function moveTask(
 
       if(source){
 
-        source.order=index;
+        source.order =
+          index;
 
       }
 
@@ -5248,18 +6239,16 @@ function moveTask(
 
 }
 
-
-/* ======================================================
-   DRAG
-====================================================== */
-
 function startDrag(id){
 
-  draggedTaskId=id;
+  draggedTaskId =
+    id;
 
 }
 
-function allowDrop(event){
+function allowDrop(
+  event
+){
 
   event.preventDefault();
 
@@ -5271,8 +6260,8 @@ function dropTask(
 ){
 
   if(
-    draggedTaskId===null ||
-    String(draggedTaskId)===
+    draggedTaskId === null ||
+    String(draggedTaskId) ===
     String(targetId)
   ){
 
@@ -5281,32 +6270,37 @@ function dropTask(
   }
 
   const day =
-    getDayTasks(date);
+    getDayTasks(
+      date
+    );
 
   const from =
     day.findIndex(
-      t =>
+      task =>
         String(
-          getSourceId(t)
-        )===
-        String(draggedTaskId)
+          getSourceId(task)
+        ) ===
+        String(
+          draggedTaskId
+        )
     );
 
   const to =
     day.findIndex(
-      t =>
+      task =>
         String(
-          getSourceId(t)
-        )===
+          getSourceId(task)
+        ) ===
         String(targetId)
     );
 
   if(
-    from===-1 ||
-    to===-1
+    from === -1 ||
+    to === -1
   ){
 
-    draggedTaskId=null;
+    draggedTaskId =
+      null;
 
     return;
 
@@ -5315,11 +6309,11 @@ function dropTask(
   const reordered =
     [...day];
 
-  const [item] =
+  const item =
     reordered.splice(
       from,
       1
-    );
+    )[0];
 
   reordered.splice(
     to,
@@ -5328,20 +6322,21 @@ function dropTask(
   );
 
   reordered.forEach(
-    (item,index)=>{
+    (dayTask,index)=>{
 
       const source =
         tasks.find(
-          t =>
-            String(t.id)===
+          task =>
+            String(task.id) ===
             String(
-              getSourceId(item)
+              getSourceId(dayTask)
             )
         );
 
       if(source){
 
-        source.order=index;
+        source.order =
+          index;
 
       }
 
@@ -5350,7 +6345,8 @@ function dropTask(
 
   saveTasks();
 
-  draggedTaskId=null;
+  draggedTaskId =
+    null;
 
   renderHome();
 
@@ -5364,30 +6360,19 @@ function dropTask(
 
 }
 
-
-/* ======================================================
-   ORDER
-====================================================== */
-
 function ensureOrders(){
 
   tasks.forEach(
     (task,index)=>{
 
-      if(
-        !Number.isFinite(
+      task.order =
+        Number.isFinite(
           task.order
         )
-      ){
-
-        task.order=index;
-
-      }else{
-
-        task.order =
-          Number(task.order);
-
-      }
+          ? Number(
+              task.order
+            )
+          : index;
 
     }
   );
@@ -5396,32 +6381,43 @@ function ensureOrders(){
 
 
 /* ======================================================
-   ÖNCELİK
+   YARDIMCI
 ====================================================== */
 
-function priorityText(priority){
+function priorityText(
+  priority
+){
 
-  if(priority==="high"){
+  if(
+    priority ===
+    "high"
+  ){
+
     return "🔴 Yüksek";
+
   }
 
-  if(priority==="medium"){
+  if(
+    priority ===
+    "medium"
+  ){
+
     return "🟡 Orta";
+
   }
 
   return "🟢 Düşük";
 
 }
 
-
-/* ======================================================
-   GÜVENLİ METİN
-====================================================== */
-
-function escapeHTML(text){
+function escapeHTML(
+  text
+){
 
   const div =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   div.textContent =
     text == null
@@ -5437,55 +6433,70 @@ function escapeHTML(text){
    TASK HTML
 ====================================================== */
 
-function taskHTML(task){
+function taskHTML(
+  task
+){
 
   const timeTag =
     task.time
       ? `
-        <span class="tag">
-          ⏰ ${escapeHTML(task.time)}
-        </span>
-      `
+          <span class="tag">
+            ⏰ ${escapeHTML(
+              task.time
+            )}
+          </span>
+        `
       : "";
 
   const repeatTag =
     task.isRecurring
       ? `
-        <span class="tag repeat-tag">
-          🔁 ${escapeHTML(
-            getRepeatLabel(task)
-          )}
-        </span>
-      `
+          <span class="tag repeat-tag">
+            🔁 ${escapeHTML(
+              getRepeatLabel(
+                task
+              )
+            )}
+          </span>
+        `
       : "";
 
   const dateTag =
     task.isRecurring
       ? `
-        <span class="tag">
-          📅 ${
-            task.repeatEnd
-              ? shortDate(task.repeatEnd)+"'e kadar"
-              : "Süresiz"
-          }
-        </span>
-      `
+          <span class="tag">
+            📅 ${
+              task.repeatEnd
+                ? shortDate(
+                    task.repeatEnd
+                  ) +
+                  "'e kadar"
+                : "Süresiz"
+            }
+          </span>
+        `
       : `
-        <span class="tag">
-          📅 ${shortDate(task.date)}
-        </span>
-      `;
+          <span class="tag">
+            📅 ${shortDate(
+              task.date
+            )}
+          </span>
+        `;
 
   return `
 
     <div
       class="
         task
-        ${task.completed ? "completed" : ""}
+        ${task.completed
+          ? "completed"
+          : ""}
       "
       draggable="true"
       ondragstart="
-        startDrag(${task.sourceId})
+        startDrag(
+          ${task.sourceId}
+        )
       "
       ondragover="
         allowDrop(event)
@@ -5501,7 +6512,11 @@ function taskHTML(task){
       <input
         class="task-check"
         type="checkbox"
-        ${task.completed ? "checked" : ""}
+        ${
+          task.completed
+            ? "checked"
+            : ""
+        }
         onchange="
           toggleTask(
             ${task.sourceId},
@@ -5511,18 +6526,24 @@ function taskHTML(task){
         "
       >
 
+
       <div class="task-info">
 
         <div class="task-name">
-          ${escapeHTML(task.text)}
+          ${escapeHTML(
+            task.text
+          )}
         </div>
+
 
         <div class="task-meta">
 
           ${timeTag}
 
           <span class="tag">
-            ${escapeHTML(task.category)}
+            ${escapeHTML(
+              task.category
+            )}
           </span>
 
           <span
@@ -5533,7 +6554,9 @@ function taskHTML(task){
               )}
             "
           >
-            ${priorityText(task.priority)}
+            ${priorityText(
+              task.priority
+            )}
           </span>
 
           ${repeatTag}
@@ -5544,6 +6567,7 @@ function taskHTML(task){
 
       </div>
 
+
       <div class="task-actions">
 
         <span
@@ -5552,6 +6576,7 @@ function taskHTML(task){
         >
           ⋮⋮
         </span>
+
 
         <button
           class="action-btn"
@@ -5567,6 +6592,7 @@ function taskHTML(task){
           ↑
         </button>
 
+
         <button
           class="action-btn"
           onclick="
@@ -5581,6 +6607,7 @@ function taskHTML(task){
           ↓
         </button>
 
+
         <button
           class="action-btn"
           onclick="
@@ -5592,6 +6619,7 @@ function taskHTML(task){
         >
           ✏️
         </button>
+
 
         <button
           class="action-btn"
@@ -5631,13 +6659,18 @@ function renderHome(){
       selectedDate
     );
 
-  if(dayTasks.length===0){
+  if(
+    dayTasks.length ===
+    0
+  ){
 
-    list.innerHTML=`
+    list.innerHTML = `
 
       <div class="empty">
 
-        Bu gün için henüz görev yok. 📅<br><br>
+        Bu gün için henüz görev yok. 📅
+
+        <br><br>
 
         <button
           class="primary-btn"
@@ -5655,13 +6688,18 @@ function renderHome(){
     list.innerHTML =
       dayTasks
         .map(
-          task=>taskHTML(task)
+          task =>
+            taskHTML(
+              task
+            )
         )
         .join("");
 
   }
 
-  updateStats(dayTasks);
+  updateStats(
+    dayTasks
+  );
 
 }
 
@@ -5670,45 +6708,56 @@ function renderHome(){
    GÜNLÜK STATS
 ====================================================== */
 
-function updateStats(dayTasks){
+function updateStats(
+  dayTasks
+){
 
   const total =
     dayTasks.length;
 
   const completed =
     dayTasks.filter(
-      t=>t.completed
+      t =>
+        t.completed
     ).length;
 
   const percentage =
-    total===0
-      ?0
-      :Math.round(
-        completed/total*100
-      );
+    total === 0
+      ? 0
+      : Math.round(
+          completed /
+          total *
+          100
+        );
 
   document.getElementById(
     "totalTasks"
-  ).textContent=total;
+  ).textContent =
+    total;
 
   document.getElementById(
     "completedTasks"
-  ).textContent=completed;
+  ).textContent =
+    completed;
 
   document.getElementById(
     "percentage"
-  ).textContent=
-    percentage+"%";
+  ).textContent =
+    percentage +
+    "%";
 
   document.getElementById(
     "progressText"
-  ).textContent=
-    completed+" / "+total;
+  ).textContent =
+    completed +
+    " / " +
+    total;
 
   document.getElementById(
     "progressBar"
-  ).style.width=
-    percentage+"%";
+  ).style.width =
+    percentage +
+    "%";
 
 }
 
@@ -5729,116 +6778,136 @@ function renderAllTasks(){
       "recurringTaskList"
     );
 
-  const normalCount =
-    document.getElementById(
-      "normalSectionCount"
-    );
-
-  const recurringCount =
-    document.getElementById(
-      "recurringSectionCount"
-    );
-
   const search =
     (
       document.getElementById(
         "searchInput"
-      )?.value || ""
+      )?.value ||
+      ""
     ).toLowerCase();
 
   const status =
     document.getElementById(
       "filterStatus"
-    )?.value || "all";
+    )?.value ||
+    "all";
 
   const category =
     document.getElementById(
       "filterCategory"
-    )?.value || "all";
+    )?.value ||
+    "all";
+
 
   const normalTasks =
     tasks
       .filter(
-        task=>!task.recurring
+        task =>
+          !task.recurring
       )
-      .filter(task=>{
+      .filter(
+        task=>{
 
-        const matchesSearch =
-          task.text
-            .toLowerCase()
-            .includes(search);
+          const matchesSearch =
+            task.text
+              .toLowerCase()
+              .includes(
+                search
+              );
 
-        const matchesStatus =
-          status==="all" ||
+          const matchesStatus =
+            status ===
+              "all" ||
 
-          (
-            status==="active" &&
-            !task.completed
-          ) ||
+            (
+              status ===
+                "active" &&
+              !task.completed
+            ) ||
 
-          (
-            status==="completed" &&
-            task.completed
+            (
+              status ===
+                "completed" &&
+              task.completed
+            );
+
+          const matchesCategory =
+            category ===
+              "all" ||
+            task.category ===
+              category;
+
+          return (
+            matchesSearch &&
+            matchesStatus &&
+            matchesCategory
           );
 
-        const matchesCategory =
-          category==="all" ||
-          task.category===category;
+        }
+      )
+      .sort(
+        compareTasks
+      );
 
-        return (
-          matchesSearch &&
-          matchesStatus &&
-          matchesCategory
-        );
-
-      })
-      .sort(compareTasks);
 
   const recurringTasks =
     tasks
       .filter(
-        task=>task.recurring
+        task =>
+          task.recurring
       )
-      .filter(task=>{
+      .filter(
+        task=>{
 
-        const matchesSearch =
-          task.text
-            .toLowerCase()
-            .includes(search);
+          const matchesSearch =
+            task.text
+              .toLowerCase()
+              .includes(
+                search
+              );
 
-        const matchesCategory =
-          category==="all" ||
-          task.category===category;
+          const matchesCategory =
+            category ===
+              "all" ||
+            task.category ===
+              category;
 
-        return (
-          matchesSearch &&
-          matchesCategory
-        );
+          return (
+            matchesSearch &&
+            matchesCategory
+          );
 
-      })
+        }
+      )
       .sort(
         (a,b)=>
-          (a.order||0)-
-          (b.order||0)
+          (
+            a.order || 0
+          ) -
+          (
+            b.order || 0
+          )
       );
 
-  if(normalCount){
 
-    normalCount.textContent =
-      normalTasks.length;
+  document.getElementById(
+    "normalSectionCount"
+  ).textContent =
+    normalTasks.length;
 
-  }
 
-  if(recurringCount){
+  document.getElementById(
+    "recurringSectionCount"
+  ).textContent =
+    recurringTasks.length;
 
-    recurringCount.textContent =
-      recurringTasks.length;
 
-  }
+  if(
+    normalTasks.length ===
+    0
+  ){
 
-  if(normalTasks.length===0){
-
-    normalList.innerHTML=`
+    normalList.innerHTML = `
 
       <div class="empty">
         Uygun tek seferlik görev bulunamadı.
@@ -5851,28 +6920,31 @@ function renderAllTasks(){
     normalList.innerHTML =
       normalTasks
         .map(
-          task=>({
+          task =>
+            taskHTML({
+              ...task,
 
-            ...task,
+              isRecurring:
+                false,
 
-            isRecurring:false,
+              sourceId:
+                task.id,
 
-            sourceId:task.id,
-
-            occurrenceDate:task.date
-
-          })
-        )
-        .map(
-          task=>taskHTML(task)
+              occurrenceDate:
+                task.date
+            })
         )
         .join("");
 
   }
 
-  if(recurringTasks.length===0){
 
-    recurringList.innerHTML=`
+  if(
+    recurringTasks.length ===
+    0
+  ){
+
+    recurringList.innerHTML = `
 
       <div class="empty">
         Henüz tekrarlayan plan yok.
@@ -5885,7 +6957,10 @@ function renderAllTasks(){
     recurringList.innerHTML =
       recurringTasks
         .map(
-          task=>recurringHTML(task)
+          task =>
+            recurringHTML(
+              task
+            )
         )
         .join("");
 
@@ -5898,21 +6973,36 @@ function renderAllTasks(){
    RECURRING HTML
 ====================================================== */
 
-function recurringHTML(task){
+function recurringHTML(
+  task
+){
 
   const rangeText =
     task.repeatEnd
-      ? `${shortDate(task.date)} → ${shortDate(task.repeatEnd)}`
-      : `${shortDate(task.date)} → Süresiz`;
+      ? shortDate(
+          task.date
+        ) +
+        " → " +
+        shortDate(
+          task.repeatEnd
+        )
+      : shortDate(
+          task.date
+        ) +
+        " → Süresiz";
+
 
   const timeTag =
     task.time
       ? `
-        <span class="tag">
-          ⏰ ${escapeHTML(task.time)}
-        </span>
-      `
+          <span class="tag">
+            ⏰ ${escapeHTML(
+              task.time
+            )}
+          </span>
+        `
       : "";
+
 
   return `
 
@@ -5921,16 +7011,22 @@ function recurringHTML(task){
       <div class="task-info">
 
         <div class="task-name">
-          🔁 ${escapeHTML(task.text)}
+          🔁 ${escapeHTML(
+            task.text
+          )}
         </div>
+
 
         <div class="task-meta">
 
           ${timeTag}
 
           <span class="tag">
-            ${escapeHTML(task.category)}
+            ${escapeHTML(
+              task.category
+            )}
           </span>
+
 
           <span
             class="
@@ -5940,14 +7036,20 @@ function recurringHTML(task){
               )}
             "
           >
-            ${priorityText(task.priority)}
+            ${priorityText(
+              task.priority
+            )}
           </span>
+
 
           <span class="tag repeat-tag">
             ${escapeHTML(
-              getRepeatLabel(task)
+              getRepeatLabel(
+                task
+              )
             )}
           </span>
+
 
           <span class="tag">
             📅 ${rangeText}
@@ -5957,17 +7059,21 @@ function recurringHTML(task){
 
       </div>
 
+
       <div class="task-actions">
 
         <button
           class="action-btn"
           onclick="
-            openEditTask(${task.id})
+            openEditTask(
+              ${task.id}
+            )
           "
           title="Düzenle"
         >
           ✏️
         </button>
+
 
         <button
           class="action-btn"
@@ -5992,31 +7098,38 @@ function recurringHTML(task){
 
 
 /* ======================================================
-   WEEK
+   HAFTA
 ====================================================== */
 
-function getMonday(key){
+function getMonday(
+  key
+){
 
   const d =
-    dateObject(key);
+    dateObject(
+      key
+    );
 
   const day =
     d.getDay();
 
   const diff =
-    day===0
+    day === 0
       ? -6
       : 1-day;
 
   d.setDate(
-    d.getDate()+diff
+    d.getDate() +
+    diff
   );
 
   return d;
 
 }
 
-function changeWeek(amount){
+function changeWeek(
+  amount
+){
 
   const monday =
     getMonday(
@@ -6024,8 +7137,8 @@ function changeWeek(amount){
     );
 
   monday.setDate(
-    monday.getDate()+
-    amount*7
+    monday.getDate() +
+    amount * 7
   );
 
   weekAnchor =
@@ -6059,24 +7172,32 @@ function renderWeek(){
     );
 
   const sunday =
-    new Date(monday);
+    new Date(
+      monday
+    );
 
   sunday.setDate(
-    sunday.getDate()+6
+    sunday.getDate() +
+    6
   );
 
   document.getElementById(
     "weekTitle"
   ).textContent =
     shortDate(
-      dateKeyFromDate(monday)
+      dateKeyFromDate(
+        monday
+      )
     ) +
     " – " +
     shortDate(
-      dateKeyFromDate(sunday)
+      dateKeyFromDate(
+        sunday
+      )
     );
 
-  const dayNames=[
+
+  const dayNames = [
     "Pzt",
     "Sal",
     "Çar",
@@ -6086,7 +7207,10 @@ function renderWeek(){
     "Paz"
   ];
 
-  let html="";
+
+  let html =
+    "";
+
 
   for(
     let i=0;
@@ -6095,10 +7219,13 @@ function renderWeek(){
   ){
 
     const current =
-      new Date(monday);
+      new Date(
+        monday
+      );
 
     current.setDate(
-      monday.getDate()+i
+      monday.getDate() +
+      i
     );
 
     const key =
@@ -6107,24 +7234,35 @@ function renderWeek(){
       );
 
     const dayTasks =
-      getDayTasks(key);
+      getDayTasks(
+        key
+      );
 
     const selected =
-      key===selectedDate;
+      key ===
+      selectedDate;
 
     const today =
-      key===getTodayKey();
+      key ===
+      getTodayKey();
+
 
     html += `
 
       <div
         class="
           day-card
-          ${selected ? "selected" : ""}
-          ${today ? "today" : ""}
+          ${selected
+            ? "selected"
+            : ""}
+          ${today
+            ? "today"
+            : ""}
         "
         onclick="
-          selectWeekDay('${key}')
+          selectWeekDay(
+            '${key}'
+          )
         "
       >
 
@@ -6132,60 +7270,80 @@ function renderWeek(){
           ${dayNames[i]}
         </div>
 
+
         <div class="day-number">
           ${current.getDate()}
         </div>
 
+
         <div class="day-count">
-          ${dayTasks.length} görev
+          ${dayTasks.length}
+          görev
         </div>
 
+
         ${
-          dayTasks.length===0
-          ?
+          dayTasks.length ===
+          0
+
+            ?
+
           `
             <div class="week-empty">
               Plan yok
             </div>
           `
-          :
-          dayTasks.map(
-            task=>`
 
-              <div
-                class="
-                  week-task
-                  ${task.completed ? "done" : ""}
-                "
-                onclick="
-                  event.stopPropagation();
-                  toggleTask(
-                    ${task.sourceId},
-                    '${key}',
-                    ${task.isRecurring}
-                  )
-                "
-              >
+            :
 
-                ${
-                  task.time
-                    ? "⏰ "+
-                      escapeHTML(task.time)+" "
-                    : ""
-                }
+          dayTasks
+            .map(
+              task =>
+                `
 
-                ${
-                  task.isRecurring
-                    ? "🔁 "
-                    : ""
-                }
+                  <div
+                    class="
+                      week-task
+                      ${task.completed
+                        ? "done"
+                        : ""}
+                    "
+                    onclick="
+                      event.stopPropagation();
 
-                ${escapeHTML(task.text)}
+                      toggleTask(
+                        ${task.sourceId},
+                        '${key}',
+                        ${task.isRecurring}
+                      )
+                    "
+                  >
 
-              </div>
+                    ${
+                      task.time
+                        ? "⏰ " +
+                          escapeHTML(
+                            task.time
+                          ) +
+                          " "
+                        : ""
+                    }
 
-            `
-          ).join("")
+                    ${
+                      task.isRecurring
+                        ? "🔁 "
+                        : ""
+                    }
+
+                    ${escapeHTML(
+                      task.text
+                    )}
+
+                  </div>
+
+                `
+            )
+            .join("")
         }
 
       </div>
@@ -6194,15 +7352,20 @@ function renderWeek(){
 
   }
 
-  grid.innerHTML=html;
+  grid.innerHTML =
+    html;
 
 }
 
-function selectWeekDay(key){
+function selectWeekDay(
+  key
+){
 
-  selectedDate=key;
+  selectedDate =
+    key;
 
-  weekAnchor=key;
+  weekAnchor =
+    key;
 
   updateDateUI();
 
@@ -6213,49 +7376,80 @@ function selectWeekDay(key){
 function showHomeFromCode(){
 
   document
-    .querySelectorAll(".page")
+    .querySelectorAll(
+      ".page"
+    )
     .forEach(
-      p=>p.classList.remove("active")
+      p =>
+        p.classList.remove(
+          "active"
+        )
+    );
+
+  document.getElementById(
+    "home"
+  ).classList.add(
+    "active"
+  );
+
+  document
+    .querySelectorAll(
+      ".menu-item"
+    )
+    .forEach(
+      b =>
+        b.classList.remove(
+          "active"
+        )
     );
 
   document
-    .getElementById("home")
-    .classList.add("active");
-
-  document
-    .querySelectorAll(".menu-item")
-    .forEach(
-      b=>b.classList.remove("active")
+    .querySelectorAll(
+      ".menu-item"
+    )[0]
+    .classList.add(
+      "active"
     );
 
   document
-    .querySelectorAll(".menu-item")[0]
-    .classList.add("active");
-
-  document
-    .querySelectorAll(".mobile-nav button")
+    .querySelectorAll(
+      ".mobile-nav button"
+    )
     .forEach(
-      b=>b.classList.remove("active")
+      b =>
+        b.classList.remove(
+          "active"
+        )
     );
 
   document
-    .querySelectorAll(".mobile-nav button")[0]
-    .classList.add("active");
+    .querySelectorAll(
+      ".mobile-nav button"
+    )[0]
+    .classList.add(
+      "active"
+    );
 
   renderHome();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
 }
 
 
 /* ======================================================
-   İSTATİSTİKLER
+   İSTATİSTİK
 ====================================================== */
 
 function renderStatistics(){
 
   const normalTasks =
     tasks.filter(
-      t=>!t.recurring
+      t =>
+        !t.recurring
     );
 
   const total =
@@ -6263,35 +7457,47 @@ function renderStatistics(){
 
   const completed =
     normalTasks.filter(
-      t=>t.completed
+      t =>
+        t.completed
     ).length;
 
   const percentage =
-    total===0
-      ?0
-      :Math.round(
-        completed/total*100
-      );
+    total === 0
+      ? 0
+      : Math.round(
+          completed /
+          total *
+          100
+        );
+
 
   document.getElementById(
     "allTotal"
-  ).textContent=total;
+  ).textContent =
+    total;
+
 
   document.getElementById(
     "allCompleted"
-  ).textContent=completed;
+  ).textContent =
+    completed;
+
 
   document.getElementById(
     "allPercentage"
-  ).textContent=
-    percentage+"%";
+  ).textContent =
+    percentage +
+    "%";
+
 
   document.getElementById(
     "recurringCount"
   ).textContent =
     tasks.filter(
-      t=>t.recurring
+      t =>
+        t.recurring
     ).length;
+
 
   renderCategoryStats();
 
@@ -6303,7 +7509,7 @@ function renderStatistics(){
 
 function renderCategoryStats(){
 
-  const categories=[
+  const categories = [
     "Genel",
     "Ders",
     "Python",
@@ -6317,58 +7523,71 @@ function renderCategoryStats(){
       "categoryStats"
     );
 
-  container.innerHTML="";
+  container.innerHTML =
+    "";
 
-  categories.forEach(category=>{
 
-    const normalTasks =
-      tasks.filter(
-        t =>
-          !t.recurring &&
-          t.category===category
-      );
+  categories.forEach(
+    category=>{
 
-    const done =
-      normalTasks.filter(
-        t=>t.completed
-      ).length;
-
-    const percent =
-      normalTasks.length===0
-        ?0
-        :Math.round(
-          done/
-          normalTasks.length*
-          100
+      const normalTasks =
+        tasks.filter(
+          t =>
+            !t.recurring &&
+            t.category ===
+            category
         );
 
-    container.innerHTML+=`
+      const done =
+        normalTasks.filter(
+          t =>
+            t.completed
+        ).length;
 
-      <div class="category-row">
+      const percent =
+        normalTasks.length ===
+          0
 
-        <div class="stat-label">
-          ${escapeHTML(category)}
+          ? 0
+
+          : Math.round(
+              done /
+              normalTasks.length *
+              100
+            );
+
+
+      container.innerHTML += `
+
+        <div class="category-row">
+
+          <div class="stat-label">
+            ${escapeHTML(
+              category
+            )}
+          </div>
+
+          <div class="stat-bar">
+
+            <div
+              style="
+                width:${percent}%
+              "
+            ></div>
+
+          </div>
+
+          <div class="stat-count">
+            ${done}/
+            ${normalTasks.length}
+          </div>
+
         </div>
 
-        <div class="stat-bar">
+      `;
 
-          <div
-            style="
-              width:${percent}%
-            "
-          ></div>
-
-        </div>
-
-        <div class="stat-count">
-          ${done}/${normalTasks.length}
-        </div>
-
-      </div>
-
-    `;
-
-  });
+    }
+  );
 
 }
 
@@ -6379,12 +7598,15 @@ function renderLastSevenStats(){
       "lastSevenStats"
     );
 
-  container.innerHTML="";
+  container.innerHTML =
+    "";
+
 
   const end =
     dateObject(
       selectedDate
     );
+
 
   for(
     let i=6;
@@ -6393,33 +7615,44 @@ function renderLastSevenStats(){
   ){
 
     const d =
-      new Date(end);
+      new Date(
+        end
+      );
 
     d.setDate(
-      d.getDate()-i
+      d.getDate() -
+      i
     );
 
+
     const key =
-      dateKeyFromDate(d);
+      dateKeyFromDate(
+        d
+      );
 
     const dayTasks =
-      getDayTasks(key);
+      getDayTasks(
+        key
+      );
 
     const done =
       dayTasks.filter(
-        t=>t.completed
+        t =>
+          t.completed
       ).length;
 
     const total =
       dayTasks.length;
 
     const percent =
-      total===0
-        ?0
-        :Math.round(
-          done/
-          total*100
-        );
+      total === 0
+        ? 0
+        : Math.round(
+            done /
+            total *
+            100
+          );
+
 
     const label =
       d.toLocaleDateString(
@@ -6429,13 +7662,15 @@ function renderLastSevenStats(){
         }
       );
 
-    container.innerHTML+=`
+
+    container.innerHTML += `
 
       <div class="day-stat-row">
 
         <div class="day-stat-label">
           ${label}
         </div>
+
 
         <div class="stat-bar">
 
@@ -6446,6 +7681,7 @@ function renderLastSevenStats(){
           ></div>
 
         </div>
+
 
         <div class="day-stat-value">
           ${done}/${total}
@@ -6461,79 +7697,96 @@ function renderLastSevenStats(){
 
 function renderPriorityStats(){
 
-  const priorities=[
+  const priorities = [
+
     {
       key:"high",
       name:"Yüksek"
     },
+
     {
       key:"medium",
       name:"Orta"
     },
+
     {
       key:"low",
       name:"Düşük"
     }
+
   ];
+
 
   const container =
     document.getElementById(
       "priorityStats"
     );
 
-  container.innerHTML="";
+  container.innerHTML =
+    "";
 
-  priorities.forEach(priority=>{
 
-    const normalTasks =
-      tasks.filter(
-        t =>
-          !t.recurring &&
-          t.priority===
-          priority.key
-      );
+  priorities.forEach(
+    priority=>{
 
-    const done =
-      normalTasks.filter(
-        t=>t.completed
-      ).length;
-
-    const percent =
-      normalTasks.length===0
-        ?0
-        :Math.round(
-          done/
-          normalTasks.length*
-          100
+      const normalTasks =
+        tasks.filter(
+          t =>
+            !t.recurring &&
+            t.priority ===
+            priority.key
         );
 
-    container.innerHTML+=`
+      const done =
+        normalTasks.filter(
+          t =>
+            t.completed
+        ).length;
 
-      <div class="category-row">
+      const percent =
+        normalTasks.length ===
+          0
 
-        <div class="stat-label">
-          ${priority.name}
+          ? 0
+
+          : Math.round(
+              done /
+              normalTasks.length *
+              100
+            );
+
+
+      container.innerHTML += `
+
+        <div class="category-row">
+
+          <div class="stat-label">
+            ${priority.name}
+          </div>
+
+
+          <div class="stat-bar">
+
+            <div
+              style="
+                width:${percent}%
+              "
+            ></div>
+
+          </div>
+
+
+          <div class="stat-count">
+            ${done}/
+            ${normalTasks.length}
+          </div>
+
         </div>
 
-        <div class="stat-bar">
+      `;
 
-          <div
-            style="
-              width:${percent}%
-            "
-          ></div>
-
-        </div>
-
-        <div class="stat-count">
-          ${done}/${normalTasks.length}
-        </div>
-
-      </div>
-
-    `;
-
-  });
+    }
+  );
 
 }
 
@@ -6560,7 +7813,8 @@ function toggleDarkMode(){
 if(
   localStorage.getItem(
     "darkMode"
-  )==="true"
+  ) ===
+  "true"
 ){
 
   document.body.classList.add(
@@ -6571,27 +7825,26 @@ if(
 
 
 /* ======================================================
-   MODAL TARİH
+   EVENTS
 ====================================================== */
 
 document
-  .getElementById("modalDate")
+  .getElementById(
+    "modalDate"
+  )
   .addEventListener(
     "change",
     updateRepeatEndMin
   );
 
 
-/* ======================================================
-   ESC
-====================================================== */
-
 document.addEventListener(
   "keydown",
-  function(event){
+  event=>{
 
     if(
-      event.key==="Escape"
+      event.key ===
+      "Escape"
     ){
 
       closeModal();
@@ -6600,19 +7853,6 @@ document.addEventListener(
 
   }
 );
-
-
-/* ======================================================
-   BAŞLAT
-====================================================== */
-
-ensureOrders();
-
-updateGreeting();
-
-updateDateUI();
-
-renderHome();
 
 
 /* ======================================================
@@ -6625,9 +7865,13 @@ let authMode =
 function toggleAuthMode(){
 
   authMode =
-    authMode==="login"
+    authMode ===
+    "login"
+
       ? "signup"
+
       : "login";
+
 
   const title =
     document.getElementById(
@@ -6649,9 +7893,15 @@ function toggleAuthMode(){
       "authMessage"
     );
 
-  message.textContent="";
 
-  if(authMode==="signup"){
+  message.textContent =
+    "";
+
+
+  if(
+    authMode ===
+    "signup"
+  ){
 
     title.textContent =
       "Yeni hesap oluştur";
@@ -6699,7 +7949,11 @@ async function handleAuth(){
       "authButton"
     );
 
-  if(!email || !password){
+
+  if(
+    !email ||
+    !password
+  ){
 
     message.textContent =
       "Lütfen e-posta ve şifreni gir.";
@@ -6708,7 +7962,11 @@ async function handleAuth(){
 
   }
 
-  if(password.length<6){
+
+  if(
+    password.length <
+    6
+  ){
 
     message.textContent =
       "Şifre en az 6 karakter olmalı.";
@@ -6717,26 +7975,37 @@ async function handleAuth(){
 
   }
 
-  button.disabled=true;
+
+  button.disabled =
+    true;
 
   message.textContent =
     "İşlem yapılıyor...";
 
+
   try{
 
-    if(authMode==="signup"){
+    if(
+      authMode ===
+      "signup"
+    ){
 
       const {
         data,
         error
       } =
-        await supabaseClient.auth.signUp({
+        await supabaseClient
+          .auth
+          .signUp({
 
-          email:email,
+            email:
+              email,
 
-          password:password
+            password:
+              password
 
-        });
+          });
+
 
       if(error){
 
@@ -6744,13 +8013,18 @@ async function handleAuth(){
 
       }
 
-      if(data.session){
+
+      if(
+        data.session
+      ){
 
         document.getElementById(
           "authScreen"
-        ).style.display="none";
+        ).style.display =
+          "none";
 
-        message.textContent="";
+        message.textContent =
+          "";
 
         await loadTasks();
 
@@ -6765,16 +8039,21 @@ async function handleAuth(){
 
     }else{
 
-      const { error } =
+      const {
+        error
+      } =
         await supabaseClient
           .auth
           .signInWithPassword({
 
-            email:email,
+            email:
+              email,
 
-            password:password
+            password:
+              password
 
           });
+
 
       if(error){
 
@@ -6782,11 +8061,14 @@ async function handleAuth(){
 
       }
 
+
       document.getElementById(
         "authScreen"
-      ).style.display="none";
+      ).style.display =
+        "none";
 
-      message.textContent="";
+      message.textContent =
+        "";
 
       await loadTasks();
 
@@ -6799,7 +8081,8 @@ async function handleAuth(){
 
   }finally{
 
-    button.disabled=false;
+    button.disabled =
+      false;
 
   }
 
@@ -6807,19 +8090,27 @@ async function handleAuth(){
 
 
 /* ======================================================
-   AUTH KONTROL
+   AUTH CONTROL
 ====================================================== */
 
 async function checkAuth(){
 
-  const { data } =
-    await supabaseClient.auth.getSession();
+  const {
+    data
+  } =
+    await supabaseClient
+      .auth
+      .getSession();
 
-  if(data.session){
+
+  if(
+    data.session
+  ){
 
     document.getElementById(
       "authScreen"
-    ).style.display="none";
+    ).style.display =
+      "none";
 
     await loadTasks();
 
@@ -6827,16 +8118,13 @@ async function checkAuth(){
 
     document.getElementById(
       "authScreen"
-    ).style.display="flex";
+    ).style.display =
+      "flex";
 
   }
 
 }
 
-
-/* ======================================================
-   AUTH STATE
-====================================================== */
 
 supabaseClient.auth.onAuthStateChange(
   (
@@ -6849,9 +8137,11 @@ supabaseClient.auth.onAuthStateChange(
         "authScreen"
       );
 
+
     if(session){
 
-      authScreen.style.display="none";
+      authScreen.style.display =
+        "none";
 
       setTimeout(
         ()=>{
@@ -6862,12 +8152,26 @@ supabaseClient.auth.onAuthStateChange(
 
     }else{
 
-      authScreen.style.display="flex";
+      authScreen.style.display =
+        "flex";
 
     }
 
   }
 );
+
+
+/* ======================================================
+   START
+====================================================== */
+
+ensureOrders();
+
+updateGreeting();
+
+updateDateUI();
+
+renderHome();
 
 checkAuth();
 
