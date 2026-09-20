@@ -5074,6 +5074,8 @@ async function checkAuth() {
 
   if (data.session) {
     document.getElementById("authScreen").style.display = "none";
+
+    await loadTasks();
   } else {
     document.getElementById("authScreen").style.display = "flex";
   }
