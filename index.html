@@ -38,6 +38,7 @@ button{
   min-height:100vh;
 }
 
+
 /* SIDEBAR */
 
 .sidebar{
@@ -116,14 +117,6 @@ button{
   padding:12px;
   border-radius:9px;
   cursor:pointer;
-}
-
-.theme-btn:hover{
-  background:#f2f3f5;
-}
-
-.dark .theme-btn:hover{
-  background:#2c3034;
 }
 
 
@@ -323,9 +316,9 @@ button{
 
 .add-area{
   display:grid;
-  grid-template-columns:1fr 145px 135px 120px auto;
+  grid-template-columns:1fr 120px 145px 135px 110px auto;
   gap:9px;
-  margin-bottom:20px;
+  margin-bottom:10px;
 }
 
 input,select{
@@ -349,10 +342,6 @@ select:focus{
   border-color:#4f46e5;
 }
 
-.time-input{
-  width:100%;
-}
-
 .add-btn{
   border:0;
   background:#4f46e5;
@@ -361,6 +350,12 @@ select:focus{
   border-radius:9px;
   cursor:pointer;
   font-weight:700;
+}
+
+.repeat-help{
+  font-size:12px;
+  color:#888;
+  margin-bottom:20px;
 }
 
 
@@ -456,6 +451,16 @@ select:focus{
   background:#263c2d;
 }
 
+.repeat-tag{
+  background:#eeeafe;
+  color:#5b4acb;
+}
+
+.dark .repeat-tag{
+  background:#302d4a;
+  color:#bbb2ff;
+}
+
 .task-actions{
   display:flex;
   gap:3px;
@@ -526,6 +531,18 @@ select:focus{
 .filters input{
   flex:1;
   min-width:220px;
+}
+
+.subsection-title{
+  font-size:15px;
+  font-weight:700;
+  margin:20px 0 10px;
+}
+
+.recurring-note{
+  font-size:12px;
+  color:#888;
+  margin-bottom:10px;
 }
 
 
@@ -721,12 +738,12 @@ select:focus{
 }
 
 .stat-label{
-  width:80px;
+  width:90px;
   font-size:13px;
 }
 
 .stat-count{
-  width:60px;
+  width:65px;
   text-align:right;
   font-size:13px;
 }
@@ -755,7 +772,23 @@ select:focus{
 }
 
 
-/* MOBILE */
+/* RESPONSIVE */
+
+@media(max-width:1100px){
+
+  .add-area{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .add-area input:first-child{
+    grid-column:1/-1;
+  }
+
+  .add-btn{
+    width:100%;
+  }
+
+}
 
 @media(max-width:1000px){
 
@@ -799,21 +832,10 @@ select:focus{
     padding:22px 15px;
   }
 
-  .add-area{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .add-area input{
-    grid-column:1/-1;
-  }
-
-  .add-btn{
-    width:100%;
-  }
-
   .week-grid{
     grid-template-columns:repeat(7,170px);
   }
+
 }
 
 @media(max-width:650px){
@@ -852,7 +874,7 @@ select:focus{
     grid-template-columns:1fr;
   }
 
-  .add-area input{
+  .add-area input:first-child{
     grid-column:auto;
   }
 
@@ -884,6 +906,7 @@ select:focus{
   .week-grid{
     grid-template-columns:repeat(7,145px);
   }
+
 }
 </style>
 </head>
@@ -941,7 +964,9 @@ select:focus{
 
     <div class="date-navigation">
 
-      <button class="date-button" onclick="changeDate(-1)">‹</button>
+      <button class="date-button" onclick="changeDate(-1)">
+        ‹
+      </button>
 
       <input
         type="date"
@@ -950,7 +975,9 @@ select:focus{
         onchange="selectDate(this.value)"
       >
 
-      <button class="date-button" onclick="changeDate(1)">›</button>
+      <button class="date-button" onclick="changeDate(1)">
+        ›
+      </button>
 
       <button class="today-button" onclick="goToday()">
         Bugün
@@ -1001,6 +1028,7 @@ select:focus{
       Bu Günün Görevleri
     </div>
 
+
     <div class="add-area">
 
       <input
@@ -1013,27 +1041,27 @@ select:focus{
       <input
         id="taskTime"
         type="time"
-        class="time-input"
         aria-label="Görev saati"
       >
 
       <select id="category">
-
         <option value="Genel">📌 Genel</option>
         <option value="Ders">📚 Ders</option>
         <option value="Python">💻 Python</option>
         <option value="İngilizce">🇬🇧 İngilizce</option>
         <option value="Spor">🏃 Spor</option>
         <option value="Kişisel">👤 Kişisel</option>
-
       </select>
 
       <select id="priority">
-
         <option value="low">🟢 Düşük</option>
         <option value="medium" selected>🟡 Orta</option>
         <option value="high">🔴 Yüksek</option>
+      </select>
 
+      <select id="repeatType">
+        <option value="none">🔂 Tekrar yok</option>
+        <option value="daily">🔁 Her gün</option>
       </select>
 
       <button class="add-btn" onclick="addTask()">
@@ -1041,6 +1069,35 @@ select:focus{
       </button>
 
     </div>
+
+
+    <div class="add-area">
+
+      <div></div>
+
+      <div></div>
+
+      <div></div>
+
+      <div></div>
+
+      <input
+        id="repeatEnd"
+        type="date"
+        aria-label="Tekrar bitiş tarihi"
+        title="Tekrar bitiş tarihi"
+      >
+
+      <div></div>
+
+    </div>
+
+
+    <div class="repeat-help">
+      "Her gün" seçersen başlangıç olarak seçtiğin gün kullanılır.
+      Bitiş tarihi boşsa her gün devam eder.
+    </div>
+
 
     <div id="homeTaskList"></div>
 
@@ -1057,9 +1114,10 @@ select:focus{
 
     <h2>Tüm Görevler</h2>
 
-    <p>Planladığın tüm görevleri tarihlerine göre yönet.</p>
+    <p>Tek seferlik görevlerini ve tekrarlayan planlarını yönet.</p>
 
   </div>
+
 
   <div class="card">
 
@@ -1094,6 +1152,23 @@ select:focus{
         <option value="Kişisel">Kişisel</option>
       </select>
 
+    </div>
+
+
+    <div class="subsection-title">
+      Tekrarlayan Planlar
+    </div>
+
+    <div class="recurring-note">
+      Tekrarlayan görevler burada bir kez görünür. Her günün tamamlanma
+      durumu Ana Sayfa ve Haftalık görünümde ayrı ayrı tutulur.
+    </div>
+
+    <div id="recurringTaskList"></div>
+
+
+    <div class="subsection-title">
+      Tek Seferlik Görevler
     </div>
 
     <div id="allTaskList"></div>
@@ -1168,17 +1243,32 @@ select:focus{
       <h3>Genel Durum</h3>
 
       <div class="big-number" id="allTotal">0</div>
-      <div class="muted">Toplam görev</div>
+      <div class="muted">Tek seferlik görev</div>
 
       <br>
 
       <div class="big-number" id="allCompleted">0</div>
-      <div class="muted">Tamamlanan görev</div>
+      <div class="muted">Tamamlanan tek seferlik görev</div>
 
       <br>
 
       <div class="big-number" id="allPercentage">0%</div>
-      <div class="muted">Genel tamamlanma oranı</div>
+      <div class="muted">Tek seferlik tamamlanma oranı</div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <h3>Tekrarlayan Planlar</h3>
+
+      <div class="big-number" id="recurringCount">
+        0
+      </div>
+
+      <div class="muted">
+        Aktif günlük plan
+      </div>
 
     </div>
 
@@ -1214,20 +1304,21 @@ select:focus{
 
 </section>
 
-
 </main>
 </div>
 
 
 <script>
 
-/* =========================
+/* ======================================================
    VERİ
-========================= */
+====================================================== */
 
-let tasks = JSON.parse(
-  localStorage.getItem("plannerTasks")
-) || [];
+let tasks =
+  JSON.parse(
+    localStorage.getItem("plannerTasks")
+  ) || [];
+
 
 let selectedDate = getTodayKey();
 
@@ -1236,66 +1327,97 @@ let weekAnchor = selectedDate;
 let draggedTaskId = null;
 
 
-/* Eski verilerle uyumluluk */
+/* ======================================================
+   ESKİ VERİLERLE UYUMLULUK
+====================================================== */
 
-tasks = tasks.map((task,index) => {
+tasks = tasks.map((task,index)=>{
 
   return {
 
-    id: task.id || Date.now() + index,
+    id:
+      task.id ||
+      Date.now()+index,
 
-    text: task.text || "Görev",
+    text:
+      task.text ||
+      "Görev",
 
-    category: task.category || "Genel",
+    category:
+      task.category ||
+      "Genel",
 
-    priority: task.priority || "medium",
+    priority:
+      task.priority ||
+      "medium",
 
-    completed: Boolean(task.completed),
+    completed:
+      Boolean(task.completed),
 
-    date: task.date || getTodayKey(),
+    date:
+      task.date ||
+      getTodayKey(),
 
-    time: task.time || "",
+    time:
+      task.time ||
+      "",
 
-    order: Number.isFinite(task.order)
-      ? task.order
-      : index
+    order:
+      Number.isFinite(task.order)
+        ? task.order
+        : index,
+
+    recurring:
+      Boolean(task.recurring),
+
+    repeatType:
+      task.repeatType ||
+      "daily",
+
+    repeatEnd:
+      task.repeatEnd ||
+      "",
+
+    completedDates:
+      Array.isArray(task.completedDates)
+        ? task.completedDates
+        : []
 
   };
 
 });
 
 
-/* =========================
+/* ======================================================
    TARİH
-========================= */
+====================================================== */
 
 function getTodayKey(){
 
   const d = new Date();
 
-  return d.getFullYear() +
-    "-" +
-    String(d.getMonth()+1).padStart(2,"0") +
-    "-" +
-    String(d.getDate()).padStart(2,"0");
+  return dateKeyFromDate(d);
 
 }
 
 
 function dateKeyFromDate(d){
 
-  return d.getFullYear() +
+  return (
+    d.getFullYear() +
     "-" +
     String(d.getMonth()+1).padStart(2,"0") +
     "-" +
-    String(d.getDate()).padStart(2,"0");
+    String(d.getDate()).padStart(2,"0")
+  );
 
 }
 
 
 function dateObject(key){
 
-  const parts = key.split("-");
+  const parts =
+    key.split("-");
 
   return new Date(
     Number(parts[0]),
@@ -1308,7 +1430,8 @@ function dateObject(key){
 
 function formatDate(key){
 
-  const d = dateObject(key);
+  const d =
+    dateObject(key);
 
   return d.toLocaleDateString(
     "tr-TR",
@@ -1325,7 +1448,8 @@ function formatDate(key){
 
 function shortDate(key){
 
-  const d = dateObject(key);
+  const d =
+    dateObject(key);
 
   return d.toLocaleDateString(
     "tr-TR",
@@ -1338,15 +1462,34 @@ function shortDate(key){
 }
 
 
+function addDays(key,amount){
+
+  const d =
+    dateObject(key);
+
+  d.setDate(
+    d.getDate()+amount
+  );
+
+  return dateKeyFromDate(d);
+
+}
+
+
+/* ======================================================
+   TARİH SEÇİMİ
+====================================================== */
+
 function changeDate(amount){
 
-  const d = dateObject(selectedDate);
+  selectedDate =
+    addDays(
+      selectedDate,
+      amount
+    );
 
-  d.setDate(d.getDate()+amount);
-
-  selectedDate = dateKeyFromDate(d);
-
-  weekAnchor = selectedDate;
+  weekAnchor =
+    selectedDate;
 
   updateDateUI();
 
@@ -1357,11 +1500,11 @@ function changeDate(amount){
 
 function selectDate(value){
 
-  if(!value) return;
+  if(!value)return;
 
-  selectedDate = value;
+  selectedDate=value;
 
-  weekAnchor = value;
+  weekAnchor=value;
 
   updateDateUI();
 
@@ -1372,9 +1515,11 @@ function selectDate(value){
 
 function goToday(){
 
-  selectedDate = getTodayKey();
+  selectedDate =
+    getTodayKey();
 
-  weekAnchor = selectedDate;
+  weekAnchor =
+    selectedDate;
 
   updateDateUI();
 
@@ -1387,18 +1532,20 @@ function updateDateUI(){
 
   document.getElementById(
     "selectedDate"
-  ).value = selectedDate;
+  ).value=selectedDate;
+
 
   document.getElementById(
     "welcomeDate"
-  ).textContent = formatDate(selectedDate);
+  ).textContent=
+    formatDate(selectedDate);
 
 }
 
 
-/* =========================
+/* ======================================================
    KAYDET
-========================= */
+====================================================== */
 
 function saveTasks(){
 
@@ -1410,9 +1557,9 @@ function saveTasks(){
 }
 
 
-/* =========================
+/* ======================================================
    SAYFA
-========================= */
+====================================================== */
 
 function showPage(page,button){
 
@@ -1422,15 +1569,18 @@ function showPage(page,button){
       p.classList.remove("active");
     });
 
+
   document
     .getElementById(page)
     .classList.add("active");
+
 
   document
     .querySelectorAll(".menu-item")
     .forEach(b=>{
       b.classList.remove("active");
     });
+
 
   button.classList.add("active");
 
@@ -1439,9 +1589,11 @@ function showPage(page,button){
     renderAllTasks();
   }
 
+
   if(page==="week"){
     renderWeek();
   }
+
 
   if(page==="stats"){
     renderStatistics();
@@ -1450,56 +1602,149 @@ function showPage(page,button){
 }
 
 
-/* =========================
+/* ======================================================
    SIRALAMA
-========================= */
+====================================================== */
 
-function compareTasks(a,b){
+function getSourceId(task){
 
-  if(a.date !== b.date){
-
-    return a.date.localeCompare(b.date);
-
-  }
-
-  const timeA = a.time || "99:99";
-  const timeB = b.time || "99:99";
-
-  if(timeA !== timeB){
-
-    return timeA.localeCompare(timeB);
-
-  }
-
-  return (a.order || 0) - (b.order || 0);
+  return task.sourceId || task.id;
 
 }
 
 
 function getDayTasks(date){
 
-  return tasks
-    .filter(t=>t.date===date)
-    .sort(compareTasks);
+  const normalTasks =
+    tasks
+      .filter(
+        task =>
+          !task.recurring &&
+          task.date===date
+      )
+      .map(task=>({
+
+        ...task,
+
+        isRecurring:false,
+
+        sourceId:task.id,
+
+        occurrenceDate:date
+
+      }));
+
+
+  const recurringTasks =
+    tasks
+      .filter(
+        task =>
+          task.recurring &&
+          task.repeatType==="daily" &&
+          date >= task.date &&
+          (
+            !task.repeatEnd ||
+            date <= task.repeatEnd
+          )
+      )
+      .map(task=>({
+
+        ...task,
+
+        isRecurring:true,
+
+        sourceId:task.id,
+
+        occurrenceDate:date,
+
+        completed:
+          task.completedDates.includes(date)
+
+      }));
+
+
+  return [
+    ...normalTasks,
+    ...recurringTasks
+  ].sort(compareTasks);
 
 }
 
 
-/* =========================
-   GÖREV EKLE
-========================= */
+function compareTasks(a,b){
+
+  const timeA =
+    a.time || "99:99";
+
+  const timeB =
+    b.time || "99:99";
+
+
+  if(timeA !== timeB){
+
+    return timeA.localeCompare(
+      timeB
+    );
+
+  }
+
+
+  return (
+    (a.order || 0) -
+    (b.order || 0)
+  );
+
+}
+
+
+/* ======================================================
+   YENİ GÖREV
+====================================================== */
 
 function addTask(){
 
   const input =
-    document.getElementById("taskInput");
+    document.getElementById(
+      "taskInput"
+    );
+
 
   const text =
     input.value.trim();
 
+
   if(!text){
 
-    alert("Lütfen bir görev yaz.");
+    alert(
+      "Lütfen bir görev yaz."
+    );
+
+    return;
+
+  }
+
+
+  const repeatType =
+    document.getElementById(
+      "repeatType"
+    ).value;
+
+
+  const repeatEnd =
+    document.getElementById(
+      "repeatEnd"
+    ).value;
+
+
+  if(
+    repeatType==="daily" &&
+    repeatEnd &&
+    repeatEnd<selectedDate
+  ){
+
+    alert(
+      "Tekrar bitiş tarihi başlangıç tarihinden önce olamaz."
+    );
 
     return;
 
@@ -1507,17 +1752,20 @@ function addTask(){
 
 
   const dayTasks =
-    tasks.filter(t=>t.date===selectedDate);
+    getDayTasks(selectedDate);
+
 
   const maxOrder =
     dayTasks.length
       ? Math.max(
-          ...dayTasks.map(t=>t.order || 0)
+          ...dayTasks.map(
+            t=>t.order || 0
+          )
         )
-      : 0;
+      : -1;
 
 
-  tasks.push({
+  const baseTask={
 
     id:Date.now(),
 
@@ -1533,18 +1781,34 @@ function addTask(){
         "priority"
       ).value,
 
-    completed:false,
-
-    date:selectedDate,
-
     time:
       document.getElementById(
         "taskTime"
       ).value,
 
-    order:maxOrder+1
+    order:maxOrder+1,
 
-  });
+    date:selectedDate,
+
+    recurring:
+      repeatType==="daily",
+
+    repeatType:
+      repeatType,
+
+    repeatEnd:
+      repeatType==="daily"
+        ? repeatEnd
+        : "",
+
+    completed:false,
+
+    completedDates:[]
+
+  };
+
+
+  tasks.push(baseTask);
 
 
   input.value="";
@@ -1554,28 +1818,76 @@ function addTask(){
   ).value="";
 
 
+  document.getElementById(
+    "repeatType"
+  ).value="none";
+
+
+  document.getElementById(
+    "repeatEnd"
+  ).value="";
+
+
   saveTasks();
 
   renderHome();
 
+  renderWeek();
+
+  renderStatistics();
+
 }
 
 
-/* =========================
-   TAMAMLA
-========================= */
+/* ======================================================
+   TAMAMLAMA
+====================================================== */
 
-function toggleTask(id){
+function toggleTask(
+  sourceId,
+  occurrenceDate,
+  isRecurring
+){
 
   const task =
-    tasks.find(t=>t.id===id);
+    tasks.find(
+      t=>t.id===sourceId
+    );
 
-  if(task){
+
+  if(!task)return;
+
+
+  if(isRecurring){
+
+    const index =
+      task.completedDates.indexOf(
+        occurrenceDate
+      );
+
+
+    if(index===-1){
+
+      task.completedDates.push(
+        occurrenceDate
+      );
+
+    }else{
+
+      task.completedDates.splice(
+        index,
+        1
+      );
+
+    }
+
+  }else{
 
     task.completed =
       !task.completed;
 
   }
+
 
   saveTasks();
 
@@ -1590,14 +1902,42 @@ function toggleTask(id){
 }
 
 
-/* =========================
+/* ======================================================
    SİL
-========================= */
+====================================================== */
 
-function deleteTask(id){
+function deleteTask(
+  sourceId,
+  isRecurring=false
+){
+
+  const task =
+    tasks.find(
+      t=>t.id===sourceId
+    );
+
+
+  if(!task)return;
+
+
+  if(isRecurring){
+
+    const okay =
+      confirm(
+        "Bu tekrarlayan görevin tamamını silmek istiyor musun?"
+      );
+
+
+    if(!okay)return;
+
+  }
+
 
   tasks =
-    tasks.filter(t=>t.id!==id);
+    tasks.filter(
+      t=>t.id!==sourceId
+    );
+
 
   normalizeOrders();
 
@@ -1614,16 +1954,22 @@ function deleteTask(id){
 }
 
 
-/* =========================
+/* ======================================================
    DÜZENLE
-========================= */
+====================================================== */
 
-function editTask(id){
+function editTask(
+  sourceId,
+  isRecurring=false
+){
 
   const task =
-    tasks.find(t=>t.id===id);
+    tasks.find(
+      t=>t.id===sourceId
+    );
 
-  if(!task) return;
+
+  if(!task)return;
 
 
   const newText =
@@ -1634,9 +1980,7 @@ function editTask(id){
 
 
   if(newText===null){
-
     return;
-
   }
 
 
@@ -1646,7 +1990,9 @@ function editTask(id){
 
   if(!value){
 
-    alert("Görev boş bırakılamaz.");
+    alert(
+      "Görev boş bırakılamaz."
+    );
 
     return;
 
@@ -1665,12 +2011,46 @@ function editTask(id){
 
   if(newTime!==null){
 
-    task.time =
-      /^\d{2}:\d{2}$/.test(
-        newTime.trim()
-      )
-      ? newTime.trim()
-      : "";
+    const cleaned =
+      newTime.trim();
+
+
+    if(
+      cleaned==="" ||
+      /^\d{2}:\d{2}$/.test(cleaned)
+    ){
+
+      task.time=cleaned;
+
+    }
+
+  }
+
+
+  if(isRecurring){
+
+    const newEnd =
+      prompt(
+        "Tekrar bitiş tarihi (YYYY-AA-GG). Boş bırakırsan süresiz:",
+        task.repeatEnd || ""
+      );
+
+
+    if(newEnd!==null){
+
+      if(
+        newEnd==="" ||
+        (
+          /^\d{4}-\d{2}-\d{2}$/.test(newEnd) &&
+          newEnd>=task.date
+        )
+      ){
+
+        task.repeatEnd=newEnd;
+
+      }
+
+    }
 
   }
 
@@ -1683,34 +2063,41 @@ function editTask(id){
 
   renderWeek();
 
+  renderStatistics();
+
 }
 
 
-/* =========================
+/* ======================================================
    YUKARI / AŞAĞI
-========================= */
+====================================================== */
 
-function moveTask(id,direction){
+function moveTask(
+  sourceId,
+  direction,
+  date
+){
 
-  const task =
-    tasks.find(t=>t.id===id);
+  const day =
+    getDayTasks(date);
 
-  if(!task) return;
-
-
-  const sameDay =
-    getDayTasks(task.date);
 
   const index =
-    sameDay.findIndex(t=>t.id===id);
+    day.findIndex(
+      t=>getSourceId(t)===sourceId
+    );
+
+
+  if(index===-1)return;
+
 
   const newIndex =
-    index + direction;
+    index+direction;
 
 
   if(
-    newIndex < 0 ||
-    newIndex >= sameDay.length
+    newIndex<0 ||
+    newIndex>=day.length
   ){
 
     return;
@@ -1718,17 +2105,44 @@ function moveTask(id,direction){
   }
 
 
+  const current =
+    day[index];
+
   const other =
-    sameDay[newIndex];
+    day[newIndex];
+
+
+  const currentSource =
+    tasks.find(
+      t=>t.id===getSourceId(current)
+    );
+
+
+  const otherSource =
+    tasks.find(
+      t=>t.id===getSourceId(other)
+    );
+
+
+  if(
+    !currentSource ||
+    !otherSource
+  ){
+
+    return;
+
+  }
 
 
   const temp =
-    task.order;
+    currentSource.order;
 
-  task.order =
-    other.order;
 
-  other.order =
+  currentSource.order =
+    otherSource.order;
+
+
+  otherSource.order =
     temp;
 
 
@@ -1743,9 +2157,9 @@ function moveTask(id,direction){
 }
 
 
-/* =========================
-   DRAG
-========================= */
+/* ======================================================
+   DRAG & DROP
+====================================================== */
 
 function startDrag(id){
 
@@ -1761,7 +2175,10 @@ function allowDrop(event){
 }
 
 
-function dropTask(targetId){
+function dropTask(
+  targetId,
+  date
+){
 
   if(
     draggedTaskId===null ||
@@ -1773,21 +2190,25 @@ function dropTask(targetId){
   }
 
 
-  const dragged =
-    tasks.find(
-      t=>t.id===draggedTaskId
+  const day =
+    getDayTasks(date);
+
+
+  const from =
+    day.findIndex(
+      t=>getSourceId(t)===draggedTaskId
     );
 
-  const target =
-    tasks.find(
-      t=>t.id===targetId
+
+  const to =
+    day.findIndex(
+      t=>getSourceId(t)===targetId
     );
 
 
   if(
-    !dragged ||
-    !target ||
-    dragged.date!==target.date
+    from===-1 ||
+    to===-1
   ){
 
     draggedTaskId=null;
@@ -1797,33 +2218,39 @@ function dropTask(targetId){
   }
 
 
-  const day =
-    getDayTasks(dragged.date);
-
-
-  const from =
-    day.findIndex(
-      t=>t.id===draggedTaskId
-    );
-
-  const to =
-    day.findIndex(
-      t=>t.id===targetId
-    );
-
-
   const reordered =
     [...day];
 
-  const [item] =
-    reordered.splice(from,1);
 
-  reordered.splice(to,0,item);
+  const [item] =
+    reordered.splice(
+      from,
+      1
+    );
+
+
+  reordered.splice(
+    to,
+    0,
+    item
+  );
 
 
   reordered.forEach(
-    (t,index)=>{
-      t.order=index;
+    (item,index)=>{
+
+      const source =
+        tasks.find(
+          t=>t.id===getSourceId(item)
+        );
+
+
+      if(source){
+
+        source.order=index;
+
+      }
+
     }
   );
 
@@ -1841,22 +2268,35 @@ function dropTask(targetId){
 }
 
 
-/* =========================
-   SIRALAMALARI NORMALLEŞTİR
-========================= */
+/* ======================================================
+   ORDER NORMALIZE
+====================================================== */
 
 function normalizeOrders(){
 
   const dates =
-    [...new Set(
-      tasks.map(t=>t.date)
-    )];
+    [
+      ...new Set(
+        tasks
+          .filter(
+            t=>!t.recurring
+          )
+          .map(t=>t.date)
+      )
+    ];
 
 
   dates.forEach(date=>{
 
     const day =
-      getDayTasks(date);
+      tasks
+        .filter(
+          t =>
+            !t.recurring &&
+            t.date===date
+        )
+        .sort(compareTasks);
+
 
     day.forEach(
       (task,index)=>{
@@ -1866,12 +2306,28 @@ function normalizeOrders(){
 
   });
 
+
+  tasks
+    .filter(
+      t=>t.recurring
+    )
+    .sort(
+      (a,b)=>
+        (a.order||0)-
+        (b.order||0)
+    )
+    .forEach(
+      (task,index)=>{
+        task.order=index;
+      }
+    );
+
 }
 
 
-/* =========================
+/* ======================================================
    ÖNCELİK
-========================= */
+====================================================== */
 
 function priorityText(priority){
 
@@ -1888,14 +2344,16 @@ function priorityText(priority){
 }
 
 
-/* =========================
+/* ======================================================
    GÜVENLİ METİN
-========================= */
+====================================================== */
 
 function escapeHTML(text){
 
   const div =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   div.textContent=text;
 
@@ -1904,16 +2362,48 @@ function escapeHTML(text){
 }
 
 
-/* =========================
+/* ======================================================
    GÖREV HTML
-========================= */
+====================================================== */
 
 function taskHTML(task){
 
   const timeTag =
     task.time
-      ? `<span class="tag">⏰ ${escapeHTML(task.time)}</span>`
+      ? `
+        <span class="tag">
+          ⏰ ${escapeHTML(task.time)}
+        </span>
+      `
       : "";
+
+
+  const repeatTag =
+    task.isRecurring
+      ? `
+        <span class="tag repeat-tag">
+          🔁 Her gün
+        </span>
+      `
+      : "";
+
+
+  const dateTag =
+    task.isRecurring
+      ? `
+        <span class="tag">
+          📅 ${escapeHTML(
+            task.repeatEnd
+              ? shortDate(task.repeatEnd)+"'e kadar"
+              : "Süresiz"
+          )}
+        </span>
+      `
+      : `
+        <span class="tag">
+          📅 ${shortDate(task.date)}
+        </span>
+      `;
 
 
   return `
@@ -1921,16 +2411,20 @@ function taskHTML(task){
     <div
       class="task ${task.completed ? "completed" : ""}"
       draggable="true"
-      ondragstart="startDrag(${task.id})"
+      ondragstart="startDrag(${task.sourceId})"
       ondragover="allowDrop(event)"
-      ondrop="dropTask(${task.id})"
+      ondrop="dropTask(${task.sourceId},'${task.occurrenceDate}')"
     >
 
       <input
         class="task-check"
         type="checkbox"
         ${task.completed ? "checked" : ""}
-        onchange="toggleTask(${task.id})"
+        onchange="toggleTask(
+          ${task.sourceId},
+          '${task.occurrenceDate}',
+          ${task.isRecurring}
+        )"
       >
 
 
@@ -1953,9 +2447,9 @@ function taskHTML(task){
             ${priorityText(task.priority)}
           </span>
 
-          <span class="tag">
-            📅 ${shortDate(task.date)}
-          </span>
+          ${repeatTag}
+
+          ${dateTag}
 
         </div>
 
@@ -1973,7 +2467,11 @@ function taskHTML(task){
 
         <button
           class="action-btn"
-          onclick="moveTask(${task.id},-1)"
+          onclick="moveTask(
+            ${task.sourceId},
+            -1,
+            '${task.occurrenceDate}'
+          )"
           title="Yukarı taşı"
         >
           ↑
@@ -1981,7 +2479,11 @@ function taskHTML(task){
 
         <button
           class="action-btn"
-          onclick="moveTask(${task.id},1)"
+          onclick="moveTask(
+            ${task.sourceId},
+            1,
+            '${task.occurrenceDate}'
+          )"
           title="Aşağı taşı"
         >
           ↓
@@ -1989,7 +2491,10 @@ function taskHTML(task){
 
         <button
           class="action-btn"
-          onclick="editTask(${task.id})"
+          onclick="editTask(
+            ${task.sourceId},
+            ${task.isRecurring}
+          )"
           title="Düzenle"
         >
           ✏️
@@ -1997,7 +2502,10 @@ function taskHTML(task){
 
         <button
           class="action-btn"
-          onclick="deleteTask(${task.id})"
+          onclick="deleteTask(
+            ${task.sourceId},
+            ${task.isRecurring}
+          )"
           title="Sil"
         >
           🗑️
@@ -2012,9 +2520,9 @@ function taskHTML(task){
 }
 
 
-/* =========================
+/* ======================================================
    ANA SAYFA
-========================= */
+====================================================== */
 
 function renderHome(){
 
@@ -2025,12 +2533,14 @@ function renderHome(){
 
 
   const dayTasks =
-    getDayTasks(selectedDate);
+    getDayTasks(
+      selectedDate
+    );
 
 
   if(dayTasks.length===0){
 
-    list.innerHTML = `
+    list.innerHTML=`
 
       <div class="empty">
 
@@ -2056,9 +2566,9 @@ function renderHome(){
 }
 
 
-/* =========================
-   İLERLEME
-========================= */
+/* ======================================================
+   GÜNLÜK İLERLEME
+====================================================== */
 
 function updateStats(dayTasks){
 
@@ -2074,10 +2584,10 @@ function updateStats(dayTasks){
 
   const percentage =
     total===0
-      ? 0
-      : Math.round(
-          completed/total*100
-        );
+      ?0
+      :Math.round(
+        completed/total*100
+      );
 
 
   document.getElementById(
@@ -2110,15 +2620,21 @@ function updateStats(dayTasks){
 }
 
 
-/* =========================
+/* ======================================================
    TÜM GÖREVLER
-========================= */
+====================================================== */
 
 function renderAllTasks(){
 
-  const list =
+  const normalList =
     document.getElementById(
       "allTaskList"
+    );
+
+
+  const recurringList =
+    document.getElementById(
+      "recurringTaskList"
     );
 
 
@@ -2142,85 +2658,230 @@ function renderAllTasks(){
     )?.value || "all";
 
 
-  let filtered =
-    tasks.filter(task=>{
+  const normalTasks =
+    tasks
+      .filter(task=>!task.recurring)
+      .filter(task=>{
 
-      const matchesSearch =
-        task.text
-          .toLowerCase()
-          .includes(search);
+        const matchesSearch =
+          task.text
+            .toLowerCase()
+            .includes(search);
 
 
-      const matchesStatus =
-        status==="all" ||
-        (
-          status==="active" &&
-          !task.completed
-        ) ||
-        (
-          status==="completed" &&
-          task.completed
+        const matchesStatus =
+          status==="all" ||
+          (
+            status==="active" &&
+            !task.completed
+          ) ||
+          (
+            status==="completed" &&
+            task.completed
+          );
+
+
+        const matchesCategory =
+          category==="all" ||
+          task.category===category;
+
+
+        return (
+          matchesSearch &&
+          matchesStatus &&
+          matchesCategory
         );
 
-
-      const matchesCategory =
-        category==="all" ||
-        task.category===category;
+      })
+      .sort(compareTasks);
 
 
-      return (
-        matchesSearch &&
-        matchesStatus &&
-        matchesCategory
+  const recurringTasks =
+    tasks
+      .filter(task=>task.recurring)
+      .filter(task=>{
+
+        const matchesSearch =
+          task.text
+            .toLowerCase()
+            .includes(search);
+
+
+        const matchesCategory =
+          category==="all" ||
+          task.category===category;
+
+
+        return (
+          matchesSearch &&
+          matchesCategory
+        );
+
+      })
+      .sort(
+        (a,b)=>
+          (a.order||0)-
+          (b.order||0)
       );
 
-    });
 
+  if(normalTasks.length===0){
 
-  filtered.sort(compareTasks);
-
-
-  if(filtered.length===0){
-
-    list.innerHTML=`
+    normalList.innerHTML=`
 
       <div class="empty">
-        Aradığın kriterlere uygun görev bulunamadı.
+        Uygun tek seferlik görev bulunamadı.
       </div>
 
     `;
 
-    return;
+  }else{
+
+    normalList.innerHTML =
+      normalTasks
+        .map(task=>({
+
+          ...task,
+
+          isRecurring:false,
+
+          sourceId:task.id,
+
+          occurrenceDate:task.date
+
+        }))
+        .map(task=>taskHTML(task))
+        .join("");
 
   }
 
 
-  list.innerHTML =
-    filtered
-      .map(task=>taskHTML(task))
-      .join("");
+  if(recurringTasks.length===0){
+
+    recurringList.innerHTML=`
+
+      <div class="empty">
+        Henüz tekrarlayan bir plan yok.
+      </div>
+
+    `;
+
+  }else{
+
+    recurringList.innerHTML =
+      recurringTasks
+        .map(task=>recurringHTML(task))
+        .join("");
+
+  }
 
 }
 
 
-/* =========================
+/* ======================================================
+   TEKRARLAYAN PLAN HTML
+====================================================== */
+
+function recurringHTML(task){
+
+  const rangeText =
+    task.repeatEnd
+      ? `${shortDate(task.date)} → ${shortDate(task.repeatEnd)}`
+      : `${shortDate(task.date)} → Süresiz`;
+
+
+  const timeTag =
+    task.time
+      ? `<span class="tag">⏰ ${escapeHTML(task.time)}</span>`
+      : "";
+
+
+  return `
+
+    <div class="task">
+
+      <div class="task-info">
+
+        <div class="task-name">
+          🔁 ${escapeHTML(task.text)}
+        </div>
+
+        <div class="task-meta">
+
+          ${timeTag}
+
+          <span class="tag">
+            ${escapeHTML(task.category)}
+          </span>
+
+          <span class="tag priority-${task.priority}">
+            ${priorityText(task.priority)}
+          </span>
+
+          <span class="tag repeat-tag">
+            Her gün
+          </span>
+
+          <span class="tag">
+            📅 ${rangeText}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="task-actions">
+
+        <button
+          class="action-btn"
+          onclick="editTask(${task.id},true)"
+          title="Düzenle"
+        >
+          ✏️
+        </button>
+
+        <button
+          class="action-btn"
+          onclick="deleteTask(${task.id},true)"
+          title="Serinin tamamını sil"
+        >
+          🗑️
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* ======================================================
    HAFTA
-========================= */
+====================================================== */
 
 function getMonday(key){
 
   const d =
     dateObject(key);
 
+
   const day =
     d.getDay();
 
+
   const diff =
-    day===0 ? -6 : 1-day;
+    day===0
+      ? -6
+      : 1-day;
+
 
   d.setDate(
     d.getDate()+diff
   );
+
 
   return d;
 
@@ -2230,15 +2891,22 @@ function getMonday(key){
 function changeWeek(amount){
 
   const monday =
-    getMonday(weekAnchor);
+    getMonday(
+      weekAnchor
+    );
+
 
   monday.setDate(
-    monday.getDate() +
+    monday.getDate()+
     amount*7
   );
 
+
   weekAnchor =
-    dateKeyFromDate(monday);
+    dateKeyFromDate(
+      monday
+    );
+
 
   renderWeek();
 
@@ -2247,7 +2915,8 @@ function changeWeek(amount){
 
 function weekToday(){
 
-  weekAnchor=getTodayKey();
+  weekAnchor =
+    getTodayKey();
 
   renderWeek();
 
@@ -2263,11 +2932,14 @@ function renderWeek(){
 
 
   const monday =
-    getMonday(weekAnchor);
+    getMonday(
+      weekAnchor
+    );
 
 
   const sunday =
     new Date(monday);
+
 
   sunday.setDate(
     sunday.getDate()+6
@@ -2305,13 +2977,16 @@ function renderWeek(){
     const current =
       new Date(monday);
 
+
     current.setDate(
       monday.getDate()+i
     );
 
 
     const key =
-      dateKeyFromDate(current);
+      dateKeyFromDate(
+        current
+      );
 
 
     const dayTasks =
@@ -2349,17 +3024,37 @@ function renderWeek(){
 
         ${
           dayTasks.length===0
-            ? `<div class="week-empty">Plan yok</div>`
+
+            ? `
+              <div class="week-empty">
+                Plan yok
+              </div>
+            `
+
             : dayTasks.map(task=>`
 
               <div
                 class="week-task ${task.completed ? "done" : ""}"
-                onclick="event.stopPropagation(); toggleTask(${task.id})"
+                onclick="
+                  event.stopPropagation();
+                  toggleTask(
+                    ${task.sourceId},
+                    '${key}',
+                    ${task.isRecurring}
+                  )
+                "
               >
 
                 ${
                   task.time
-                    ? "⏰ "+escapeHTML(task.time)+" "
+                    ? "⏰ "+
+                      escapeHTML(task.time)+" "
+                    : ""
+                }
+
+                ${
+                  task.isRecurring
+                    ? "🔁 "
                     : ""
                 }
 
@@ -2397,33 +3092,28 @@ function selectWeekDay(key){
 
 function showHomeFromCode(){
 
-  const pages =
-    document.querySelectorAll(
-      ".page"
-    );
-
-  pages.forEach(
-    p=>p.classList.remove("active")
-  );
-
-
-  document.getElementById(
-    "home"
-  ).classList.add("active");
-
-
-  const buttons =
-    document.querySelectorAll(
-      ".menu-item"
+  document
+    .querySelectorAll(".page")
+    .forEach(
+      p=>p.classList.remove("active")
     );
 
 
-  buttons.forEach(
-    b=>b.classList.remove("active")
-  );
+  document
+    .getElementById("home")
+    .classList.add("active");
 
 
-  buttons[0].classList.add("active");
+  document
+    .querySelectorAll(".menu-item")
+    .forEach(
+      b=>b.classList.remove("active")
+    );
+
+
+  document
+    .querySelectorAll(".menu-item")[0]
+    .classList.add("active");
 
 
   renderHome();
@@ -2431,28 +3121,34 @@ function showHomeFromCode(){
 }
 
 
-/* =========================
+/* ======================================================
    İSTATİSTİKLER
-========================= */
+====================================================== */
 
 function renderStatistics(){
 
+  const normalTasks =
+    tasks.filter(
+      t=>!t.recurring
+    );
+
+
   const total =
-    tasks.length;
+    normalTasks.length;
 
 
   const completed =
-    tasks.filter(
+    normalTasks.filter(
       t=>t.completed
     ).length;
 
 
   const percentage =
     total===0
-      ? 0
-      : Math.round(
-          completed/total*100
-        );
+      ?0
+      :Math.round(
+        completed/total*100
+      );
 
 
   document.getElementById(
@@ -2471,6 +3167,14 @@ function renderStatistics(){
     percentage+"%";
 
 
+  document.getElementById(
+    "recurringCount"
+  ).textContent =
+    tasks.filter(
+      t=>t.recurring
+    ).length;
+
+
   renderCategoryStats();
 
   renderLastSevenStats();
@@ -2479,6 +3183,10 @@ function renderStatistics(){
 
 }
 
+
+/* ======================================================
+   KATEGORİ İSTATİSTİKLERİ
+====================================================== */
 
 function renderCategoryStats(){
 
@@ -2505,27 +3213,34 @@ function renderCategoryStats(){
 
     const categoryTasks =
       tasks.filter(
-        t=>t.category===category
+        t=>
+          t.category===category
+      );
+
+
+    const normalTasks =
+      categoryTasks.filter(
+        t=>!t.recurring
       );
 
 
     const done =
-      categoryTasks.filter(
+      normalTasks.filter(
         t=>t.completed
       ).length;
 
 
     const percent =
-      categoryTasks.length===0
-        ? 0
-        : Math.round(
-            done/
-            categoryTasks.length*
-            100
-          );
+      normalTasks.length===0
+        ?0
+        :Math.round(
+          done/
+          normalTasks.length*
+          100
+        );
 
 
-    container.innerHTML += `
+    container.innerHTML+=`
 
       <div class="category-row">
 
@@ -2540,7 +3255,7 @@ function renderCategoryStats(){
         </div>
 
         <div class="stat-count">
-          ${done}/${categoryTasks.length}
+          ${done}/${normalTasks.length}
         </div>
 
       </div>
@@ -2551,6 +3266,108 @@ function renderCategoryStats(){
 
 }
 
+
+/* ======================================================
+   SON 7 GÜN
+====================================================== */
+
+function renderLastSevenStats(){
+
+  const container =
+    document.getElementById(
+      "lastSevenStats"
+    );
+
+
+  container.innerHTML="";
+
+
+  const end =
+    dateObject(
+      selectedDate
+    );
+
+
+  for(let i=6;i>=0;i--){
+
+    const d =
+      new Date(end);
+
+
+    d.setDate(
+      d.getDate()-i
+    );
+
+
+    const key =
+      dateKeyFromDate(d);
+
+
+    const dayTasks =
+      getDayTasks(key);
+
+
+    const done =
+      dayTasks.filter(
+        t=>t.completed
+      ).length;
+
+
+    const total =
+      dayTasks.length;
+
+
+    const percent =
+      total===0
+        ?0
+        :Math.round(
+          done/
+          total*
+          100
+        );
+
+
+    const label =
+      d.toLocaleDateString(
+        "tr-TR",
+        {
+          weekday:"short"
+        }
+      );
+
+
+    container.innerHTML+=`
+
+      <div class="day-stat-row">
+
+        <div class="day-stat-label">
+          ${label}
+        </div>
+
+        <div class="stat-bar">
+
+          <div
+            style="width:${percent}%"
+          ></div>
+
+        </div>
+
+        <div class="day-stat-value">
+          ${done}/${total}
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* ======================================================
+   ÖNCELİK İSTATİSTİĞİ
+====================================================== */
 
 function renderPriorityStats(){
 
@@ -2581,29 +3398,32 @@ function renderPriorityStats(){
 
   priorities.forEach(priority=>{
 
-    const count =
+    const normalTasks =
       tasks.filter(
-        t=>t.priority===priority.key
-      ).length;
+        t=>
+          !t.recurring &&
+          t.priority===
+          priority.key
+      );
 
 
     const done =
-      tasks.filter(
-        t=>
-          t.priority===priority.key &&
-          t.completed
+      normalTasks.filter(
+        t=>t.completed
       ).length;
 
 
     const percent =
-      count===0
-        ? 0
-        : Math.round(
-            done/count*100
-          );
+      normalTasks.length===0
+        ?0
+        :Math.round(
+          done/
+          normalTasks.length*
+          100
+        );
 
 
-    container.innerHTML += `
+    container.innerHTML+=`
 
       <div class="category-row">
 
@@ -2618,7 +3438,7 @@ function renderPriorityStats(){
         </div>
 
         <div class="stat-count">
-          ${done}/${count}
+          ${done}/${normalTasks.length}
         </div>
 
       </div>
@@ -2630,100 +3450,9 @@ function renderPriorityStats(){
 }
 
 
-function renderLastSevenStats(){
-
-  const container =
-    document.getElementById(
-      "lastSevenStats"
-    );
-
-
-  container.innerHTML="";
-
-
-  const end =
-    dateObject(
-      selectedDate
-    );
-
-
-  for(let i=6;i>=0;i--){
-
-    const d =
-      new Date(end);
-
-    d.setDate(
-      d.getDate()-i
-    );
-
-
-    const key =
-      dateKeyFromDate(d);
-
-
-    const dayTasks =
-      getDayTasks(key);
-
-
-    const done =
-      dayTasks.filter(
-        t=>t.completed
-      ).length;
-
-
-    const total =
-      dayTasks.length;
-
-
-    const percent =
-      total===0
-        ? 0
-        : Math.round(
-            done/total*100
-          );
-
-
-    const label =
-      d.toLocaleDateString(
-        "tr-TR",
-        {
-          weekday:"short"
-        }
-      );
-
-
-    container.innerHTML += `
-
-      <div class="day-stat-row">
-
-        <div class="day-stat-label">
-          ${label}
-        </div>
-
-        <div class="stat-bar">
-
-          <div
-            style="width:${percent}%"
-          ></div>
-
-        </div>
-
-        <div class="day-stat-value">
-          ${done}/${total}
-        </div>
-
-      </div>
-
-    `;
-
-  }
-
-}
-
-
-/* =========================
+/* ======================================================
    KARANLIK MOD
-========================= */
+====================================================== */
 
 function toggleDarkMode(){
 
@@ -2755,12 +3484,14 @@ if(
 }
 
 
-/* =========================
+/* ======================================================
    ENTER
-========================= */
+====================================================== */
 
 document
-  .getElementById("taskInput")
+  .getElementById(
+    "taskInput"
+  )
   .addEventListener(
     "keydown",
     function(event){
@@ -2775,9 +3506,9 @@ document
   );
 
 
-/* =========================
+/* ======================================================
    BAŞLAT
-========================= */
+====================================================== */
 
 normalizeOrders();
 
