@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Günlük Planlayıcı</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .add-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    #taskInput {
+      flex: 1;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    #addButton {
+      padding: 14px 20px;
+      border: none;
+      border-radius: 10px;
+      background: #222;
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    #addButton:hover {
+      background: #444;
+    }
+
+    .task-list {
+      list-style: none;
+    }
+
+    .task {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: white;
+      padding: 16px;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .task input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .task-text {
+      flex: 1;
+      font-size: 16px;
+    }
+
+    .completed .task-text {
+      text-decoration: line-through;
+      color: #999;
+    }
+
+    .delete-button {
+      border: none;
+      background: transparent;
+      color: #d33;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .empty {
+      text-align: center;
+      color: #888;
+      padding: 30px;
+    }
+
+    @media (max-width: 600px) {
+      .add-box {
+        flex-direction: column;
+      }
+
+      #addButton {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>Günlük Planlayıcı</h1>
+
+    <p class="subtitle">
+      Bugün yapacaklarını planla ve tamamladıkça işaretle.
+    </p>
+
+    <div class="add-box">
+      <input
+        type="text"
+        id="taskInput"
+        placeholder="Yeni görev yaz..."
+      >
+
+      <button id="addButton">
+        Görev Ekle
+      </button>
+    </div>
+
+    <ul id="taskList" class="task-list"></ul>
+
+  </div>
+
+  <script>
+    const taskInput = document.getElementById("taskInput");
+    const addButton = document.getElementById("addButton");
+    const taskList = document.getElementById("taskList");
+
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    function saveTasks() {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function renderTasks() {
+      taskList.innerHTML = "";
+
+      if (tasks.length === 0) {
+        taskList.innerHTML = `
+          <li class="empty">
+            Henüz görev eklemedin.
+          </li>
+        `;
+        return;
+      }
+
+      tasks.forEach((task, index) => {
+
+        const li = document.createElement("li");
+        li.className = "task";
+
+        if (task.completed) {
+          li.classList.add("completed");
+        }
+
+        li.innerHTML = `
+          <input
+            type="checkbox"
+            ${task.completed ? "checked" : ""}
+          >
+
+          <span class="task-text">
+            ${task.text}
+          </span>
+
+          <button class="delete-button">
+            Sil
+          </button>
+        `;
+
+        const checkbox = li.querySelector("input");
+
+        checkbox.addEventListener("change", () => {
+          tasks[index].completed = checkbox.checked;
+          saveTasks();
+          renderTasks();
+        });
+
+        const deleteButton = li.querySelector(".delete-button");
+
+        deleteButton.addEventListener("click", () => {
+          tasks.splice(index, 1);
+          saveTasks();
+          renderTasks();
+        });
+
+        taskList.appendChild(li);
+      });
+    }
+
+    function addTask() {
+      const text = taskInput.value.trim();
+
+      if (text === "") {
+        return;
+      }
+
+      tasks.push({
+        text: text,
+        completed: false
+      });
+
+      saveTasks();
+
+      taskInput.value = "";
+
+      renderTasks();
+    }
+
+    addButton.addEventListener("click", addTask);
+
+    taskInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        addTask();
+      }
+    });
+
+    renderTasks();
+  </script>
+
+</body>
+</html>
