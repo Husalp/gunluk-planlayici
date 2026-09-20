@@ -1173,7 +1173,90 @@ select:focus{
 
 
 <body>
+<div id="authScreen" style="
+  position: fixed;
+  inset: 0;
+  background: #f5f5f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+">
+  <div style="
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  ">
+    <h1 style="margin-bottom: 8px;">Günlük Planlayıcı</h1>
 
+    <p id="authTitle" style="margin-bottom: 20px;">
+      Hesabına giriş yap
+    </p>
+
+    <input
+      id="authEmail"
+      type="email"
+      placeholder="E-posta"
+      style="
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      "
+    >
+
+    <input
+      id="authPassword"
+      type="password"
+      placeholder="Şifre"
+      style="
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      "
+    >
+
+    <button
+      id="authButton"
+      onclick="handleAuth()"
+      style="
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      "
+    >
+      Giriş Yap
+    </button>
+
+    <button
+      onclick="toggleAuthMode()"
+      id="authToggle"
+      style="
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+      "
+    >
+      Hesabın yok mu? Kayıt ol
+    </button>
+
+    <p id="authMessage" style="
+      margin-top: 15px;
+      font-size: 14px;
+    "></p>
+  </div>
+</div>
 
 <div class="app">
 
@@ -4819,7 +4902,108 @@ updateGreeting();
 updateDateUI();
 
 renderHome();
+let authMode = "login";
 
+function toggleAuthMode() {
+  authMode = authMode === "login" ? "signup" : "login";
+
+  const title = document.getElementById("authTitle");
+  const button = document.getElementById("authButton");
+  const toggle = document.getElementById("authToggle");
+  const message = document.getElementById("authMessage");
+
+  message.textContent = "";
+
+  if (authMode === "signup") {
+    title.textContent = "Yeni hesap oluştur";
+    button.textContent = "Kayıt Ol";
+    toggle.textContent = "Zaten hesabın var mı? Giriş yap";
+  } else {
+    title.textContent = "Hesabına giriş yap";
+    button.textContent = "Giriş Yap";
+    toggle.textContent = "Hesabın yok mu? Kayıt ol";
+  }
+}
+
+async function handleAuth() {
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
+  const message = document.getElementById("authMessage");
+  const button = document.getElementById("authButton");
+
+  if (!email || !password) {
+    message.textContent = "Lütfen e-posta ve şifreni gir.";
+    return;
+  }
+
+  if (password.length < 6) {
+    message.textContent = "Şifre en az 6 karakter olmalı.";
+    return;
+  }
+
+  button.disabled = true;
+  message.textContent = "İşlem yapılıyor...";
+
+  try {
+    if (authMode === "signup") {
+      const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (data.session) {
+        document.getElementById("authScreen").style.display = "none";
+        message.textContent = "";
+      } else {
+        message.textContent =
+          "Hesabın oluşturuldu. Şimdi giriş yapabilirsin.";
+        toggleAuthMode();
+      }
+    } else {
+      const { error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      document.getElementById("authScreen").style.display = "none";
+      message.textContent = "";
+    }
+  } catch (error) {
+    message.textContent = error.message;
+  } finally {
+    button.disabled = false;
+  }
+}
+
+async function checkAuth() {
+  const { data } = await supabaseClient.auth.getSession();
+
+  if (data.session) {
+    document.getElementById("authScreen").style.display = "none";
+  } else {
+    document.getElementById("authScreen").style.display = "flex";
+  }
+}
+
+supabaseClient.auth.onAuthStateChange((event, session) => {
+  const authScreen = document.getElementById("authScreen");
+
+  if (session) {
+    authScreen.style.display = "none";
+  } else {
+    authScreen.style.display = "flex";
+  }
+});
+
+checkAuth();
 </script>
 
 </body>
