@@ -2549,6 +2549,52 @@ async function saveTasks() {
   if (!user) {
     return;
   }
+async function saveTasks() {
+  localStorage.setItem(
+    "plannerTasks",
+    JSON.stringify(tasks)
+  );
+
+  const { data: sessionData } =
+    await supabaseClient.auth.getSession();
+
+  const user = sessionData.session?.user;
+
+  if (!user) {
+    return;
+  }
+
+  const rows = tasks.map(task => ({
+    task_id: task.id,
+    user_id: user.id,
+    title: task.text,
+    completed: task.completed,
+    task_date: task.date,
+    task_time: task.time || null,
+    category: task.category || null,
+    priority: task.priority || null,
+    task_order: task.order ?? 0,
+    recurring: task.recurring || false,
+    repeat_type: task.repeatType || null,
+    repeat_end: task.repeatEnd || null,
+    completed_dates: task.completedDates || []
+  }));
+
+  const { error } = await supabaseClient
+    .from("tasks")
+    .upsert(rows, {
+      onConflict: "user_id,task_id"
+    });
+
+  if (error) {
+    console.error(
+      "Supabase görev kaydetme hatası:",
+      error
+    );
+  }
+}
+
+
 async function loadTasks() {
   const { data: sessionData } =
     await supabaseClient.auth.getSession();
@@ -2558,6 +2604,48 @@ async function loadTasks() {
   if (!user) {
     return;
   }
+
+  const { data, error } = await supabaseClient
+    .from("tasks")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("task_order", { ascending: true });
+
+  if (error) {
+    console.error(
+      "Supabase görev yükleme hatası:",
+      error
+    );
+    return;
+  }
+
+  tasks = data.map(row => ({
+    id: row.task_id,
+    text: row.title,
+    date: row.task_date,
+    time: row.task_time || "",
+    category: row.category || "",
+    priority: row.priority || "",
+    order: row.task_order ?? 0,
+    completed: !!row.completed,
+    recurring: !!row.recurring,
+    repeatType: row.repeat_type || "",
+    repeatEnd: row.repeat_end || "",
+    completedDates: row.completed_dates || []
+  }));
+
+  localStorage.setItem(
+    "plannerTasks",
+    JSON.stringify(tasks)
+  );
+
+  normalizeOrders();
+  updateDateUI();
+  renderHome();
+  renderAllTasks();
+  renderWeek();
+  renderStatistics();
+}
 
   const { data, error } = await supabaseClient
     .from("tasks")
