@@ -2595,9 +2595,7 @@ body.dark #authPassword{
     bottom:
       calc(
         8px +
-        env(
-          safe-area-inset-bottom
-        )
+        env(safe-area-inset-bottom)
       );
 
     height:68px;
@@ -8488,6 +8486,7 @@ function showHomeFromCode(){
     );
 
 
+  /* DÜZELTİLDİ: burada forEach kapanışı eksikti */
   document
     .querySelectorAll(
       ".mobile-nav button"
@@ -8496,7 +8495,8 @@ function showHomeFromCode(){
       b =>
         b.classList.remove(
           "active"
-        );
+        )
+    );
 
 
   document
@@ -9274,11 +9274,45 @@ updateDateUI();
 
 renderHome();
 
-updateNotificationUI();
-
-registerServiceWorker();
-
+/* Önce giriş kontrolü çalışsın */
 checkAuth();
+
+/* Bildirim sistemi giriş ekranını engellemesin */
+try {
+
+  updateNotificationUI();
+
+} catch(error) {
+
+  console.error(
+    "Bildirim arayüzü hatası:",
+    error
+  );
+
+}
+
+try {
+
+  registerServiceWorker();
+
+} catch(error) {
+
+  console.error(
+    "Service Worker başlatma hatası:",
+    error
+  );
+
+}
+
+setTimeout(
+  checkDueTaskNotifications,
+  1000
+);
+
+setInterval(
+  checkDueTaskNotifications,
+  30000
+);
 
 </script>
 
