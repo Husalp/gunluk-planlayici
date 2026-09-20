@@ -2551,7 +2551,7 @@ async function saveTasks() {
   }
 
   const rows = tasks.map(task => ({
-    id: task.id,
+    task_id: task.id,
     user_id: user.id,
     title: task.text,
     completed: task.completed,
